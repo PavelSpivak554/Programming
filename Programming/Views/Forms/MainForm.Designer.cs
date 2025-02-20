@@ -31,9 +31,9 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.EnumsListBox = new System.Windows.Forms.ListBox();
-            this.ValuesListBox = new System.Windows.Forms.ListBox();
             this.ValueTextBox = new System.Windows.Forms.TextBox();
+            this.ValuesListBox = new System.Windows.Forms.ListBox();
+            this.EnumsListBox = new System.Windows.Forms.ListBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -72,6 +72,24 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Enumeration";
             // 
+            // ValueTextBox
+            // 
+            this.ValueTextBox.Location = new System.Drawing.Point(351, 37);
+            this.ValueTextBox.Name = "ValueTextBox";
+            this.ValueTextBox.ReadOnly = true;
+            this.ValueTextBox.Size = new System.Drawing.Size(100, 22);
+            this.ValueTextBox.TabIndex = 2;
+            // 
+            // ValuesListBox
+            // 
+            this.ValuesListBox.FormattingEnabled = true;
+            this.ValuesListBox.ItemHeight = 16;
+            this.ValuesListBox.Location = new System.Drawing.Point(181, 37);
+            this.ValuesListBox.Name = "ValuesListBox";
+            this.ValuesListBox.Size = new System.Drawing.Size(154, 244);
+            this.ValuesListBox.TabIndex = 1;
+            this.ValuesListBox.SelectedValueChanged += new System.EventHandler(this.ValuesListBox_SelectedValueChanged);
+            // 
             // EnumsListBox
             // 
             this.EnumsListBox.FormattingEnabled = true;
@@ -87,22 +105,7 @@
             this.EnumsListBox.Name = "EnumsListBox";
             this.EnumsListBox.Size = new System.Drawing.Size(154, 244);
             this.EnumsListBox.TabIndex = 0;
-            // 
-            // ValuesListBox
-            // 
-            this.ValuesListBox.FormattingEnabled = true;
-            this.ValuesListBox.ItemHeight = 16;
-            this.ValuesListBox.Location = new System.Drawing.Point(181, 37);
-            this.ValuesListBox.Name = "ValuesListBox";
-            this.ValuesListBox.Size = new System.Drawing.Size(154, 244);
-            this.ValuesListBox.TabIndex = 1;
-            // 
-            // ValueTextBox
-            // 
-            this.ValueTextBox.Location = new System.Drawing.Point(351, 37);
-            this.ValueTextBox.Name = "ValueTextBox";
-            this.ValueTextBox.Size = new System.Drawing.Size(100, 22);
-            this.ValueTextBox.TabIndex = 2;
+            this.EnumsListBox.SelectedIndexChanged += new System.EventHandler(this.EnumsListBox_SelectedIndexChanged);
             // 
             // MainForm
             // 
