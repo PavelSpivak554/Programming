@@ -48,5 +48,19 @@ namespace Programming.Views.Forms
             ValueTextBox.Text = Convert.ToInt32(ValuesListBox.SelectedValue).ToString();
 
         }
+
+        private void ParseButton_Click(object sender, EventArgs e)
+        {
+            string input = ParsingTextBox.Text;           
+            if (Enum.TryParse<Weekday>(input,true ,out Weekday weekday))
+            {
+                ParsingTextBox2.Text = $"Это день недели {weekday} = {(int)weekday}";
+            }
+            else
+            {
+                ParsingTextBox2.Text = "Нет такого дня недели";
+
+            }
+        }
     }
 }
