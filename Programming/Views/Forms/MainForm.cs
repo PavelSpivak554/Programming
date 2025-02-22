@@ -62,5 +62,27 @@ namespace Programming.Views.Forms
 
             }
         }
+
+        private void SeasonButton_Click(object sender, EventArgs e)
+        {
+            switch (SeasonComboBox.SelectedItem)
+            {
+                case "Winter":
+                    MessageBox.Show("Бррр! Холодно!","Зима",MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    break;
+                case "Spring":
+                    this.tabPage1.BackColor = System.Drawing.Color.Green;
+                    MessageBox.Show("Все зеленое!\nВернуть цвет?", "Весна", MessageBoxButtons.YesNo);
+                    break;
+                case "Summer":
+                    MessageBox.Show("Ура! Солнце!", "Лето", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    break;
+                case "Autumn":
+                    this.tabPage1.BackColor = System.Drawing.Color.Orange;
+                    MessageBox.Show("Листья Падают", "Осень");
+                    break;
+
+            }
+        }
     }
 }

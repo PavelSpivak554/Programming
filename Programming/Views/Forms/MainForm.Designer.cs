@@ -30,19 +30,25 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.SeasonButton = new System.Windows.Forms.Button();
+            this.SeasonComboBox = new System.Windows.Forms.ComboBox();
+            this.SeasonLabel = new System.Windows.Forms.Label();
             this.ParsingBox = new System.Windows.Forms.GroupBox();
             this.ParsingTextBox2 = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.ParsingLabel = new System.Windows.Forms.Label();
             this.ParseButton = new System.Windows.Forms.Button();
             this.ParsingTextBox = new System.Windows.Forms.TextBox();
             this.EnumBox = new System.Windows.Forms.GroupBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.IntLabel = new System.Windows.Forms.Label();
+            this.ValueLabel = new System.Windows.Forms.Label();
+            this.EmunLabel = new System.Windows.Forms.Label();
             this.ValueTextBox = new System.Windows.Forms.TextBox();
             this.ValuesListBox = new System.Windows.Forms.ListBox();
             this.EnumsListBox = new System.Windows.Forms.ListBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.ParsingBox.SuspendLayout();
             this.EnumBox.SuspendLayout();
             this.SuspendLayout();
@@ -59,6 +65,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.groupBox1);
             this.tabPage1.Controls.Add(this.ParsingBox);
             this.tabPage1.Controls.Add(this.EnumBox);
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
@@ -69,15 +76,59 @@
             this.tabPage1.Text = "Enums";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.SeasonButton);
+            this.groupBox1.Controls.Add(this.SeasonComboBox);
+            this.groupBox1.Controls.Add(this.SeasonLabel);
+            this.groupBox1.Location = new System.Drawing.Point(380, 253);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(404, 160);
+            this.groupBox1.TabIndex = 7;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Season Handle";
+            // 
+            // SeasonButton
+            // 
+            this.SeasonButton.Location = new System.Drawing.Point(145, 47);
+            this.SeasonButton.Name = "SeasonButton";
+            this.SeasonButton.Size = new System.Drawing.Size(75, 23);
+            this.SeasonButton.TabIndex = 9;
+            this.SeasonButton.Text = "Go!";
+            this.SeasonButton.UseVisualStyleBackColor = true;
+            this.SeasonButton.Click += new System.EventHandler(this.SeasonButton_Click);
+            // 
+            // SeasonComboBox
+            // 
+            this.SeasonComboBox.FormattingEnabled = true;
+            this.SeasonComboBox.Items.AddRange(new object[] {
+            "Winter",
+            "Spring",
+            "Summer",
+            "Autumn"});
+            this.SeasonComboBox.Location = new System.Drawing.Point(9, 46);
+            this.SeasonComboBox.Name = "SeasonComboBox";
+            this.SeasonComboBox.Size = new System.Drawing.Size(121, 24);
+            this.SeasonComboBox.TabIndex = 8;
+            // 
+            // SeasonLabel
+            // 
+            this.SeasonLabel.AutoSize = true;
+            this.SeasonLabel.Location = new System.Drawing.Point(6, 27);
+            this.SeasonLabel.Name = "SeasonLabel";
+            this.SeasonLabel.Size = new System.Drawing.Size(102, 16);
+            this.SeasonLabel.TabIndex = 7;
+            this.SeasonLabel.Text = "Choose season";
+            // 
             // ParsingBox
             // 
             this.ParsingBox.Controls.Add(this.ParsingTextBox2);
-            this.ParsingBox.Controls.Add(this.label1);
+            this.ParsingBox.Controls.Add(this.ParsingLabel);
             this.ParsingBox.Controls.Add(this.ParseButton);
             this.ParsingBox.Controls.Add(this.ParsingTextBox);
             this.ParsingBox.Location = new System.Drawing.Point(11, 253);
             this.ParsingBox.Name = "ParsingBox";
-            this.ParsingBox.Size = new System.Drawing.Size(775, 160);
+            this.ParsingBox.Size = new System.Drawing.Size(363, 160);
             this.ParsingBox.TabIndex = 1;
             this.ParsingBox.TabStop = false;
             this.ParsingBox.Text = "Weekday Parsing";
@@ -90,14 +141,14 @@
             this.ParsingTextBox2.Size = new System.Drawing.Size(248, 22);
             this.ParsingTextBox2.TabIndex = 6;
             // 
-            // label1
+            // ParsingLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 17);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(144, 16);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "Type value for parsing:";
+            this.ParsingLabel.AutoSize = true;
+            this.ParsingLabel.Location = new System.Drawing.Point(7, 17);
+            this.ParsingLabel.Name = "ParsingLabel";
+            this.ParsingLabel.Size = new System.Drawing.Size(144, 16);
+            this.ParsingLabel.TabIndex = 5;
+            this.ParsingLabel.Text = "Type value for parsing:";
             // 
             // ParseButton
             // 
@@ -118,8 +169,9 @@
             // 
             // EnumBox
             // 
-            this.EnumBox.Controls.Add(this.label3);
-            this.EnumBox.Controls.Add(this.label2);
+            this.EnumBox.Controls.Add(this.IntLabel);
+            this.EnumBox.Controls.Add(this.ValueLabel);
+            this.EnumBox.Controls.Add(this.EmunLabel);
             this.EnumBox.Controls.Add(this.ValueTextBox);
             this.EnumBox.Controls.Add(this.ValuesListBox);
             this.EnumBox.Controls.Add(this.EnumsListBox);
@@ -130,23 +182,32 @@
             this.EnumBox.TabStop = false;
             this.EnumBox.Text = "Enumeration";
             // 
-            // label3
+            // IntLabel
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(178, 18);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(90, 16);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "Choose value";
+            this.IntLabel.AutoSize = true;
+            this.IntLabel.Location = new System.Drawing.Point(348, 18);
+            this.IntLabel.Name = "IntLabel";
+            this.IntLabel.Size = new System.Drawing.Size(56, 16);
+            this.IntLabel.TabIndex = 8;
+            this.IntLabel.Text = "int value";
             // 
-            // label2
+            // ValueLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 18);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(131, 16);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "Choose enumeration";
+            this.ValueLabel.AutoSize = true;
+            this.ValueLabel.Location = new System.Drawing.Point(178, 18);
+            this.ValueLabel.Name = "ValueLabel";
+            this.ValueLabel.Size = new System.Drawing.Size(90, 16);
+            this.ValueLabel.TabIndex = 7;
+            this.ValueLabel.Text = "Choose value";
+            // 
+            // EmunLabel
+            // 
+            this.EmunLabel.AutoSize = true;
+            this.EmunLabel.Location = new System.Drawing.Point(6, 18);
+            this.EmunLabel.Name = "EmunLabel";
+            this.EmunLabel.Size = new System.Drawing.Size(131, 16);
+            this.EmunLabel.TabIndex = 6;
+            this.EmunLabel.Text = "Choose enumeration";
             // 
             // ValueTextBox
             // 
@@ -193,6 +254,8 @@
             this.Text = "MainForm";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ParsingBox.ResumeLayout(false);
             this.ParsingBox.PerformLayout();
             this.EnumBox.ResumeLayout(false);
@@ -210,11 +273,16 @@
         private System.Windows.Forms.TextBox ValueTextBox;
         private System.Windows.Forms.ListBox ValuesListBox;
         private System.Windows.Forms.GroupBox ParsingBox;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label ParsingLabel;
         private System.Windows.Forms.Button ParseButton;
         private System.Windows.Forms.TextBox ParsingTextBox;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label EmunLabel;
+        private System.Windows.Forms.Label ValueLabel;
         private System.Windows.Forms.TextBox ParsingTextBox2;
+        private System.Windows.Forms.Label IntLabel;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label SeasonLabel;
+        private System.Windows.Forms.ComboBox SeasonComboBox;
+        private System.Windows.Forms.Button SeasonButton;
     }
 }
