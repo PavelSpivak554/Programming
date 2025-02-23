@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Programming.Models
 {
-    internal class Flight
+    internal class Time
     {
-        private string departure;
-        private string destination;
-        private int duration;
+        private int hour;
+        private int minute;
+        private int second;
     }
 }

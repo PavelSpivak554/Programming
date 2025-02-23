@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Programming.Models
 {
-    internal class Flight
+    internal class Discipline
     {
-        private string departure;
-        private string destination;
-        private int duration;
+        private string studentName;
+        private string lectorName;
+        private int mark;
     }
 }
