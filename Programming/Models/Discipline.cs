@@ -11,5 +11,52 @@ namespace Programming.Models
         private string studentName;
         private string lectorName;
         private int mark;
+
+        public string StudentName
+        {
+            get
+            {
+                return studentName;
+            }
+            set
+            {
+                if(!string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException($"Значение не может быть пустым или состоять из пробелов.");
+                }
+                studentName = value;
+            }
+        }
+        public string LectorName
+        {
+            get
+            {
+                return lectorName;
+            }
+            set
+            {
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException($"Значение не может быть пустым или состоять из пробелов.");
+                }
+                lectorName = value;
+            }
+
+        }
+        public int Mark
+        {
+            get
+            {
+                return mark;
+            }
+            set
+            {
+                if(value<1 || value>5)
+                {
+                    throw new ArgumentException("Недопустимое значение");
+                }
+                mark = value;
+            }
+        }
     }
 }

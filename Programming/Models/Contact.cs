@@ -10,6 +10,54 @@ namespace Programming.Models
     {
         private string name;
         private string surname;
-        private int number;
+        private string number;
+        public Contact() { }    
+        public string Name
+        {
+            get
+            {
+                return name;
+            }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException($"Значение не может быть пустым или состоять из пробелов.");
+                }
+                name = value;
+            }
+
+        }
+        public string Surname
+        {
+            get
+            {
+                return surname;
+            }
+            set
+            {
+                if(string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException($"Значение не может быть пустым или состоять из пробелов.");
+                }
+                name = value;
+            }
+        
+        }
+        public string Number
+        {
+            get
+            {
+                return number;
+            }
+            set
+            {
+                if (!string.IsNullOrWhiteSpace(value) || value.Length!=11)
+                {
+                    throw new ArgumentException($"Невозмозможное значение номера телефона");
+                }
+                number = value;
+            }
+        }
     }
 }
