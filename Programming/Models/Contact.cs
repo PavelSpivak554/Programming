@@ -11,7 +11,14 @@ namespace Programming.Models
         private string name;
         private string surname;
         private string number;
-        public Contact() { }    
+        public Contact() { }  
+        public Contact(string name, string surname, string number)
+        {
+            Name = name;
+            Surname = surname;
+            Number = number;
+        }
+
         public string Name
         {
             get

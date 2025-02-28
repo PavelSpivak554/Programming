@@ -13,6 +13,14 @@ namespace Programming.Models
         private string title;
         private string album;
         public Song() { }
+        public Song(string artist, int duration, string title, string album)
+        {
+            Artist = artist;
+            Duration = duration;
+            Title = title;
+            Album = album;
+        }
+
         public string Artist
         {
             get

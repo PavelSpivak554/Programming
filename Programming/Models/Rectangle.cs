@@ -12,6 +12,14 @@ namespace Programming.Models
         private double width;
         private string color;
 
+        public Rectangle() { }
+        public Rectangle(double length, double width, string color)
+        {
+            Length = length;
+            Width = width;
+            Color = color;
+        }
+
         public double Length
         {
             get

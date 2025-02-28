@@ -12,6 +12,14 @@ namespace Programming.Models
         private int minute;
         private int second;
 
+        public Time() { }
+        public Time(int hour, int minute, int second)
+        {
+            Hour = hour;
+            Minute = minute;
+            Second = second;
+        }
+
         public int Hour
         {
             get

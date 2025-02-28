@@ -12,6 +12,14 @@ namespace Programming.Models
         private string lectorName;
         private int mark;
 
+        public Discipline() { }
+        public Discipline(string studentName, string lectorName, int mark)
+        {
+            StudentName = studentName;
+            LectorName = lectorName;
+            Mark = mark;
+        }
+
         public string StudentName
         {
             get

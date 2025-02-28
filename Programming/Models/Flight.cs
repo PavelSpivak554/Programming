@@ -12,6 +12,14 @@ namespace Programming.Models
         private string destination;
         private int duration;
 
+        public Flight() { }
+        public Flight(string departure, string destination, int duration)
+        {
+            Departure = departure;
+            Destination = destination;
+            Duration = duration;
+        }
+
         public string Departure
         {
             get

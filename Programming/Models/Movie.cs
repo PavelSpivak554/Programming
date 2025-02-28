@@ -14,6 +14,16 @@ namespace Programming.Models
         private string genre;
         private double rating;
 
+        public Movie() { }
+        public Movie(string nameOfMovie, int duration, int year, string genre, double rating)
+        {
+            NameOfMovie = nameOfMovie;
+            Duration = duration;
+            Year = year;
+            Genre = genre;
+            Rating = rating;
+        }
+
         public string NameOfMovie
         {
             get
