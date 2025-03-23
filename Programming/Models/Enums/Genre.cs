@@ -13,6 +13,6 @@ namespace Programming.Models.Enums
         Thriller,
         Action,
         Horror,
-        Blolbuster
+        Blokbuster
     }
 }

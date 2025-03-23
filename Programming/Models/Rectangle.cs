@@ -12,7 +12,12 @@ namespace Programming.Models
         private double width;
         private string color;
 
-        public Rectangle() { }
+        public Rectangle()
+        {
+            length = 0;
+            width = 0;
+            color = "Unknown";
+        }
         public Rectangle(double length, double width, string color)
         {
             Length = length;
@@ -43,9 +48,9 @@ namespace Programming.Models
             }
             set
             {
-                if (value < 0 || value>length)
+                if (value < 0)
                 {
-                    throw new ArgumentException("Недопустимое значение");
+                    throw new ArgumentOutOfRangeException("Недопустимое значение");
                 }
                 width = value;
             }
@@ -58,7 +63,7 @@ namespace Programming.Models
             }
             set
             {
-                if(!string.IsNullOrEmpty(value))
+                if(string.IsNullOrWhiteSpace(value))
                 {
                     throw new ArgumentException("Значение не может быть пустым или состоять из пробелов.");
                 }
