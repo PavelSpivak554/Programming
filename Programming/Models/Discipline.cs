@@ -59,11 +59,10 @@ namespace Programming.Models
             }
             set
             {
-                if(value<1 || value>5)
+                if(Validator.AssertValueInRange(value, 1,5,nameof(Mark)))
                 {
-                    throw new ArgumentException("Недопустимое значение");
+                    mark = value;
                 }
-                mark = value;
             }
         }
     }

@@ -74,11 +74,10 @@ namespace Programming.Models
             }
             set
             {
-                if (value < 0)
+                if (Validator.AssertOnPositiveValue(value, nameof(Duration)))
                 {
-                    throw new ArgumentException("Недопустимое значение");
+                    duration = value;
                 }
-                duration = value;
             }
         }
     }

@@ -58,11 +58,12 @@ namespace Programming.Models
             }
             set
             {
-                if(value < 0)
-                {
-                    throw new ArgumentException("Недопустимое значение");
-                }
-                duration = value;
+
+               if( Validator.AssertOnPositiveValue(value,nameof(Duration)))
+               {
+                   duration = value;
+               }
+
             }
         }
     }

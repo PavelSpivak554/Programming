@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,20 +12,29 @@ namespace Programming.Models
         private double length;
         private double width;
         private string color;
+        private static int _allRectanglesCount;
+        private int id;
+        public Point2D Center { get; private set; }
+        public int Id => id; // Свойство только для чтения
 
         public Rectangle()
         {
             length = 0;
             width = 0;
             color = "Unknown";
+            Center = new Point2D(0, 0);
         }
-        public Rectangle(double length, double width, string color)
+        // Конструктор (инициализация объекта)
+
+        public Rectangle(double length, double width, string color, Point2D center)
         {
             Length = length;
             Width = width;
             Color = color;
+            Center = center;
+            _allRectanglesCount++;
+            id = _allRectanglesCount;
         }
-
         public double Length
         {
             get
@@ -33,11 +43,10 @@ namespace Programming.Models
             }
             set
             {
-                if (value < 0)
+                if (Validator.AssertOnPositiveValue(value, nameof(Length)))
                 {
-                   throw new ArgumentException("Недопустимое значение");
+                    length = value;
                 }
-                length = value;
             }
         }
         public double Width
@@ -48,11 +57,10 @@ namespace Programming.Models
             }
             set
             {
-                if (value < 0)
+                if (Validator.AssertOnPositiveValue(value, nameof(Width)))
                 {
-                    throw new ArgumentOutOfRangeException("Недопустимое значение");
+                    width = value;
                 }
-                width = value;
             }
         }
         public string Color
@@ -69,6 +77,10 @@ namespace Programming.Models
                 }
                 color = value;  
             }
+        }
+        public int AllRectanglesCount()
+        {
+            return _allRectanglesCount;
         }
     }
 }

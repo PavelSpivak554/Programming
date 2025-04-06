@@ -32,7 +32,7 @@ namespace Programming.Models
             }
             set
             {
-                if (!string.IsNullOrEmpty(value))
+                if (string.IsNullOrEmpty(value))
                 {
                     throw new ArgumentException("Значение не может быть пустым или состоять из пробелов.");
                 }
@@ -47,11 +47,10 @@ namespace Programming.Models
             }
             set
             {
-                if (value < 0)
+                if (Validator.AssertOnPositiveValue(value, nameof(Duration)))
                 {
-                    throw new ArgumentException("Недопустимое значение");
+                    duration = value;
                 }
-                duration = value;
             }
         }
         public int Year
@@ -62,11 +61,10 @@ namespace Programming.Models
             }
             set
             {
-                if (value < 0)
+                if (Validator.AssertOnPositiveValue(value,nameof(Year)))
                 {
-                    throw new ArgumentException("Недопустимое значение");
+                    year = value;
                 }
-                year = value;
             }
         }
         public string Genre
@@ -77,7 +75,7 @@ namespace Programming.Models
             }
             set
             {
-                if (!string.IsNullOrEmpty(value))
+                if (string.IsNullOrEmpty(value))
                 {
                     throw new ArgumentException("Значение не может быть пустым или состоять из пробелов.");
                 }
@@ -92,11 +90,10 @@ namespace Programming.Models
             }
             set
             {
-                if (value < 0 || value > 10)
+                if (Validator.AssertValueInRange(value, 0, 10, nameof(Rating)))
                 {
-                    throw new ArgumentException("Недопустимое значение");
+                    rating = value;
                 }
-                rating = value;
             }
         }
 

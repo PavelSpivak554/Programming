@@ -33,6 +33,12 @@ namespace Programming.Views.Forms
         private Models.Rectangle[] _rectangles;
         private Models.Rectangle _currentRectangle;
         bool _isUserInput = false;
+
+        private Models.Movie[] _movies;
+        private Models.Movie _currentMovie;
+
+
+
         private void TextBox_Enter(object sender, EventArgs e)
         {
             _isUserInput = true; // Пользователь начал ввод
@@ -117,13 +123,15 @@ namespace Programming.Views.Forms
                 int length = random.Next(1, 100); // Случайная длина
                 int width = random.Next(1, 100);  // Случайная ширина
                 string color = "Color" + i;       // Пример цвета
-                _rectangles[i] = new Models.Rectangle(length, width, color);
+                var center = new Point2D(length / 2, width/2);
+                var id = 0;
+                _rectangles[i] = new Models.Rectangle(length, width, color,center);
             }
             _currentRectangle = _rectangles[0];
             WidthTextBox.BackColor = System.Drawing.Color.White;
             LengthTextBox.BackColor = System.Drawing.Color.White;
             ColorTextBox.BackColor = System.Drawing.Color.White;
-
+                
         }
 
         private void RectangleListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -135,10 +143,17 @@ namespace Programming.Views.Forms
             var Width = _rectangles[i].Width;
             var Length = _rectangles[i].Length;
             var Color = _rectangles[i].Color;
+            var CenterX = _rectangles[i].Length / 2;
+            var CenterY = _rectangles[i].Width / 2;
+            var Id = _rectangles[i].Id;
+
             // Обновляем текстовые поля значениями ширины, высоты и цвета
             WidthTextBox.Text = Width.ToString();
             LengthTextBox.Text = Length.ToString();
             ColorTextBox.Text = Color.ToString();
+            CenterXtextBox.Text = CenterX.ToString();
+            CenterYtextBox.Text = CenterY.ToString();
+            IDTextBox.Text = Id.ToString();
         }
 
         private void LengthTextBox_TextChanged(object sender, EventArgs e)
@@ -172,17 +187,17 @@ namespace Programming.Views.Forms
             {
                 if (Int32.TryParse(WidthTextBox.Text, out Width))
                 {
-                var rect = _rectangles[RectangleListBox.SelectedIndex];
-                rect.Width = Width;
+                    var rect = _rectangles[RectangleListBox.SelectedIndex];
+                    rect.Width = Width;
                 }
                 else
-                {   
+                {
                     MessageBox.Show("Недопустимое значение:");
                     WidthTextBox.BackColor = System.Drawing.Color.Red;
                 }
             }
-            
-            catch(ArgumentOutOfRangeException) 
+
+            catch (ArgumentOutOfRangeException)
             {
                 MessageBox.Show("Недопустимое значение:");
                 WidthTextBox.BackColor = System.Drawing.Color.Red;
@@ -200,7 +215,7 @@ namespace Programming.Views.Forms
         {
             double maxWidth = 0;
             int maxIndex = 0;
-            for (int i =0; i<rectangle.Length; i++)
+            for (int i = 0; i < rectangle.Length; i++)
             {
                 if (rectangle[i].Width > maxWidth)
                 {
@@ -215,6 +230,115 @@ namespace Programming.Views.Forms
         {
             int index = FindRectangleWithMaxWidth(_rectangles);
             RectangleListBox.SelectedIndex = index;
+        }
+
+        private void CreateMovieButton_Click(object sender, EventArgs e)
+        {
+            _movies = new Models.Movie[5];
+            Random random = new Random();
+            for (int i = 0; i < _movies.Length; i++)
+            {
+                int year = random.Next(1950, 2025); // Случайная длина
+                int duration = random.Next(10, 200);  // Случайная ширина
+                string name = "Name" + i;       // Пример цвета
+                string genre = "Неизвестен";
+                double rating = random.Next(1, 10);
+                _movies[i] = new Models.Movie(name, duration, year, genre, rating);
+            }
+            _currentMovie = _movies[0];
+            MovieNameTextBox.BackColor = System.Drawing.Color.White;
+            MovieDurationTextBox.BackColor = System.Drawing.Color.White;
+            MovieYearTextBox.BackColor = System.Drawing.Color.White;
+            MovieGenreTextBox.BackColor = System.Drawing.Color.White;
+            MovieRatingTextBox.BackColor = System.Drawing.Color.White;
+
+        }
+
+        private void MovieTextChange(int i)
+        {
+            var Year = _movies[i].Year;
+            var duration = _movies[i].Duration;
+            var Name = _movies[i].NameOfMovie;
+            var genre = _movies[i].Genre;
+            var Rating = _movies[i].Rating;
+
+
+            // Обновляем текстовые поля значениями ширины, высоты и цвета
+
+            MovieNameTextBox.Text = Name.ToString();
+            MovieDurationTextBox.Text = Name.ToString();
+            MovieYearTextBox.Text = Year.ToString();
+            MovieGenreTextBox.Text = "Неизвестен";
+            MovieRatingTextBox.Text = Rating.ToString();
+        }
+
+        private void MovieListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            MovieTextChange(MovieListBox.SelectedIndex);
+        }
+
+        int FindMovieWithMaxRating(Models.Movie[] movie)
+        {
+            int maxRating = 0;
+            int maxIndex = 0;
+            for (int i = 0; i < movie.Length; i++)
+            {
+                if (movie[i].Rating > maxRating)
+                {
+                    maxRating = (int)movie[i].Rating;
+                    maxIndex = i;
+                }
+            }
+            return maxIndex;
+        }
+
+        private void FindMovieButton_Click(object sender, EventArgs e)
+        {
+            int index = FindMovieWithMaxRating(_movies);
+            MovieListBox.SelectedIndex = index;
+        }
+
+        private void MovieYearTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void IntersectionButton_Click(object sender, EventArgs e)
+        {
+            // Проверка первого числа
+            if (!int.TryParse(InterTextBox1.Text, out int firstRect))
+            {
+                MessageBox.Show("Первый прямоугольник: введите корректное число", "Ошибка",
+                              MessageBoxButtons.OK, MessageBoxIcon.Error);
+                InterTextBox1.Focus();
+                return;
+            }
+
+            // Проверка второго числа
+            if (!int.TryParse(InterTextBox2.Text, out int secondRect))
+            {
+                MessageBox.Show("Второй прямоугольник: введите корректное число", "Ошибка",
+                              MessageBoxButtons.OK, MessageBoxIcon.Error);
+                InterTextBox2.Focus();
+                return;
+            }
+
+            // Проверка диапазона (1-5)
+            if (firstRect < 1 || firstRect > 5 || secondRect < 1 || secondRect > 5)
+            {
+                MessageBox.Show("Номера прямоугольников должны быть от 1 до 5", "Ошибка",
+                               MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+
+            // Проверка пересечения
+            bool isColliding = CollisionManager.IsCollision(_rectangles[firstRect - 1], _rectangles[secondRect - 1]);
+
+            MessageBox.Show(isColliding ? "Прямоугольники пересекаются" : "Прямоугольники не пересекаются",
+                           "Результат проверки",
+                           MessageBoxButtons.OK,
+                           isColliding ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
         }
     }
 }

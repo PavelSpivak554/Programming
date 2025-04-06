@@ -28,11 +28,10 @@ namespace Programming.Models
             }
             set
             {
-                if (value < 0 || value>23)
+                if (Validator.AssertValueInRange(value, 0, 23, nameof(Hour)))
                 {
-                    throw new ArgumentException("Недопустимое значение");
+                    hour = value;
                 }
-                hour = value;
             }
         }
         public int Second
@@ -43,11 +42,10 @@ namespace Programming.Models
             }
             set
             {
-                if (value < 0 || value > 59)
+                if(Validator.AssertValueInRange(value,0, 59,nameof(Second)))
                 {
-                    throw new ArgumentException("Недопустимое значение");
+                    second = value;
                 }
-                second = value;
             }
         }
         public int Minute
@@ -58,11 +56,10 @@ namespace Programming.Models
             }
             set
             {
-                if (value < 0 || value > 59)
+                if (Validator.AssertValueInRange(value, 0, 59, nameof(Minute)))
                 {
-                    throw new ArgumentException("Недопустимое значение");
+                    minute = value;
                 }
-                minute = value;
             }
         }
     }

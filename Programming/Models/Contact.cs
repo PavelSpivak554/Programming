@@ -31,10 +31,11 @@ namespace Programming.Models
                 {
                     throw new ArgumentException($"Значение не может быть пустым или состоять из пробелов.");
                 }
+                Validator.AssertStringContainsOnlyLetters(value, nameof(Name));
                 name = value;
             }
-
         }
+
         public string Surname
         {
             get
@@ -47,6 +48,9 @@ namespace Programming.Models
                 {
                     throw new ArgumentException($"Значение не может быть пустым или состоять из пробелов.");
                 }
+                Validator.AssertStringContainsOnlyLetters(value, nameof(Surname));
+
+
                 name = value;
             }
         
