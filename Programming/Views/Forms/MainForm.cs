@@ -339,6 +339,13 @@ namespace Programming.Views.Forms
                            "Результат проверки",
                            MessageBoxButtons.OK,
                            isColliding ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
+
+
+
+
+
         }
+
+
     }
 }

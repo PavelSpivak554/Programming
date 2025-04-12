@@ -17,6 +17,8 @@ namespace Programming.Models
             throw new ArgumentException($"Некоректное значение в свойстве {NameOfProperty}");
         }
 
+
+
         public static bool AssertOnPositiveValue(int value, string NameOfProperty)
         {
             if (value > 0)
@@ -33,6 +35,8 @@ namespace Programming.Models
             }
             throw new ArgumentException($"Отрицательное значение в свойстве {NameOfProperty}");
         }
+
+
 
         public static bool AssertValueInRange(int value, int min, int max, string NameOfProperty)
         {
@@ -51,6 +55,9 @@ namespace Programming.Models
             return true;
         }
 
+
+
+
         public static bool AssertValueMore(int value, int minValue, string NameOfProperty)
         {
             if (value < minValue)
@@ -67,6 +74,9 @@ namespace Programming.Models
             }
             return true;
         }
+
+
+
         public static bool AssertValueLow(double value, double minValue, string NameOfProperty)
         {
             if (value > minValue)

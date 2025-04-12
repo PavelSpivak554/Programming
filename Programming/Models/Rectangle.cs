@@ -24,7 +24,7 @@ namespace Programming.Models
             color = "Unknown";
             Center = new Point2D(0, 0);
         }
-        // Конструктор (инициализация объекта)
+        // Конструктор
 
         public Rectangle(double length, double width, string color, Point2D center)
         {

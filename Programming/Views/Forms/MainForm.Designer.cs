@@ -48,6 +48,15 @@
             this.EnumsListBox = new System.Windows.Forms.ListBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.RectanglesGroupBox = new System.Windows.Forms.GroupBox();
+            this.InterTextBox2 = new System.Windows.Forms.TextBox();
+            this.InterTextBox1 = new System.Windows.Forms.TextBox();
+            this.IntersectionButton = new System.Windows.Forms.Button();
+            this.IDTextBox = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.CenterYtextBox = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.CenterXtextBox = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.CreateRectangleButton = new System.Windows.Forms.Button();
             this.FindButton = new System.Windows.Forms.Button();
             this.ColorTextBox = new System.Windows.Forms.TextBox();
@@ -72,15 +81,20 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.MovieListBox = new System.Windows.Forms.ListBox();
-            this.CenterXtextBox = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.CenterYtextBox = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.IDTextBox = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.IntersectionButton = new System.Windows.Forms.Button();
-            this.InterTextBox1 = new System.Windows.Forms.TextBox();
-            this.InterTextBox2 = new System.Windows.Forms.TextBox();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.RectanglesPanel = new System.Windows.Forms.Panel();
+            this.RectWidthTextBox = new System.Windows.Forms.TextBox();
+            this.RectLengthTextBox = new System.Windows.Forms.TextBox();
+            this.RectYTextBox = new System.Windows.Forms.TextBox();
+            this.RectXTextBox = new System.Windows.Forms.TextBox();
+            this.RectIDTextBox = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.RectListBox = new System.Windows.Forms.ListBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -90,6 +104,7 @@
             this.RectanglesGroupBox.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -97,6 +112,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -322,6 +338,81 @@
             this.RectanglesGroupBox.TabIndex = 0;
             this.RectanglesGroupBox.TabStop = false;
             this.RectanglesGroupBox.Text = "Rectangles";
+            // 
+            // InterTextBox2
+            // 
+            this.InterTextBox2.Location = new System.Drawing.Point(301, 182);
+            this.InterTextBox2.Name = "InterTextBox2";
+            this.InterTextBox2.Size = new System.Drawing.Size(24, 22);
+            this.InterTextBox2.TabIndex = 17;
+            // 
+            // InterTextBox1
+            // 
+            this.InterTextBox1.Location = new System.Drawing.Point(250, 182);
+            this.InterTextBox1.Name = "InterTextBox1";
+            this.InterTextBox1.Size = new System.Drawing.Size(24, 22);
+            this.InterTextBox1.TabIndex = 16;
+            // 
+            // IntersectionButton
+            // 
+            this.IntersectionButton.Location = new System.Drawing.Point(250, 210);
+            this.IntersectionButton.Name = "IntersectionButton";
+            this.IntersectionButton.Size = new System.Drawing.Size(102, 23);
+            this.IntersectionButton.TabIndex = 15;
+            this.IntersectionButton.Text = "Intersection";
+            this.IntersectionButton.UseVisualStyleBackColor = true;
+            this.IntersectionButton.Click += new System.EventHandler(this.IntersectionButton_Click);
+            // 
+            // IDTextBox
+            // 
+            this.IDTextBox.Location = new System.Drawing.Point(277, 135);
+            this.IDTextBox.Name = "IDTextBox";
+            this.IDTextBox.ReadOnly = true;
+            this.IDTextBox.Size = new System.Drawing.Size(100, 22);
+            this.IDTextBox.TabIndex = 14;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(274, 115);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(23, 16);
+            this.label8.TabIndex = 13;
+            this.label8.Text = "ID:";
+            // 
+            // CenterYtextBox
+            // 
+            this.CenterYtextBox.Location = new System.Drawing.Point(277, 90);
+            this.CenterYtextBox.Name = "CenterYtextBox";
+            this.CenterYtextBox.ReadOnly = true;
+            this.CenterYtextBox.Size = new System.Drawing.Size(100, 22);
+            this.CenterYtextBox.TabIndex = 12;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(274, 70);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(61, 16);
+            this.label7.TabIndex = 11;
+            this.label7.Text = "Center Y:";
+            // 
+            // CenterXtextBox
+            // 
+            this.CenterXtextBox.Location = new System.Drawing.Point(277, 41);
+            this.CenterXtextBox.Name = "CenterXtextBox";
+            this.CenterXtextBox.ReadOnly = true;
+            this.CenterXtextBox.Size = new System.Drawing.Size(100, 22);
+            this.CenterXtextBox.TabIndex = 10;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(274, 21);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(60, 16);
+            this.label6.TabIndex = 9;
+            this.label6.Text = "Center X:";
             // 
             // CreateRectangleButton
             // 
@@ -560,80 +651,134 @@
             this.MovieListBox.TabIndex = 0;
             this.MovieListBox.SelectedIndexChanged += new System.EventHandler(this.MovieListBox_SelectedIndexChanged);
             // 
-            // CenterXtextBox
+            // tabPage4
             // 
-            this.CenterXtextBox.Location = new System.Drawing.Point(277, 41);
-            this.CenterXtextBox.Name = "CenterXtextBox";
-            this.CenterXtextBox.ReadOnly = true;
-            this.CenterXtextBox.Size = new System.Drawing.Size(100, 22);
-            this.CenterXtextBox.TabIndex = 10;
+            this.tabPage4.Controls.Add(this.RectanglesPanel);
+            this.tabPage4.Controls.Add(this.RectWidthTextBox);
+            this.tabPage4.Controls.Add(this.RectLengthTextBox);
+            this.tabPage4.Controls.Add(this.RectYTextBox);
+            this.tabPage4.Controls.Add(this.RectXTextBox);
+            this.tabPage4.Controls.Add(this.RectIDTextBox);
+            this.tabPage4.Controls.Add(this.label14);
+            this.tabPage4.Controls.Add(this.label13);
+            this.tabPage4.Controls.Add(this.label12);
+            this.tabPage4.Controls.Add(this.label11);
+            this.tabPage4.Controls.Add(this.label10);
+            this.tabPage4.Controls.Add(this.RectListBox);
+            this.tabPage4.Controls.Add(this.label9);
+            this.tabPage4.Location = new System.Drawing.Point(4, 25);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(792, 421);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Rectangles";
+            this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // label6
+            // RectanglesPanel
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(274, 21);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(60, 16);
-            this.label6.TabIndex = 9;
-            this.label6.Text = "Center X:";
+            this.RectanglesPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.RectanglesPanel.Location = new System.Drawing.Point(283, 6);
+            this.RectanglesPanel.Name = "RectanglesPanel";
+            this.RectanglesPanel.Size = new System.Drawing.Size(503, 407);
+            this.RectanglesPanel.TabIndex = 22;
             // 
-            // CenterYtextBox
+            // RectWidthTextBox
             // 
-            this.CenterYtextBox.Location = new System.Drawing.Point(277, 90);
-            this.CenterYtextBox.Name = "CenterYtextBox";
-            this.CenterYtextBox.ReadOnly = true;
-            this.CenterYtextBox.Size = new System.Drawing.Size(100, 22);
-            this.CenterYtextBox.TabIndex = 12;
+            this.RectWidthTextBox.Location = new System.Drawing.Point(64, 255);
+            this.RectWidthTextBox.Name = "RectWidthTextBox";
+            this.RectWidthTextBox.Size = new System.Drawing.Size(100, 22);
+            this.RectWidthTextBox.TabIndex = 21;
             // 
-            // label7
+            // RectLengthTextBox
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(274, 70);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(61, 16);
-            this.label7.TabIndex = 11;
-            this.label7.Text = "Center Y:";
+            this.RectLengthTextBox.Location = new System.Drawing.Point(64, 230);
+            this.RectLengthTextBox.Name = "RectLengthTextBox";
+            this.RectLengthTextBox.Size = new System.Drawing.Size(100, 22);
+            this.RectLengthTextBox.TabIndex = 20;
             // 
-            // IDTextBox
+            // RectYTextBox
             // 
-            this.IDTextBox.Location = new System.Drawing.Point(277, 135);
-            this.IDTextBox.Name = "IDTextBox";
-            this.IDTextBox.ReadOnly = true;
-            this.IDTextBox.Size = new System.Drawing.Size(100, 22);
-            this.IDTextBox.TabIndex = 14;
+            this.RectYTextBox.Location = new System.Drawing.Point(64, 205);
+            this.RectYTextBox.Name = "RectYTextBox";
+            this.RectYTextBox.Size = new System.Drawing.Size(100, 22);
+            this.RectYTextBox.TabIndex = 19;
             // 
-            // label8
+            // RectXTextBox
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(274, 115);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(23, 16);
-            this.label8.TabIndex = 13;
-            this.label8.Text = "ID:";
+            this.RectXTextBox.Location = new System.Drawing.Point(64, 181);
+            this.RectXTextBox.Name = "RectXTextBox";
+            this.RectXTextBox.Size = new System.Drawing.Size(100, 22);
+            this.RectXTextBox.TabIndex = 18;
             // 
-            // IntersectionButton
+            // RectIDTextBox
             // 
-            this.IntersectionButton.Location = new System.Drawing.Point(250, 210);
-            this.IntersectionButton.Name = "IntersectionButton";
-            this.IntersectionButton.Size = new System.Drawing.Size(75, 23);
-            this.IntersectionButton.TabIndex = 15;
-            this.IntersectionButton.Text = "Find";
-            this.IntersectionButton.UseVisualStyleBackColor = true;
-            this.IntersectionButton.Click += new System.EventHandler(this.IntersectionButton_Click);
+            this.RectIDTextBox.Location = new System.Drawing.Point(64, 156);
+            this.RectIDTextBox.Name = "RectIDTextBox";
+            this.RectIDTextBox.Size = new System.Drawing.Size(100, 22);
+            this.RectIDTextBox.TabIndex = 17;
             // 
-            // InterTextBox1
+            // label14
             // 
-            this.InterTextBox1.Location = new System.Drawing.Point(250, 182);
-            this.InterTextBox1.Name = "InterTextBox1";
-            this.InterTextBox1.Size = new System.Drawing.Size(24, 22);
-            this.InterTextBox1.TabIndex = 16;
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(14, 258);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(44, 16);
+            this.label14.TabIndex = 16;
+            this.label14.Text = "Width:";
             // 
-            // InterTextBox2
+            // label13
             // 
-            this.InterTextBox2.Location = new System.Drawing.Point(301, 182);
-            this.InterTextBox2.Name = "InterTextBox2";
-            this.InterTextBox2.Size = new System.Drawing.Size(24, 22);
-            this.InterTextBox2.TabIndex = 17;
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(8, 233);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(50, 16);
+            this.label13.TabIndex = 15;
+            this.label13.Text = "Length:";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(35, 160);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(23, 16);
+            this.label12.TabIndex = 14;
+            this.label12.Text = "ID:";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(39, 208);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(19, 16);
+            this.label11.TabIndex = 11;
+            this.label11.Text = "Y:";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(40, 184);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(18, 16);
+            this.label10.TabIndex = 10;
+            this.label10.Text = "X:";
+            // 
+            // RectListBox
+            // 
+            this.RectListBox.FormattingEnabled = true;
+            this.RectListBox.ItemHeight = 16;
+            this.RectListBox.Location = new System.Drawing.Point(6, 22);
+            this.RectListBox.Name = "RectListBox";
+            this.RectListBox.Size = new System.Drawing.Size(271, 116);
+            this.RectListBox.TabIndex = 3;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(8, 3);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(76, 16);
+            this.label9.TabIndex = 2;
+            this.label9.Text = "Rectangles";
             // 
             // MainForm
             // 
@@ -657,6 +802,8 @@
             this.tabPage3.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -716,5 +863,19 @@
         private System.Windows.Forms.Button IntersectionButton;
         private System.Windows.Forms.TextBox InterTextBox2;
         private System.Windows.Forms.TextBox InterTextBox1;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.ListBox RectListBox;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox RectLengthTextBox;
+        private System.Windows.Forms.TextBox RectYTextBox;
+        private System.Windows.Forms.TextBox RectXTextBox;
+        private System.Windows.Forms.TextBox RectIDTextBox;
+        private System.Windows.Forms.Panel RectanglesPanel;
+        private System.Windows.Forms.TextBox RectWidthTextBox;
     }
 }
