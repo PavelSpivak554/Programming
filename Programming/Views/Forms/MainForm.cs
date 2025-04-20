@@ -29,10 +29,17 @@ namespace Programming.Views.Forms
             WidthTextBox.Leave += TextBox_Leave;
             LengthTextBox.Leave += TextBox_Leave;
             ColorTextBox.Leave += TextBox_Leave;
+
+
         }
-        private Models.Rectangle[] _rectangles;
+        private List<Models.Rectangle> _rectangles = new List<Models.Rectangle>();
         private Models.Rectangle _currentRectangle;
+
+        private Models.Rectangle[] rectangles;
+        private Models.Rectangle currentRectangle;
         bool _isUserInput = false;
+
+
 
         private Models.Movie[] _movies;
         private Models.Movie _currentMovie;
@@ -116,18 +123,18 @@ namespace Programming.Views.Forms
 
         private void CreateRectangleButton_Click(object sender, EventArgs e)
         {
-            _rectangles = new Models.Rectangle[5];
+            rectangles = new Models.Rectangle[5];
             Random random = new Random();
-            for (int i = 0; i < _rectangles.Length; i++)
+            for (int i = 0; i < rectangles.Length; i++)
             {
                 int length = random.Next(1, 100); // Случайная длина
                 int width = random.Next(1, 100);  // Случайная ширина
                 string color = "Color" + i;       // Пример цвета
                 var center = new Point2D(length / 2, width/2);
                 var id = 0;
-                _rectangles[i] = new Models.Rectangle(length, width, color,center);
+                rectangles[i] = new Models.Rectangle(length, width, color,center);
             }
-            _currentRectangle = _rectangles[0];
+            _currentRectangle = rectangles[0];
             WidthTextBox.BackColor = System.Drawing.Color.White;
             LengthTextBox.BackColor = System.Drawing.Color.White;
             ColorTextBox.BackColor = System.Drawing.Color.White;
@@ -140,12 +147,12 @@ namespace Programming.Views.Forms
         }
         private void RectangleTextChange(int i)
         {
-            var Width = _rectangles[i].Width;
-            var Length = _rectangles[i].Length;
-            var Color = _rectangles[i].Color;
-            var CenterX = _rectangles[i].Length / 2;
-            var CenterY = _rectangles[i].Width / 2;
-            var Id = _rectangles[i].Id;
+            var Width = rectangles[i].Width;
+            var Length = rectangles[i].Length;
+            var Color = rectangles[i].Color;
+            var CenterX = rectangles[i].Length / 2;
+            var CenterY = rectangles[i].Width / 2;
+            var Id = rectangles[i].Id;
 
             // Обновляем текстовые поля значениями ширины, высоты и цвета
             WidthTextBox.Text = Width.ToString();
@@ -163,7 +170,7 @@ namespace Programming.Views.Forms
             {
                 if (Int32.TryParse(LengthTextBox.Text, out Length))
                 {
-                    var rect = _rectangles[RectangleListBox.SelectedIndex];
+                    var rect = rectangles[RectangleListBox.SelectedIndex];
                     rect.Length = Length;
                 }
                 else
@@ -187,7 +194,7 @@ namespace Programming.Views.Forms
             {
                 if (Int32.TryParse(WidthTextBox.Text, out Width))
                 {
-                    var rect = _rectangles[RectangleListBox.SelectedIndex];
+                    var rect = rectangles[RectangleListBox.SelectedIndex];
                     rect.Width = Width;
                 }
                 else
@@ -207,7 +214,7 @@ namespace Programming.Views.Forms
         private void ColorTextBox_TextChanged(object sender, EventArgs e)
         {
             var Color = ColorTextBox.Text;
-            var rect = _rectangles[RectangleListBox.SelectedIndex];
+            var rect = rectangles[RectangleListBox.SelectedIndex];
             rect.Color = Color;
         }
 
@@ -228,7 +235,7 @@ namespace Programming.Views.Forms
 
         private void FindButton_Click(object sender, EventArgs e)
         {
-            int index = FindRectangleWithMaxWidth(_rectangles);
+            int index = FindRectangleWithMaxWidth(rectangles);
             RectangleListBox.SelectedIndex = index;
         }
 
@@ -333,7 +340,7 @@ namespace Programming.Views.Forms
 
 
             // Проверка пересечения
-            bool isColliding = CollisionManager.IsCollision(_rectangles[firstRect - 1], _rectangles[secondRect - 1]);
+            bool isColliding = CollisionManager.IsCollision(rectangles[firstRect - 1], rectangles[secondRect - 1]);
 
             MessageBox.Show(isColliding ? "Прямоугольники пересекаются" : "Прямоугольники не пересекаются",
                            "Результат проверки",
@@ -345,6 +352,87 @@ namespace Programming.Views.Forms
 
 
         }
+        private void AddRectButton_Click(object sender, EventArgs e)
+        {
+            Random random = new Random();
+            Models.Rectangle _currentRectangle = new Models.Rectangle(
+                random.Next(1, 100),
+                random.Next(1, 100),
+                "Red",
+                new Point2D(
+                    random.Next(1, 100),
+                    random.Next(1,100)));
+            _rectangles.Add(_currentRectangle);
+            RectListBox.Items.Add($"{_currentRectangle.Id}:" +
+                $"( X={_currentRectangle.Center.X}," +
+                $" Y={_currentRectangle.Center.Y}" +
+                $" W={_currentRectangle.Width}" +
+                $" L={_currentRectangle.Length})");
+
+
+            RectIDTextBox.Text = _currentRectangle.Id.ToString();
+            RectXTextBox.Text = _currentRectangle.Center.X.ToString();
+            RectYTextBox.Text = _currentRectangle.Center.Y.ToString();
+            RectLengthTextBox.Text = _currentRectangle.Length.ToString();
+            RectWidthTextBox.Text = _currentRectangle.Width.ToString();
+
+        }
+
+        private void DelRectButton_Click(object sender, EventArgs e)
+        {
+            int index = RectListBox.SelectedIndex;
+            if (index == -1)
+            {
+                MessageBox.Show("Не выбран прямоугольник для удаления");
+                return;
+            }
+            RectListBox.Items.RemoveAt(index);
+            _rectangles.RemoveAt(index);
+        }
+
+        private void RectListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RectanglesTextChange(RectListBox.SelectedIndex);
+        }
+
+        private void ClearTextBoxes()
+        {
+            RectWidthTextBox.Clear();
+            RectLengthTextBox.Clear();
+            RectXTextBox.Clear();
+            RectYTextBox.Clear();
+            RectIDTextBox.Clear();
+        }
+        private void RectanglesTextChange(int index)
+        {
+            if (index < 0 || index >= _rectangles.Count)
+            {
+                ClearTextBoxes();
+                _currentRectangle = null;
+                return;
+            }
+
+            _currentRectangle = _rectangles[index];
+            UpdateTextBoxes(_currentRectangle);
+        }
+
+        // Заполняет текстовые поля данными прямоугольника
+        private void UpdateTextBoxes(Models.Rectangle rectangle)
+        {
+            if (rectangle == null)
+            {
+                ClearTextBoxes();
+                return;
+            }
+
+            RectIDTextBox.Text = rectangle.Id.ToString();
+            RectXTextBox.Text = rectangle.Center.X.ToString();
+            RectYTextBox.Text = rectangle.Center.Y.ToString();
+            RectLengthTextBox.Text = rectangle.Length.ToString();
+            RectWidthTextBox.Text = rectangle.Width.ToString();
+        }
+
+
 
 
     }
