@@ -82,6 +82,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.MovieListBox = new System.Windows.Forms.ListBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.DelRectButton = new System.Windows.Forms.Button();
+            this.AddRectButton = new System.Windows.Forms.Button();
             this.RectanglesPanel = new System.Windows.Forms.Panel();
             this.RectWidthTextBox = new System.Windows.Forms.TextBox();
             this.RectLengthTextBox = new System.Windows.Forms.TextBox();
@@ -95,8 +97,7 @@
             this.label10 = new System.Windows.Forms.Label();
             this.RectListBox = new System.Windows.Forms.ListBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.AddRectButton = new System.Windows.Forms.Button();
-            this.DelRectButton = new System.Windows.Forms.Button();
+            this.SaveButton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -655,6 +656,7 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.SaveButton);
             this.tabPage4.Controls.Add(this.DelRectButton);
             this.tabPage4.Controls.Add(this.AddRectButton);
             this.tabPage4.Controls.Add(this.RectanglesPanel);
@@ -677,6 +679,26 @@
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Rectangles";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // DelRectButton
+            // 
+            this.DelRectButton.Location = new System.Drawing.Point(146, 144);
+            this.DelRectButton.Name = "DelRectButton";
+            this.DelRectButton.Size = new System.Drawing.Size(75, 23);
+            this.DelRectButton.TabIndex = 25;
+            this.DelRectButton.Text = "Delete";
+            this.DelRectButton.UseVisualStyleBackColor = true;
+            this.DelRectButton.Click += new System.EventHandler(this.DelRectButton_Click);
+            // 
+            // AddRectButton
+            // 
+            this.AddRectButton.Location = new System.Drawing.Point(15, 144);
+            this.AddRectButton.Name = "AddRectButton";
+            this.AddRectButton.Size = new System.Drawing.Size(75, 23);
+            this.AddRectButton.TabIndex = 24;
+            this.AddRectButton.Text = "Add";
+            this.AddRectButton.UseVisualStyleBackColor = true;
+            this.AddRectButton.Click += new System.EventHandler(this.AddRectButton_Click);
             // 
             // RectanglesPanel
             // 
@@ -774,7 +796,7 @@
             this.RectListBox.Location = new System.Drawing.Point(6, 22);
             this.RectListBox.Name = "RectListBox";
             this.RectListBox.Size = new System.Drawing.Size(363, 116);
-            this.RectListBox.TabIndex = 3;
+            this.RectListBox.TabIndex = 0;
             this.RectListBox.SelectedIndexChanged += new System.EventHandler(this.RectListBox_SelectedIndexChanged);
             // 
             // label9
@@ -786,25 +808,15 @@
             this.label9.TabIndex = 2;
             this.label9.Text = "Rectangles";
             // 
-            // AddRectButton
+            // SaveButton
             // 
-            this.AddRectButton.Location = new System.Drawing.Point(15, 144);
-            this.AddRectButton.Name = "AddRectButton";
-            this.AddRectButton.Size = new System.Drawing.Size(75, 23);
-            this.AddRectButton.TabIndex = 24;
-            this.AddRectButton.Text = "Add";
-            this.AddRectButton.UseVisualStyleBackColor = true;
-            this.AddRectButton.Click += new System.EventHandler(this.AddRectButton_Click);
-            // 
-            // DelRectButton
-            // 
-            this.DelRectButton.Location = new System.Drawing.Point(146, 144);
-            this.DelRectButton.Name = "DelRectButton";
-            this.DelRectButton.Size = new System.Drawing.Size(75, 23);
-            this.DelRectButton.TabIndex = 25;
-            this.DelRectButton.Text = "Delete";
-            this.DelRectButton.UseVisualStyleBackColor = true;
-            this.DelRectButton.Click += new System.EventHandler(this.DelRectButton_Click);
+            this.SaveButton.Location = new System.Drawing.Point(284, 144);
+            this.SaveButton.Name = "SaveButton";
+            this.SaveButton.Size = new System.Drawing.Size(75, 23);
+            this.SaveButton.TabIndex = 26;
+            this.SaveButton.Text = "Save";
+            this.SaveButton.UseVisualStyleBackColor = true;
+            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
             // MainForm
             // 
@@ -905,5 +917,6 @@
         private System.Windows.Forms.TextBox RectWidthTextBox;
         private System.Windows.Forms.Button DelRectButton;
         private System.Windows.Forms.Button AddRectButton;
+        private System.Windows.Forms.Button SaveButton;
     }
 }

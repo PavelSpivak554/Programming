@@ -8,7 +8,7 @@ namespace Programming.Models
 {
     internal static class CollisionManager
     {
-        public static bool IsCollision(Rectangle rectangle1,Rectangle rectangle2)
+        public static bool IsCollision(Rectangle rectangle1, Rectangle rectangle2)
         {
             int diffX = Math.Abs(rectangle1.Center.X - rectangle2.Center.X);
             int diffY = Math.Abs(rectangle1.Center.Y - rectangle2.Center.Y);
@@ -23,6 +23,7 @@ namespace Programming.Models
             }
             return false;
         }
+
 
 
         public static bool IsCollision(Ring ring1,Ring ring2)

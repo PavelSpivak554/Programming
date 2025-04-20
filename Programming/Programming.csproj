@@ -59,6 +59,7 @@
     <Compile Include="Models\Flight.cs" />
     <Compile Include="Models\Point2D.cs" />
     <Compile Include="Models\Rectangle.cs" />
+    <Compile Include="Models\RectangleFactory.cs" />
     <Compile Include="Models\Ring.cs" />
     <Compile Include="Models\Song.cs" />
     <Compile Include="Models\Time.cs" />
