@@ -62,7 +62,7 @@ namespace Notes.Models
         /// <value>
         /// Время создания заметки. Доступно только для чтения.
         /// </value>
-        public DateTime CreationTime { get; }
+        public DateTime CreationTime { get; set; }
 
         /// <summary>
         /// Получает время последнего редактирования заметки.
@@ -90,13 +90,13 @@ namespace Notes.Models
         /// <exception cref="ArgumentException">
         /// Выбрасывается, если заголовок не соответствует требованиям.
         /// </exception>
-        public Note(string title, string text, KindOfNote kind, DateTime time)
+        public Note(string title, string text, KindOfNote kind, DateTime creationTime, DateTime lastEditTime)
         {
-            CreationTime = DateTime.Now;
-            _lastEditTime = CreationTime;
             Title = title;
             Text = text;
             Kind = kind;
+            CreationTime = creationTime;
+            _lastEditTime = lastEditTime; // Устанавливаем напрямую в поле
         }
 
         /// <summary>
