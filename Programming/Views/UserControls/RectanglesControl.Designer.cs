@@ -234,6 +234,7 @@
             this.Controls.Add(this.RectangleListBox);
             this.Name = "RectanglesControl";
             this.Size = new System.Drawing.Size(378, 221);
+            this.Load += new System.EventHandler(this.RectanglesControl_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

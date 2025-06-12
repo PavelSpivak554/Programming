@@ -235,5 +235,10 @@ namespace Programming.Views.UserControls
                            MessageBoxButtons.OK,
                            isColliding ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
         }
+
+        private void RectanglesControl_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

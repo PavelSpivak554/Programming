@@ -32,7 +32,9 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.enumerationsControl1 = new Programming.Views.UserControls.EnumerationsControl();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.seasonControl2 = new Programming.Views.UserControls.SeasonControl();
             this.ParsingBox = new System.Windows.Forms.GroupBox();
+            this.weekdayParsingControl2 = new Programming.Views.UserControls.WeekdayParsingControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.moviesControl1 = new Programming.Views.UserControls.MoviesControl();
@@ -42,8 +44,6 @@
             this.rectanglesCollisionControl1 = new Programming.Views.UserControls.RectanglesCollisionControl();
             this.weekdayParsingControl1 = new Programming.Views.UserControls.WeekdayParsingControl();
             this.seasonControl1 = new Programming.Views.UserControls.SeasonControl();
-            this.weekdayParsingControl2 = new Programming.Views.UserControls.WeekdayParsingControl();
-            this.seasonControl2 = new Programming.Views.UserControls.SeasonControl();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -95,6 +95,13 @@
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
             // 
+            // seasonControl2
+            // 
+            this.seasonControl2.Location = new System.Drawing.Point(7, 22);
+            this.seasonControl2.Name = "seasonControl2";
+            this.seasonControl2.Size = new System.Drawing.Size(228, 72);
+            this.seasonControl2.TabIndex = 0;
+            // 
             // ParsingBox
             // 
             this.ParsingBox.Controls.Add(this.weekdayParsingControl2);
@@ -103,6 +110,13 @@
             this.ParsingBox.Size = new System.Drawing.Size(363, 160);
             this.ParsingBox.TabIndex = 1;
             this.ParsingBox.TabStop = false;
+            // 
+            // weekdayParsingControl2
+            // 
+            this.weekdayParsingControl2.Location = new System.Drawing.Point(7, 22);
+            this.weekdayParsingControl2.Name = "weekdayParsingControl2";
+            this.weekdayParsingControl2.Size = new System.Drawing.Size(346, 107);
+            this.weekdayParsingControl2.TabIndex = 0;
             // 
             // tabPage2
             // 
@@ -182,20 +196,6 @@
             this.seasonControl1.Name = "seasonControl1";
             this.seasonControl1.Size = new System.Drawing.Size(228, 72);
             this.seasonControl1.TabIndex = 0;
-            // 
-            // weekdayParsingControl2
-            // 
-            this.weekdayParsingControl2.Location = new System.Drawing.Point(7, 22);
-            this.weekdayParsingControl2.Name = "weekdayParsingControl2";
-            this.weekdayParsingControl2.Size = new System.Drawing.Size(346, 107);
-            this.weekdayParsingControl2.TabIndex = 0;
-            // 
-            // seasonControl2
-            // 
-            this.seasonControl2.Location = new System.Drawing.Point(7, 22);
-            this.seasonControl2.Name = "seasonControl2";
-            this.seasonControl2.Size = new System.Drawing.Size(228, 72);
-            this.seasonControl2.TabIndex = 0;
             // 
             // MainForm
             // 

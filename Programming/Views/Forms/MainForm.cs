@@ -22,5 +22,7 @@ namespace Programming.Views.Forms
         {
             InitializeComponent();
         }
+
+        
     }
 }
