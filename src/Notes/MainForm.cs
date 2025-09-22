@@ -22,7 +22,8 @@ namespace Notes
     public partial class MainForm : Form
     {
         private BindingList<Note> _notes = new BindingList<Note>();
-        private readonly string _dataFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "notes_data.txt");
+        private readonly string _dataFilePath =
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "notes_data.txt");
 
         /// <summary>
         /// Инициализирует новый экземпляр главной формы
@@ -63,7 +64,8 @@ namespace Notes
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Ошибка при загрузке данных: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Ошибка при загрузке данных: {ex.Message}",
+                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     LoadSampleData();
                 }
             }
@@ -89,7 +91,8 @@ namespace Notes
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка при сохранении данных: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Ошибка при сохранении данных: {ex.Message}",
+                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -103,7 +106,7 @@ namespace Notes
             NameOfNoteListBox.DisplayMember = "Name";
 
             // Настройка ComboBox категорий
-            NoteCategoryComboBox.DataSource = Enum.GetValues(typeof(KindOfNote));
+            //NoteCategoryComboBox.DataSource = Enum.GetValues(typeof(KindOfNote));
 
             // Начальная сортировка
             SortNotes();
@@ -181,7 +184,8 @@ namespace Notes
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Ошибка: {ex.Message}",
+                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -216,7 +220,8 @@ namespace Notes
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

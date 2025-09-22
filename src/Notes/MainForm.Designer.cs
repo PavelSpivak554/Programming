@@ -138,7 +138,6 @@
             // NoteCategoryComboBox
             // 
             NoteCategoryComboBox.FormattingEnabled = true;
-            NoteCategoryComboBox.Items.AddRange(new object[] { "House", "Work", "Sport", "Finance" });
             NoteCategoryComboBox.Location = new Point(348, 174);
             NoteCategoryComboBox.Name = "NoteCategoryComboBox";
             NoteCategoryComboBox.Size = new Size(388, 28);
