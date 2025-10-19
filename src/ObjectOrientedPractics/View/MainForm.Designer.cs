@@ -30,8 +30,8 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.ItemsPage = new System.Windows.Forms.TabPage();
-            this.itemsTab1 = new ObjectOrientedPractics.View.Tabs.ItemsTab();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.itemsTab1 = new ObjectOrientedPractics.View.Tabs.ItemsTab();
             this.tabControl1.SuspendLayout();
             this.ItemsPage.SuspendLayout();
             this.SuspendLayout();
@@ -60,14 +60,6 @@
             this.ItemsPage.UseVisualStyleBackColor = true;
             this.ItemsPage.UseWaitCursor = true;
             // 
-            // itemsTab1
-            // 
-            this.itemsTab1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.itemsTab1.Location = new System.Drawing.Point(3, 3);
-            this.itemsTab1.Name = "itemsTab1";
-            this.itemsTab1.Size = new System.Drawing.Size(786, 449);
-            this.itemsTab1.TabIndex = 0;
-            // 
             // tabPage2
             // 
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
@@ -78,6 +70,15 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             this.tabPage2.UseWaitCursor = true;
+            // 
+            // itemsTab1
+            // 
+            this.itemsTab1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.itemsTab1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.itemsTab1.Location = new System.Drawing.Point(3, 3);
+            this.itemsTab1.Name = "itemsTab1";
+            this.itemsTab1.Size = new System.Drawing.Size(786, 449);
+            this.itemsTab1.TabIndex = 0;
             // 
             // MainForm
             // 

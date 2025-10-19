@@ -40,17 +40,19 @@
             this.label3 = new System.Windows.Forms.Label();
             this.NameTextBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.DescriptionTextBox = new System.Windows.Forms.TextBox();
+            this.InfoTextBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // ItemsListBox
             // 
+            this.ItemsListBox.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.ItemsListBox.FormattingEnabled = true;
             this.ItemsListBox.ItemHeight = 16;
             this.ItemsListBox.Location = new System.Drawing.Point(3, 20);
             this.ItemsListBox.Name = "ItemsListBox";
             this.ItemsListBox.Size = new System.Drawing.Size(257, 388);
             this.ItemsListBox.TabIndex = 0;
+            this.ItemsListBox.SelectedIndexChanged += new System.EventHandler(this.ItemsListBox_SelectedIndexChanged);
             // 
             // itemsLabel
             // 
@@ -79,6 +81,7 @@
             this.RemoveButton.TabIndex = 3;
             this.RemoveButton.Text = "Remove";
             this.RemoveButton.UseVisualStyleBackColor = true;
+            this.RemoveButton.Click += new System.EventHandler(this.RemoveButton_Click);
             // 
             // SelectedItemLabel
             // 
@@ -111,6 +114,7 @@
             // 
             this.IdTextBox.Location = new System.Drawing.Point(307, 37);
             this.IdTextBox.Name = "IdTextBox";
+            this.IdTextBox.ReadOnly = true;
             this.IdTextBox.Size = new System.Drawing.Size(142, 22);
             this.IdTextBox.TabIndex = 7;
             // 
@@ -148,19 +152,19 @@
             this.label4.Text = "Description:";
             this.label4.UseMnemonic = false;
             // 
-            // DescriptionTextBox
+            // InfoTextBox
             // 
-            this.DescriptionTextBox.Location = new System.Drawing.Point(266, 210);
-            this.DescriptionTextBox.Multiline = true;
-            this.DescriptionTextBox.Name = "DescriptionTextBox";
-            this.DescriptionTextBox.Size = new System.Drawing.Size(380, 116);
-            this.DescriptionTextBox.TabIndex = 12;
+            this.InfoTextBox.Location = new System.Drawing.Point(266, 210);
+            this.InfoTextBox.Multiline = true;
+            this.InfoTextBox.Name = "InfoTextBox";
+            this.InfoTextBox.Size = new System.Drawing.Size(380, 116);
+            this.InfoTextBox.TabIndex = 12;
             // 
             // ItemsTab
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.DescriptionTextBox);
+            this.Controls.Add(this.InfoTextBox);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.NameTextBox);
             this.Controls.Add(this.label3);
@@ -194,6 +198,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox NameTextBox;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox DescriptionTextBox;
+        private System.Windows.Forms.TextBox InfoTextBox;
     }
 }
