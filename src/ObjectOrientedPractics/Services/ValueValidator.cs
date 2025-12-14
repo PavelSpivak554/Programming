@@ -54,6 +54,7 @@ namespace ObjectOrientedPractics.Services
             if ((value < min) || (value > max))
             {
                 throw new ArgumentException($"{propertyName} должен быть меньше {max} или больше {min}");
+
             }
             return true;
         }

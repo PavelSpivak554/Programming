@@ -93,5 +93,13 @@ namespace ObjectOrientedPractics.Model
                 _address = value;
             }
         }
+        /// <summary>
+        /// Переопределение ToString()
+        /// </summary>
+        /// <returns>Id и полное имя покупателя</returns>
+        public override string ToString()
+        {
+            return $"{Id} | {FullName}";
+        }
     }
 }

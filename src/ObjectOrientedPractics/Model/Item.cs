@@ -37,6 +37,10 @@ namespace ObjectOrientedPractics.Model
         /// Стоимость товара.
         /// </summary>
         private double _cost;
+        /// <summary>
+        /// Категория товара.
+        /// </summary>
+        private Category _category;
 
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Item"/>
@@ -44,12 +48,14 @@ namespace ObjectOrientedPractics.Model
         /// <param name="name"></param>
         /// <param name="info"></param>
         /// <param name="cost"></param>
-        public Item(string name, string info, double cost)
+        /// <param name="category"></param>
+        public Item(string name, string info, double cost, Category category)
         {
             _id = idCounter++;
             Name = name;
             Info = info;
             Cost = cost;
+            Category = category;
         }
 
         /// <summary>
@@ -105,6 +111,26 @@ namespace ObjectOrientedPractics.Model
                 ValueValidator.AssertValueInRange(value, 0, 100000, nameof(Cost));
                 _cost = value;
             }
+        }
+        /// <summary>
+        /// Возвращает категорию товара
+        /// </summary>
+        public Category Category
+        {
+            get { return _category; }
+            set
+            {
+                _category = value;
+            }
+            
+        }
+        /// <summary>
+        /// строковое представление объекта Item, переопределенное в классе
+        /// </summary>
+        /// <returns>Строка представляющая текущий объект</returns>
+        public override string ToString()
+        {
+            return $"{Id} | {Name}";
         }
     }
 }
