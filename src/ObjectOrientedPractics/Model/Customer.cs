@@ -31,20 +31,19 @@ namespace ObjectOrientedPractics.Model
         /// <summary>
         /// Адрес доставки покупателя.
         /// </summary>
-        private string _address;
+        private Address _address;
 
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Customer"/>
         /// </summary>
         /// <param name="fullname">Полное имя покупателя</param>
         /// <param name="address">Адрес доставки.</param>
-        public Customer(string fullname, string address)
+        public Customer(string fullname, Address address)
         {
             _id = idCounter++;
             FullName = fullname;
             Address = address;
         }
-
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Customer"/>
         /// </summary>
@@ -80,7 +79,7 @@ namespace ObjectOrientedPractics.Model
         /// <summary>
         /// Возвращает  адрес доставки покупателя.
         /// </summary>
-        public string Address
+        public Address Address
         {
             get
             {
@@ -88,7 +87,6 @@ namespace ObjectOrientedPractics.Model
             }
             set
             {
-                ValueValidator.AssertStringOnLength(value, 200, nameof(Address));
                 _address = value;
             }
         }

@@ -148,7 +148,6 @@ namespace ObjectOrientedPractics.Model
                 _building = value;
             }
         }
-
         /// <summary>
         /// Номер квартиры или помещения. Может быть null для частных домов. Не более 10 символов.
         /// </summary>
@@ -169,16 +168,5 @@ namespace ObjectOrientedPractics.Model
                 _apartment = value;
             }
         }
-
-
-
-
-
-
-
-
-
-
-
     }
 }

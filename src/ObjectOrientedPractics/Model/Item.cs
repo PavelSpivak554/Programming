@@ -129,7 +129,7 @@ namespace ObjectOrientedPractics.Model
         /// <returns>Строка представляющая текущий объект</returns>
         public override string ToString()
         {
-            return $"{Id} | {Name}";
+            return $"{Id} | {Category}";
         }
     }
 }

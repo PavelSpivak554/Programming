@@ -146,6 +146,7 @@
             this.ItemCostTextBox.Name = "ItemCostTextBox";
             this.ItemCostTextBox.Size = new System.Drawing.Size(142, 22);
             this.ItemCostTextBox.TabIndex = 8;
+            this.ItemCostTextBox.TextChanged += new System.EventHandler(this.ItemCostTextBox_TextChanged);
             // 
             // label3
             // 
@@ -176,6 +177,7 @@
             this.ItemInfoTextBox.Name = "ItemInfoTextBox";
             this.ItemInfoTextBox.Size = new System.Drawing.Size(471, 66);
             this.ItemInfoTextBox.TabIndex = 12;
+            this.ItemInfoTextBox.TextChanged += new System.EventHandler(this.ItemInfoTextBox_TextChanged);
             // 
             // ItemNameTextBox
             // 
@@ -187,6 +189,7 @@
             this.ItemNameTextBox.Name = "ItemNameTextBox";
             this.ItemNameTextBox.Size = new System.Drawing.Size(471, 66);
             this.ItemNameTextBox.TabIndex = 10;
+            this.ItemNameTextBox.TextChanged += new System.EventHandler(this.ItemNameTextBox_TextChanged);
             // 
             // tableLayoutPanel1
             // 

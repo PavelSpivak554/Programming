@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.AddressTextBox = new System.Windows.Forms.TextBox();
-            this.Addresslabel = new System.Windows.Forms.Label();
             this.CustomerNameTextBox = new System.Windows.Forms.TextBox();
             this.CustomerIdTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -43,30 +41,12 @@
             this.itemsLabel = new System.Windows.Forms.Label();
             this.CustomersListBox = new System.Windows.Forms.ListBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.addressControl1 = new ObjectOrientedPractics.View.Controls.AddressControl();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // AddressTextBox
-            // 
-            this.AddressTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.AddressTextBox.Location = new System.Drawing.Point(83, 102);
-            this.AddressTextBox.Multiline = true;
-            this.AddressTextBox.Name = "AddressTextBox";
-            this.AddressTextBox.Size = new System.Drawing.Size(327, 66);
-            this.AddressTextBox.TabIndex = 23;
-            // 
-            // Addresslabel
-            // 
-            this.Addresslabel.AutoSize = true;
-            this.Addresslabel.Location = new System.Drawing.Point(6, 105);
-            this.Addresslabel.Name = "Addresslabel";
-            this.Addresslabel.Size = new System.Drawing.Size(61, 16);
-            this.Addresslabel.TabIndex = 22;
-            this.Addresslabel.Text = "Address:";
             // 
             // CustomerNameTextBox
             // 
@@ -207,11 +187,10 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.White;
+            this.panel2.Controls.Add(this.addressControl1);
             this.panel2.Controls.Add(this.SelectedCustomerLabel);
             this.panel2.Controls.Add(this.FullNameLabel);
-            this.panel2.Controls.Add(this.AddressTextBox);
             this.panel2.Controls.Add(this.label2);
-            this.panel2.Controls.Add(this.Addresslabel);
             this.panel2.Controls.Add(this.CustomerIdTextBox);
             this.panel2.Controls.Add(this.CustomerNameTextBox);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -219,6 +198,13 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(477, 469);
             this.panel2.TabIndex = 0;
+            // 
+            // addressControl1
+            // 
+            this.addressControl1.Location = new System.Drawing.Point(3, 92);
+            this.addressControl1.Name = "addressControl1";
+            this.addressControl1.Size = new System.Drawing.Size(477, 184);
+            this.addressControl1.TabIndex = 24;
             // 
             // CustomersTab
             // 
@@ -238,9 +224,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox AddressTextBox;
-        private System.Windows.Forms.Label Addresslabel;
         private System.Windows.Forms.TextBox CustomerNameTextBox;
         private System.Windows.Forms.TextBox CustomerIdTextBox;
         private System.Windows.Forms.Label label2;
@@ -254,5 +237,6 @@
         private System.Windows.Forms.Button CustomerRemoveButton;
         private System.Windows.Forms.Label itemsLabel;
         private System.Windows.Forms.ListBox CustomersListBox;
+        private Controls.AddressControl addressControl1;
     }
 }

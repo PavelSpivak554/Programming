@@ -33,11 +33,6 @@ namespace ObjectOrientedPractics.View.Controls
         public AddressControl()
         {
             InitializeComponent();
-
-            // ✅ ОТКЛЮЧАЕМ автоматическую валидацию
-            this.AutoValidate = AutoValidate.Disable;
-
-            // ✅ Визуальная подсветка при вводе
             InitializeVisualValidation();
         }
 
