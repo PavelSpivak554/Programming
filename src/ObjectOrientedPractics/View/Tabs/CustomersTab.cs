@@ -1,4 +1,5 @@
 ﻿using ObjectOrientedPractics.Model;
+using ObjectOrientedPractics.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -62,6 +63,7 @@ namespace ObjectOrientedPractics.View.Tabs
         private void NametextBox_Validating()
         {
             string Name = CustomerNameTextBox.Text;
+
             if (string.IsNullOrWhiteSpace(Name) || !Name.All(char.IsLetter))
             {
                 CustomerNameTextBox.BackColor = Color.Red;
@@ -169,5 +171,6 @@ namespace ObjectOrientedPractics.View.Tabs
             ListBoxUpdate();
             ClearFields();
         }
+
     }
 }

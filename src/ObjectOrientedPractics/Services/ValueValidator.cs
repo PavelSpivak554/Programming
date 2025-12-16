@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace ObjectOrientedPractics.Services
 {
-    internal class ValueValidator
+    internal static class ValueValidator
     {
         /// <summary>
-        /// Проверка строки на наличие недопустимых символов
+        /// Проверка строки на наличие недопустимых символов. Можно использовать только буквы.
         /// </summary>
         /// <param name="value">Значение.</param>
         /// <param name="NameOfProperty"></param>
