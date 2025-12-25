@@ -115,36 +115,36 @@
             // 
             this.PostIndexTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.PostIndexTextBox.Location = new System.Drawing.Point(78, 36);
+            this.PostIndexTextBox.Location = new System.Drawing.Point(79, 36);
             this.PostIndexTextBox.Name = "PostIndexTextBox";
-            this.PostIndexTextBox.Size = new System.Drawing.Size(105, 22);
+            this.PostIndexTextBox.Size = new System.Drawing.Size(92, 22);
             this.PostIndexTextBox.TabIndex = 7;
             // 
             // CountryTextBox
             // 
             this.CountryTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CountryTextBox.Location = new System.Drawing.Point(78, 66);
+            this.CountryTextBox.Location = new System.Drawing.Point(79, 66);
             this.CountryTextBox.Name = "CountryTextBox";
-            this.CountryTextBox.Size = new System.Drawing.Size(151, 22);
+            this.CountryTextBox.Size = new System.Drawing.Size(138, 22);
             this.CountryTextBox.TabIndex = 8;
             // 
             // StreetTextBox
             // 
             this.StreetTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.StreetTextBox.Location = new System.Drawing.Point(78, 95);
+            this.StreetTextBox.Location = new System.Drawing.Point(79, 95);
             this.StreetTextBox.Name = "StreetTextBox";
-            this.StreetTextBox.Size = new System.Drawing.Size(443, 22);
+            this.StreetTextBox.Size = new System.Drawing.Size(419, 22);
             this.StreetTextBox.TabIndex = 9;
             // 
             // BuildingTextBox
             // 
             this.BuildingTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.BuildingTextBox.Location = new System.Drawing.Point(78, 123);
+            this.BuildingTextBox.Location = new System.Drawing.Point(79, 123);
             this.BuildingTextBox.Name = "BuildingTextBox";
-            this.BuildingTextBox.Size = new System.Drawing.Size(105, 22);
+            this.BuildingTextBox.Size = new System.Drawing.Size(92, 22);
             this.BuildingTextBox.TabIndex = 10;
             // 
             // CityTextBox
@@ -153,7 +153,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.CityTextBox.Location = new System.Drawing.Point(273, 63);
             this.CityTextBox.Name = "CityTextBox";
-            this.CityTextBox.Size = new System.Drawing.Size(248, 22);
+            this.CityTextBox.Size = new System.Drawing.Size(225, 22);
             this.CityTextBox.TabIndex = 11;
             // 
             // ApartmentTextBox
@@ -162,7 +162,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ApartmentTextBox.Location = new System.Drawing.Point(312, 125);
             this.ApartmentTextBox.Name = "ApartmentTextBox";
-            this.ApartmentTextBox.Size = new System.Drawing.Size(105, 22);
+            this.ApartmentTextBox.Size = new System.Drawing.Size(92, 22);
             this.ApartmentTextBox.TabIndex = 12;
             // 
             // tableLayoutPanel1
@@ -175,7 +175,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(532, 201);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(519, 191);
             this.tableLayoutPanel1.TabIndex = 13;
             // 
             // panel1
@@ -196,7 +196,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(526, 195);
+            this.panel1.Size = new System.Drawing.Size(513, 185);
             this.panel1.TabIndex = 0;
             // 
             // AddressControl
@@ -205,7 +205,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "AddressControl";
-            this.Size = new System.Drawing.Size(532, 201);
+            this.Size = new System.Drawing.Size(519, 191);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

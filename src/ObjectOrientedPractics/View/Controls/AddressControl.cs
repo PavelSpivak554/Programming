@@ -14,6 +14,8 @@ namespace ObjectOrientedPractics.View.Controls
     public partial class AddressControl : UserControl
     {
         private Address _address = new Address();
+        public event EventHandler AddressChanged;
+
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Address Address
@@ -55,7 +57,10 @@ namespace ObjectOrientedPractics.View.Controls
         private void ValidatePostIndexVisual()
         {
             bool isValid = string.IsNullOrEmpty(PostIndexTextBox.Text) ||
-                          (int.TryParse(PostIndexTextBox.Text, out int index) && index >= 100000 && index <= 999999);
+                          (int.TryParse(PostIndexTextBox.Text, out int index) &&
+                           index >= 100000 &&
+                           index <= 999999);
+
             PostIndexTextBox.BackColor = isValid ? Color.White : Color.LightPink;
         }
 
@@ -109,12 +114,13 @@ namespace ObjectOrientedPractics.View.Controls
         /// </summary>
         public bool ValidateAddress()
         {
-            bool postIndexValid = string.IsNullOrEmpty(PostIndexTextBox.Text) ||
+            bool postIndexValid = !string.IsNullOrEmpty(PostIndexTextBox.Text) ||
                                  (int.TryParse(PostIndexTextBox.Text, out int index) && index >= 100000 && index <= 999999);
             bool countryValid = !string.IsNullOrEmpty(CountryTextBox.Text) && CountryTextBox.Text.Length <= 50;
             bool cityValid = !string.IsNullOrEmpty(CityTextBox.Text) && CityTextBox.Text.Length <= 50;
             bool streetValid = !string.IsNullOrEmpty(StreetTextBox.Text) && StreetTextBox.Text.Length <= 100;
             bool buildingValid = !string.IsNullOrEmpty(BuildingTextBox.Text) && BuildingTextBox.Text.Length <= 10;
+            bool apartmentValid = !string.IsNullOrEmpty(ApartmentTextBox.Text) && ApartmentTextBox.Text.Length <= 10;
 
             // Визуально подсвечиваем поля
             PostIndexTextBox.BackColor = postIndexValid ? Color.White : Color.LightPink;
@@ -122,8 +128,9 @@ namespace ObjectOrientedPractics.View.Controls
             CityTextBox.BackColor = cityValid ? Color.White : Color.LightPink;
             StreetTextBox.BackColor = streetValid ? Color.White : Color.LightPink;
             BuildingTextBox.BackColor = buildingValid ? Color.White : Color.LightPink;
+            ApartmentTextBox.BackColor = buildingValid ? Color.White : Color.LightPink;
 
-            return postIndexValid && countryValid && cityValid && streetValid && buildingValid;
+            return postIndexValid && countryValid && cityValid && streetValid && buildingValid && apartmentValid;
         }
 
         private void UpdateControlsFromAddress()
@@ -135,10 +142,11 @@ namespace ObjectOrientedPractics.View.Controls
             CityTextBox.Text = _address.City;
             StreetTextBox.Text = _address.Street;
             BuildingTextBox.Text = _address.Building;
-            ApartmentTextBox.Text = _address.Apartment ?? "";
+            ApartmentTextBox.Text = _address.Apartment;
 
             // Сбрасываем подсветку
             ClearVisualValidation();
+            AddressChanged?.Invoke(this, EventArgs.Empty);
         }
 
         private void UpdateAddressFromControls()
@@ -159,7 +167,9 @@ namespace ObjectOrientedPractics.View.Controls
             _address.City = CityTextBox.Text ?? "";
             _address.Street = StreetTextBox.Text ?? "";
             _address.Building = BuildingTextBox.Text ?? "";
-            _address.Apartment = string.IsNullOrEmpty(ApartmentTextBox.Text) ? null : ApartmentTextBox.Text;
+            _address.Apartment = ApartmentTextBox.Text ?? "";
+            AddressChanged?.Invoke(this, EventArgs.Empty);
+
         }
 
         /// <summary>

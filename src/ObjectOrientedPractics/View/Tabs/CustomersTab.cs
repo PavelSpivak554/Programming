@@ -1,5 +1,6 @@
 ﻿using ObjectOrientedPractics.Model;
 using ObjectOrientedPractics.Services;
+using ObjectOrientedPractics.View.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,6 +24,8 @@ namespace ObjectOrientedPractics.View.Tabs
         /// Список покупателей, отображаемых на вкладке.
         /// </summary>
         private List<Customer> _customers = new List<Customer>();
+        private AddressControl _addressControl1 = new AddressControl();
+        private Customer _selectedCustomer = null;
 
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="CustomersTab"/>.
@@ -32,7 +35,10 @@ namespace ObjectOrientedPractics.View.Tabs
             InitializeComponent();
             InitializeVisualValidation();
         }
-
+        private void InitializeVisualValidation()
+        {
+            CustomerNameTextBox.TextChanged += (s, e) => ValidateFullNameVisual();
+        }
         /// <summary>
         /// Очищает текстовые поля ввода данных о покупателе.
         /// </summary>
@@ -40,6 +46,7 @@ namespace ObjectOrientedPractics.View.Tabs
         {
             CustomerNameTextBox.Text = string.Empty;
             CustomerIdTextBox.Text = string.Empty;
+            addressControl1.ClearFields();
         }
 
         /// <summary>
@@ -48,10 +55,15 @@ namespace ObjectOrientedPractics.View.Tabs
         /// </summary>
         public void ListBoxUpdate()
         {
+            int selectedIndex = CustomersListBox.SelectedIndex;
             CustomersListBox.Items.Clear();
             foreach (var customer in _customers)
             {
                 CustomersListBox.Items.Add(customer);
+            }
+            if (selectedIndex >= 0 && selectedIndex < CustomersListBox.Items.Count)
+            {
+                CustomersListBox.SelectedIndex = selectedIndex;
             }
         }
 
@@ -60,35 +72,28 @@ namespace ObjectOrientedPractics.View.Tabs
         /// Проверяет, что строка не пустая и содержит только буквы.
         /// Изменяет цвет фона текстового поля в зависимости от результата проверки.
         /// </summary>
-        private void NametextBox_Validating()
+        private bool ValidateFullNameVisual()
         {
-            string Name = CustomerNameTextBox.Text;
-
-            if (string.IsNullOrWhiteSpace(Name) || !Name.All(char.IsLetter))
-            {
-                CustomerNameTextBox.BackColor = Color.Red;
-            }
-            else
-            {
-                CustomerNameTextBox.BackColor = Color.White;
-            }
+            bool isValid = string.IsNullOrEmpty(CustomerNameTextBox.Text) ||
+                          (CustomerNameTextBox.Text.Length >= 500) ||
+                          CustomerNameTextBox.Text.All(char.IsLetter);
+            CustomerNameTextBox.BackColor = isValid ? Color.White : Color.LightPink;
+            return isValid;
         }
-
-
         /// <summary>
         /// Выполняет комплексную валидацию всех полей ввода.
         /// </summary>
+
         private bool CustomerValidating()
         {
-            NametextBox_Validating();
-            if (CustomerNameTextBox.BackColor == Color.White)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            bool isAddressValid = addressControl1.ValidateAddress();
+            bool isNameValid = !string.IsNullOrEmpty(CustomerNameTextBox.Text) &&
+                              CustomerNameTextBox.Text.Length <= 500;
+
+            // Подсвечиваем поле имени
+            CustomerNameTextBox.BackColor = isNameValid ? Color.White : Color.LightPink;
+
+            return isNameValid && isAddressValid;
         }
 
         /// <summary>
@@ -99,13 +104,16 @@ namespace ObjectOrientedPractics.View.Tabs
         {
             try
             {
-                Customer selectedItem = (Customer)CustomersListBox.SelectedItem;
-                CustomerNameTextBox.Text = selectedItem.FullName;
-                CustomerIdTextBox.Text = selectedItem.Id.ToString();
+                Customer selectedCustomer = (Customer)CustomersListBox.SelectedItem;
+                CustomerNameTextBox.Text = selectedCustomer.FullName;
+                CustomerIdTextBox.Text = selectedCustomer.Id.ToString();
+                addressControl1.Address = selectedCustomer.Address;
+
+
             }
             catch (System.NullReferenceException)
             {
-
+                ClearFields();
             }
         }
 
@@ -120,10 +128,11 @@ namespace ObjectOrientedPractics.View.Tabs
                 if (CustomerValidating())
                 {
                     string customerName = CustomerNameTextBox.Text;
-                    //string address = AddressTextBox.Text;
+                    Address address = addressControl1.Address;
                     Customer customer = new Customer(customerName, address);
                     _customers.Add(customer);
                     ListBoxUpdate();
+                    //ClearFields();
                 }
                 else
                 {
@@ -149,20 +158,5 @@ namespace ObjectOrientedPractics.View.Tabs
             ListBoxUpdate();
             ClearFields();
         }
-
-        private void InitializeVisualValidation()
-        {
-            CustomerNameTextBox.TextChanged += (s, e) => ValidateFullNameVisual();
-            
-        }
-
-        private void ValidateFullNameVisual()
-        {
-            bool isValid = string.IsNullOrEmpty(CustomerNameTextBox.Text) ||
-                          (CustomerNameTextBox.Text.Length >= 500) ||
-                          CustomerNameTextBox.Text.All(char.IsLetter);
-            CustomerNameTextBox.BackColor = isValid ? Color.White : Color.LightPink;
-        }
-
     }
 }

@@ -26,13 +26,14 @@ namespace ObjectOrientedPractics.View.Tabs
             InitializeComponent();
             ItemsCategoryComboBox.DataSource = Enum.GetValues(typeof(Category));
             InitializeVisualValidation();
-            
+            InitializeSampleData();
         }
 
         /// <summary>
         /// Список товаров, отображаемых на вкладке.
         /// </summary>
         private List<Item> _items = new List<Item>();
+        
 
 
         /// <summary>
@@ -44,14 +45,15 @@ namespace ObjectOrientedPractics.View.Tabs
             ItemCostTextBox.TextChanged += (s, e) => ValidateCostTextBoxVisual();
             ItemNameTextBox.TextChanged += (s, e) => ValidateNameTextBoxVisual();
         }
-
-
-        private void EditTextBoxes()
-        { 
-
+        private void InitializeSampleData()
+        {
+            _items.Add(new Item("Ноутбук", "Игровой ноутбук с RTX 4060", 89999.99, Category.Electronics));
+            _items.Add(new Item("Книга", "Программирование на C#", 2499.99, Category.Books));
+            _items.Add(new Item("Кофе", "Арабика, 250г", 599.99, Category.Food));
+            _items.Add(new Item("Футболка", "Хлопковая, черная", 1299.99, Category.Clothing));
+            _items.Add(new Item("Наушники", "Беспроводные, шумоподавление", 5999.99, Category.Electronics));
+            ListBoxUpdate();
         }
-
-
         /// <summary>
         /// Выполняет валидацию поля наименования товара.
         /// Проверяет, что строка не пустая и не превышает 200 символов.
@@ -63,7 +65,6 @@ namespace ObjectOrientedPractics.View.Tabs
                           (ItemNameTextBox.Text.Length <= 200);
             ItemNameTextBox.BackColor = isValid ? Color.White : Color.LightPink;
         }
-
         /// <summary>
         /// Выполняет валидацию поля описания товара.
         /// Проверяет, что строка не пустая и не превышает 1000 символов.
@@ -71,12 +72,10 @@ namespace ObjectOrientedPractics.View.Tabs
         /// </summary>
         private void ValidateInfoTextBoxVisual()
         {
-
             bool isValid = string.IsNullOrEmpty(ItemInfoTextBox.Text) ||
                          (ItemInfoTextBox.Text.Length <= 1000);
             ItemInfoTextBox.BackColor = isValid ? Color.White : Color.LightPink;
         }
-
         /// <summary>
         /// Выполняет валидацию поля стоимости товара.
         /// Проверяет, что значение может быть преобразовано в double и является неотрицательным.
@@ -84,38 +83,41 @@ namespace ObjectOrientedPractics.View.Tabs
         /// </summary>
         private void ValidateCostTextBoxVisual()
         {
-            bool isValid = string.IsNullOrEmpty(ItemCostTextBox.Text) ||
-                          (int.TryParse(ItemCostTextBox.Text, out int index) && index >= 0 && index <= 100000);
+            bool isValid = string.IsNullOrWhiteSpace(ItemCostTextBox.Text) ||
+                          (double.TryParse(ItemCostTextBox.Text, out double index) && index >= 0 && index <= 100000);
             ItemCostTextBox.BackColor = isValid ? Color.White : Color.LightPink;
         }
-       
-
-
-        private bool CheckTextBoxesColor()
+        /// <summary>
+        /// Проверка всех полей Item
+        /// </summary>
+        private bool ItemsValidation()
         {
-            if(!(ItemCostTextBox.BackColor == Color.LightPink) ||
-                !(ItemNameTextBox.BackColor == Color.LightPink) ||
-                !(ItemInfoTextBox.BackColor == Color.LightPink))
-                return true;
-            else return false;
-        }
+            bool costValid = !string.IsNullOrEmpty(ItemCostTextBox.Text) &&
+                double.TryParse(ItemCostTextBox.Text, out double cost) &&
+                cost >= 0 &&
+                cost <= 100000;
+            bool nameValid = !string.IsNullOrEmpty(ItemNameTextBox.Text) && ItemNameTextBox.Text.Length <= 200;
+            bool infoValid = !string.IsNullOrEmpty(ItemInfoTextBox.Text) && ItemInfoTextBox.Text.Length <= 1000;
+            ItemCostTextBox.BackColor = costValid ? Color.White : Color.LightPink;
+            ItemNameTextBox.BackColor = nameValid ? Color.White : Color.LightPink;
+            ItemInfoTextBox.BackColor = infoValid ? Color.White : Color.LightPink;
 
+            return costValid && nameValid && infoValid;
+        }
         /// <summary>
         /// Обрабатывает событие нажатия кнопки добавления товара.
         /// Создает новый товар на основе введенных данных и добавляет его в коллекцию.
         /// </summary>
-
-
         private void AddButton_Click(object sender, EventArgs e)
         {
             try
             {
-                if (CheckTextBoxesColor())
+                if (ItemsValidation())
                 {
                     string itemName = ItemNameTextBox.Text;
                     string itemInfo = ItemInfoTextBox.Text;
                     double itemCost = Convert.ToDouble(ItemCostTextBox.Text);
-                    Category itemCategory = (Category)Enum.Parse(typeof(Category), ItemsCategoryComboBox.Text); // преобразует строку в значение enum.
+                    Category itemCategory = (Category)Enum.Parse(typeof(Category), ItemsCategoryComboBox.Text);
                     Item item = new Item(itemName, itemInfo, itemCost, itemCategory);
                     _items.Add(item);
                     ListBoxUpdate();
@@ -174,7 +176,6 @@ namespace ObjectOrientedPractics.View.Tabs
         /// </summary>>
         private void ItemsCategoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-
             Category newCategory = (Category)ItemsCategoryComboBox.SelectedItem;
             Item selectedItem = (Item)ItemsListBox.SelectedItem;
             if (ItemsListBox.SelectedItem != null)
@@ -182,7 +183,6 @@ namespace ObjectOrientedPractics.View.Tabs
                 selectedItem.Category = newCategory;
                 ListBoxUpdate();
             }
-
         }
         /// <summary>
         /// Очищает текстовые поля ввода данных о товаре.
@@ -209,7 +209,6 @@ namespace ObjectOrientedPractics.View.Tabs
         /// <summary>
         /// сохранение данных при редактировании названия
         /// </summary>
-
         private void ItemNameTextBox_TextChanged(object sender, EventArgs e)
         {
             string newName = ItemNameTextBox.Text;
@@ -228,7 +227,7 @@ namespace ObjectOrientedPractics.View.Tabs
             Item selectedItem = (Item)ItemsListBox.SelectedItem;
             if (ItemsListBox.SelectedItem != null)
             {
-                selectedItem.Name = newInfo;
+                selectedItem.Info = newInfo;
             }
         }
         /// <summary>
@@ -236,24 +235,13 @@ namespace ObjectOrientedPractics.View.Tabs
         /// </summary>
         private void ItemCostTextBox_TextChanged(object sender, EventArgs e)
         {
-            string newCost = ItemCostTextBox.Text;
-            Item selectedItem = (Item)ItemsListBox.SelectedItem;
-            if (ItemsListBox.SelectedItem != null)
+            if (ItemsListBox.SelectedItem != null &&
+                double.TryParse(ItemCostTextBox.Text, out double newCost)&&
+                                newCost >= 0 && newCost <= 100000)
             {
-                selectedItem.Name = newCost;
+                Item selectedItem = (Item)ItemsListBox.SelectedItem;
+                selectedItem.Cost = newCost;
             }
-        }
-
-        private void SaveChangesItem()
-        {
-            InitializeVisualValidation();
-            if (ItemsListBox.SelectedItem == null)
-                return;
-
-            Item selectedItem = (Item)ItemsListBox.SelectedItem;
-            ItemNameTextBox.Text = selectedItem.Name;
-            ItemInfoTextBox.Text = selectedItem.Info;
-            ItemCostTextBox.Text = selectedItem.Cost.ToString();
         }
     }
 }

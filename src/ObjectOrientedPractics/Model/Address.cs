@@ -23,11 +23,11 @@ namespace ObjectOrientedPractics.Model
         public Address()
         {
             _index = 100000;
-            _country = "Не указано";
-            _city = "Не указано";
-            _street = "Не указано";
-            _building = "Не указано";
-            _apartment = "Не указано";
+            _country = "Россия";
+            _city = "Москва";
+            _street = "Ленина";
+            _building = "1";
+            _apartment = "1";
         }
 
         /// <summary>
