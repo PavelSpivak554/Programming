@@ -143,9 +143,6 @@ namespace ObjectOrientedPractics.View.Controls
             StreetTextBox.Text = _address.Street;
             BuildingTextBox.Text = _address.Building;
             ApartmentTextBox.Text = _address.Apartment;
-
-            // Сбрасываем подсветку
-            ClearVisualValidation();
             AddressChanged?.Invoke(this, EventArgs.Empty);
         }
 
@@ -183,21 +180,6 @@ namespace ObjectOrientedPractics.View.Controls
             StreetTextBox.Text = "";
             BuildingTextBox.Text = "";
             ApartmentTextBox.Text = "";
-
-            ClearVisualValidation();
-        }
-
-        /// <summary>
-        /// Сброс визуальной подсветки
-        /// </summary>
-        private void ClearVisualValidation()
-        {
-            PostIndexTextBox.BackColor = Color.White;
-            CountryTextBox.BackColor = Color.White;
-            CityTextBox.BackColor = Color.White;
-            StreetTextBox.BackColor = Color.White;
-            BuildingTextBox.BackColor = Color.White;
-            ApartmentTextBox.BackColor = Color.White;
         }
 
         private void PostIndexTextBox_TextChanged(object sender, EventArgs e)
