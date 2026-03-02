@@ -48,7 +48,7 @@
                         <Label Content="Phone Number:"/>
                         <TextBox x:Name="editPhone" 
                                  Margin="5,0,0,10" 
-                                 Text="+7-913-111-22-33"/>
+                                 Text="+7-913-111-22-33" />
                     </StackPanel>
                     <StackPanel Orientation="Vertical"
                                 Grid.Row="2" 
