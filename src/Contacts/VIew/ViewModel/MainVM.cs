@@ -5,7 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using VIew.Model;
+using View.Model;
 
 namespace View.ViewModel
 {
@@ -15,7 +15,7 @@ namespace View.ViewModel
     class MainVM : INotifyPropertyChanged
     {
         /// <summary>
-        ///  поле контакта, хранящее актуальные данные.
+        /// Поле контакта, хранящее актуальные данные.
         /// </summary>
         private Contact _contact;
 
@@ -59,7 +59,7 @@ namespace View.ViewModel
             get { return _contact.PhoneNumber; }
             set
             {
-                if (value != _contact.PhoneNumber)
+                if (_contact.PhoneNumber != value)
                 {
                     _contact.PhoneNumber = value;
                     OnPropertyChanged();
@@ -71,7 +71,7 @@ namespace View.ViewModel
         /// </summary>
         public string Email
         {
-            get { return (_contact.Email); }
+            get { return _contact.Email; }
             set
             {
                 if (_contact.Email != value)

@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using View.ViewModel;
 
 namespace VIew
 {
@@ -19,6 +20,10 @@ namespace VIew
         public MainWindow()
         {
             InitializeComponent();
+
+            MainVM mainVM = new MainVM();
+            this.DataContext = mainVM;
+
         }
     }
 }

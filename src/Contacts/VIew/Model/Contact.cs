@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VIew.Model
+namespace View.Model
 {
     /// <summary>
     /// Класс, представляющий контактную информацию.
@@ -65,9 +65,9 @@ namespace VIew.Model
             get { return _email; }
             set
             {
-                if (_name != value)
+                if (_email != value)
                 {
-                    _name = value;
+                    _email = value;
                     OnPropertyChanged(nameof(Email));
                 }
             }
@@ -80,9 +80,9 @@ namespace VIew.Model
             get { return _phoneNumber; }
             set
             {
-                if (_name != value)
+                if (_phoneNumber != value)
                 {
-                    _name = value;
+                    _phoneNumber = value;
                     OnPropertyChanged(nameof(PhoneNumber));
                 }
             }
