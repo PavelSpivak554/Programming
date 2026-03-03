@@ -5,7 +5,9 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using View.Model;
+using View.Model.Services;
 
 namespace View.ViewModel
 {
@@ -20,10 +22,24 @@ namespace View.ViewModel
         private Contact _contact;
 
         /// <summary>
+        /// Поле для сереализатора
+        /// </summary>
+        private readonly ContactSerializer _serializer;
+
+        /// <summary>
+        /// Свойство для команды сохранения
+        /// </summary>
+        public ICommand SaveCommand { get; }
+
+        
+
+        /// <summary>
         /// Конструктор по умолчанию.
         /// </summary>
         public MainVM()
         {
+            // Инициализация сериализатора
+            _serializer = new ContactSerializer();
             // Инициализация контакта с тестовыми данными
             _contact = new Contact
             {
@@ -31,7 +47,19 @@ namespace View.ViewModel
                 PhoneNumber = "+7-913-111-22-33",
                 Email = "yuri.smirnov@no.mail"
             };
+            SaveCommand = new SaveCommand(contact =>
+            {
+                _serializer.SaveContact(contact);
+
+                System.Windows.MessageBox.Show(
+                    "Контакт успешно сохранен!",
+                    "Сохранение",
+                    System.Windows.MessageBoxButton.OK,
+                    System.Windows.MessageBoxImage.Information);
+            });
         }
+
+        
         /// <summary>
         /// Событие для уведомления об изменениях свойств.
         /// </summary>
@@ -92,6 +120,14 @@ namespace View.ViewModel
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+        /// <summary>
+        /// Свойство для доступа к контакту
+        /// Используется для передачи всего объекта Contact в команду сохранения
+        /// </summary>
+        public Contact CurrentContact
+        {
+            get { return _contact; }
         }
     }
 }

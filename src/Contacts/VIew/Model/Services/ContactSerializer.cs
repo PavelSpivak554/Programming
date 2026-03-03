@@ -39,7 +39,7 @@ namespace View.Model.Services
         /// Конструктор по умолчанию.
         /// Использует путь: Мои документы\Contacts\contacts.json
         /// </summary>
-        public ContactSerializer()
+        public ContactSerializer() 
         {
             FilePath = Path.Combine(ContactsDirectory, FileName);
         }
