@@ -30,11 +30,16 @@ namespace View.ViewModel
         /// Свойство для команды сохранения
         /// </summary>
         public ICommand SaveCommand { get; }
+        /// <summary>
+        /// Свойство для команды загрузки
+        /// </summary>
+        public ICommand LoadCommand { get; }
 
-        
+
 
         /// <summary>
         /// Конструктор по умолчанию.
+        /// Инициализирует сериализатор, создает тестовый контакт и команду сохранения.
         /// </summary>
         public MainVM()
         {
@@ -49,15 +54,62 @@ namespace View.ViewModel
             };
             SaveCommand = new SaveCommand(contact =>
             {
-                _serializer.SaveContact(contact);
+                try
+                {
+                    if (_serializer.SaveContact(contact))
+                    {
+                        System.Windows.MessageBox.Show("Контакт успешно сохранен!", "Сохранение",
+                                            System.Windows.MessageBoxButton.OK,
+                                            System.Windows.MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        System.Windows.MessageBox.Show("Ошибка при сохранении", "Ошибка",
+                            System.Windows.MessageBoxButton.OK,
+                            System.Windows.MessageBoxImage.Error);
+                    }
 
-                System.Windows.MessageBox.Show(
-                    "Контакт успешно сохранен!",
-                    "Сохранение",
-                    System.Windows.MessageBoxButton.OK,
-                    System.Windows.MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    System.Windows.MessageBox.Show(
+                $"Ошибка при сохранении:{ex.Message}",
+                "Ошибка",
+                System.Windows.MessageBoxButton.OK,
+                System.Windows.MessageBoxImage.Error);
+                }
+
+            });
+
+            LoadCommand = new LoadCommand(contact =>  
+            {
+                try
+                {
+                    // Загружаем контакт из файла
+                    Contact loadedContact = _serializer.LoadContact();
+
+                    Name = loadedContact.Name;
+                    PhoneNumber = loadedContact.PhoneNumber;
+                    Email = loadedContact.Email;
+
+                    System.Windows.MessageBox.Show(
+                        "Контакт успешно загружен!",
+                        "Загрузка",
+                        System.Windows.MessageBoxButton.OK,
+                        System.Windows.MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    System.Windows.MessageBox.Show(
+                        $"Ошибка при загрузке: {ex.Message}",
+                        "Ошибка",
+                        System.Windows.MessageBoxButton.OK,
+                        System.Windows.MessageBoxImage.Error);
+                }
             });
         }
+
+
 
         
         /// <summary>

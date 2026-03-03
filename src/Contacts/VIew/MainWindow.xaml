@@ -133,7 +133,9 @@
             <Button x:Name="LoadButton" 
                     Content="Load" 
                     Width="72" 
-                    Height="25"/>
+                    Height="25"
+                    Command="{Binding LoadCommand}"
+                    CommandParameter="{Binding CurrentContact}"/>
         </StackPanel>
     </Grid>
 </Window>
