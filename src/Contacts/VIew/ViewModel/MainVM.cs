@@ -173,9 +173,10 @@ namespace View.ViewModel
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
         /// <summary>
         /// Свойство для доступа к контакту
-        /// Используется для передачи всего объекта Contact в команду сохранения
+        /// Используется для передачи всего объекта Contact в команды
         /// </summary>
         public Contact CurrentContact
         {
