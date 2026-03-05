@@ -11,7 +11,7 @@ namespace View.ViewModel
     /// <summary>
     /// Команда для сохранения контакта.
     /// </summary>
-    class SaveCommand : ICommand
+    public class SaveCommand : ICommand
     {
         /// <summary>
         /// Приватное поле для хранения действия, которое нужно выполнить при сохранении
@@ -21,6 +21,7 @@ namespace View.ViewModel
         /// <summary>
         /// Создает новую команду сохранения.
         /// </summary>
+        /// <param name="saveAction">Действие, выполняемое при сохранении контакта</param>
         public SaveCommand(Action<Contact> saveAction)
         {
             _saveAction = saveAction;

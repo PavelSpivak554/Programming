@@ -10,7 +10,7 @@ namespace View.Model
     /// <summary>
     /// Класс, представляющий контактную информацию.
     /// </summary>
-    class Contact
+    public class Contact
     {
         private string _name;
         private string _phoneNumber;
@@ -57,21 +57,7 @@ namespace View.Model
                 }
             }
         }
-        /// <summary>
-        /// Почта контакта
-        /// </summary>
-        public string Email
-        {
-            get { return _email; }
-            set
-            {
-                if (_email != value)
-                {
-                    _email = value;
-                    OnPropertyChanged(nameof(Email));
-                }
-            }
-        }
+
         /// <summary>
         /// Номер контакта
         /// </summary>
@@ -87,6 +73,22 @@ namespace View.Model
                 }
             }
         }
+        /// <summary>
+        /// Почта контакта
+        /// </summary>
+        public string Email
+        {
+            get { return _email; }
+            set
+            {
+                if (_email != value)
+                {
+                    _email = value;
+                    OnPropertyChanged(nameof(Email));
+                }
+            }
+        }
+        
 
         /// <summary>
         /// Метод для вызова события PropertyChanged.

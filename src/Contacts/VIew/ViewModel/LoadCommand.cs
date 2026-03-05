@@ -11,23 +11,23 @@ namespace View.ViewModel
     /// <summary>
     /// Команда для загрузки контакта.
     /// </summary>
-    class LoadCommand : ICommand
+    public class LoadCommand : ICommand
     {
         /// <summary>
-        /// Приватное поле для хранения действия, которое нужно выполнить при загрузке;
+        /// Приватное поле для хранения действия, которое нужно выполнить при загрузке
         /// </summary>
         private readonly Action<Contact> _loadAction;
 
         /// <summary>
         /// Создает новую команду загрузки
         /// </summary>
-        /// <param name="loadAction"></param>
+        /// <param name="loadAction">Действие, выполняемое при загрузке контакта</param>
         public LoadCommand(Action<Contact> loadAction)
         {
             _loadAction = loadAction;
         }
         /// <summary>
-        /// Определеят можно ли выполнить команду сейчас. Кнопка всегда доступна.
+        /// Определяет можно ли выполнить команду сейчас. Кнопка всегда доступна.
         /// </summary>
         /// <returns>всегда true</returns>
         public bool CanExecute(object parameter)
@@ -36,7 +36,7 @@ namespace View.ViewModel
         }
 
         /// <summary>
-        /// Определяет, что происходит при выполнении комманды.
+        /// Определяет, что происходит при выполнении команды.
         /// </summary>
         public void Execute(object parameter)
         {

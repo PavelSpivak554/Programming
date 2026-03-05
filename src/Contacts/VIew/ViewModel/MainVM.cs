@@ -14,7 +14,7 @@ namespace View.ViewModel
     /// <summary>
     /// ViewModel для главного окна приложения.
     /// </summary>
-    class MainVM : INotifyPropertyChanged
+    public class MainVM : INotifyPropertyChanged
     {
         /// <summary>
         /// Поле контакта, хранящее актуальные данные.
@@ -22,7 +22,7 @@ namespace View.ViewModel
         private Contact _contact;
 
         /// <summary>
-        /// Поле для сереализатора
+        /// Поле для сериализатора
         /// </summary>
         private readonly ContactSerializer _serializer;
 
@@ -163,7 +163,7 @@ namespace View.ViewModel
         }
 
         /// <summary>
-        /// Медод для вызова события PropertyChanged
+        /// Метод для вызова события PropertyChanged
         /// </summary>
         /// <param name="propertyName"></param>
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
