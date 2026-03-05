@@ -39,8 +39,6 @@ namespace View.ViewModel
         /// </summary>
         public ICommand LoadCommand { get; }
 
-
-
         /// <summary>
         /// Конструктор по умолчанию.
         /// Инициализирует сериализатор, создает тестовый контакт и команду сохранения.
@@ -155,6 +153,7 @@ namespace View.ViewModel
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
         /// <summary>
         /// Свойство для доступа к контакту
         /// Используется для передачи всего объекта Contact в команды

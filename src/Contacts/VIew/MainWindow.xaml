@@ -5,9 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="500">
+        Title="MainWindow"
+        Height="450"
+        Width="500"
+        Icon="ContactsApp_96x96.ico">
 
-    
     <!-- Поля окна 15px с каждой стороны -->
     <Grid Margin="15">
         <Grid.RowDefinitions>
@@ -15,7 +17,8 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
+
+        <!-- Основная панель с двумя колонками -->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -24,115 +27,84 @@
 
             <!-- EDIT CONTACT - Левая панель -->
             <GroupBox Grid.Column="0" 
-                      Header="Edit Сontact"
-                      Margin="0,0,10,0">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                      Header="Edit Contact"
+                      Margin="0,0,3,0"
+                      Padding="3">
+                <StackPanel>
                     <!-- Name -->
-                    <StackPanel Orientation="Vertical"
-                                Grid.Row="0" 
-                                Grid.Column="0"
-                                Grid.ColumnSpan="2">
-                        <Label Content="Name:" />
-                        <TextBox x:Name="editName"
-                                 Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
-                                 Margin="5,0,0,0"/>
-                    </StackPanel>
-                    <!--Phone Number-->
-                    <StackPanel Orientation="Vertical"
-                                Grid.Row="1" 
-                                Grid.Column="0" 
-                                Grid.ColumnSpan="2">
-                        <Label Content="Phone Number:"/>
-                        <TextBox x:Name="editPhone" 
-                                 Margin="5,0,0,10" 
-                                 Text="{Binding PhoneNumber, UpdateSourceTrigger=PropertyChanged}" />
-                    </StackPanel>
+                    <Label Content="Name:" 
+                           Margin="0,0,0,3"
+                           Padding="0"/>
+                    <TextBox x:Name="editName"
+                             Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,0,0,10"/>
+
+                    <!-- Phone Number -->
+                    <Label Content="Phone Number:" 
+                           Margin="0,0,0,3"
+                           Padding="0"/>
+                    <TextBox x:Name="editPhone"
+                             Text="{Binding PhoneNumber, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,0,0,10"/>
+
                     <!-- Email -->
-                    <StackPanel Orientation="Vertical"
-                                Grid.Row="2" 
-                                Grid.Column="0" 
-                                Grid.ColumnSpan="2">
-                        <Label Content="Email:" />
-                        <TextBox x:Name="editEmail"
-                                 Margin="5,0,0,0" 
-                                 Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"/>
-                    </StackPanel>
-                </Grid>
+                    <Label Content="Email:" 
+                           Margin="0,0,0,3"
+                           Padding="0"/>
+                    <TextBox x:Name="editEmail"
+                             Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
             </GroupBox>
+
             <!-- READ CONTACT - Правая панель -->
             <GroupBox Grid.Column="1" 
                       Header="Read Contact" 
-                      Margin="10,0,0,0">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <!-- Name (только для чтения) -->
-                    <StackPanel Orientation="Vertical"
-                                Grid.Row="0" 
-                                Grid.Column="0"
-                                Grid.ColumnSpan="2">
-                        <Label Content="Name:"/>
-                        <TextBlock Text="{Binding Name}"
-                        FontWeight="Bold"
-                               Margin="0,-5,0,0"/>
-                    </StackPanel>
-                    <!-- Phone Number (только для чтения) -->
-                    <StackPanel Orientation="Vertical"
-                                Grid.Row="1" 
-                                Grid.Column="0"
-                                Grid.ColumnSpan="2">
-                        <Label Content="Phone number:"/>
-                        <TextBlock Text="{Binding PhoneNumber}"
+                      Margin="3,0,0,0"
+                      Padding="3">
+                <StackPanel>
+                    <!-- Name -->
+                    <Label Content="Name:" 
+                           Margin="0,0,0,3"
+                           Padding="0"/>
+                    <TextBlock Text="{Binding Name}"
                                FontWeight="Bold"
-                               Margin="0,-5,0,0"/>
-                    </StackPanel>
-                    <!-- Email (только для чтения) -->
+                               Margin="0,0,0,10"/>
 
-                    <StackPanel Orientation="Vertical"
-                                Grid.Row="2" 
-                                Grid.Column="0"
-                                Grid.ColumnSpan="2">
-                        <Label Content="Email:"/>
-                        <TextBlock Text="{Binding Email}"
+                    <!-- Phone Number -->
+                    <Label Content="Phone Number:" 
+                           Margin="0,0,0,3"
+                           Padding="0"/>
+                    <TextBlock Text="{Binding PhoneNumber}"
                                FontWeight="Bold"
-                               Margin="0,-5,0,0"/>
-                    </StackPanel>
-                </Grid>
+                               Margin="0,0,0,10"/>
+
+                    <!-- Email -->
+                    <Label Content="Email:" 
+                           Margin="0,0,0,3"
+                           Padding="0"/>
+                    <TextBlock Text="{Binding Email}"
+                               FontWeight="Bold"/>
+                </StackPanel>
             </GroupBox>
         </Grid>
+
         <!-- Кнопки сохранения и загрузки -->
         <StackPanel Grid.Row="2" 
                     Orientation="Horizontal"
                     HorizontalAlignment="Right"
-                    Margin="0,20,0,0">
-            
+                    Margin="0,10,0,0">
+
             <Button x:Name="SaveButton"
                     Content="Save" 
-                    Width="72" 
+                    Width="75" 
                     Height="25" 
-                    Margin="0,0,10,0"
+                    Margin="0,0,3,0"
                     Command="{Binding SaveCommand}"
                     CommandParameter="{Binding CurrentContact}"/>
-            
+
             <Button x:Name="LoadButton" 
                     Content="Load" 
-                    Width="72" 
+                    Width="75" 
                     Height="25"
                     Command="{Binding LoadCommand}"
                     CommandParameter="{Binding CurrentContact}"/>

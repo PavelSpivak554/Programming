@@ -12,7 +12,6 @@ using View.Model.Services;
 using View.Services;
 using View.ViewModel;
 
-
 namespace View
 {
     /// <summary>

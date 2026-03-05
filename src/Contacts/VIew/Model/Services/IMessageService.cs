@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace View.Model.Services
 {
+    /// <summary>
+    /// Интерфейс сервиса для отображения сообщений пользователю.
+    /// </summary>
     public interface IMessageService
     {
         /// <summary>
