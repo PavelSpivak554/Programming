@@ -9,9 +9,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using View.Model.Services;
+using View.Services;
 using View.ViewModel;
 
-namespace VIew
+
+namespace View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -21,10 +23,9 @@ namespace VIew
         public MainWindow()
         {
             InitializeComponent();
-
-            MainVM mainVM = new MainVM();
+            IMessageService messageService = new WindowsMessageService();
+            MainVM mainVM = new MainVM(messageService);
             this.DataContext = mainVM;
-
         }
     }
 }
