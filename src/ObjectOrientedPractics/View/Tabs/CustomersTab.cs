@@ -23,9 +23,7 @@ namespace ObjectOrientedPractics.View.Tabs
         /// <summary>
         /// Список покупателей, отображаемых на вкладке.
         /// </summary>
-        private List<Customer> _customers = new List<Customer>();
-        private AddressControl _addressControl1 = new AddressControl();
-        private Customer _selectedCustomer = null;
+        private List<Customer> _customers;
 
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="CustomersTab"/>.
@@ -34,11 +32,41 @@ namespace ObjectOrientedPractics.View.Tabs
         {
             InitializeComponent();
             InitializeVisualValidation();
+            _customers = new List<Customer>();
         }
+
+        /// <summary>
+        /// Получает или задает список покупателей для отображения на вкладке.
+        /// При установке нового списка обновляет отображение в ListBox.
+        /// </summary>
+        public List<Customer> Customers
+        {
+            get
+            {
+                return _customers;
+            }
+            set
+            {
+                if (value == null)
+                {
+                    _customers = new List<Customer>();
+                }
+                else
+                {
+                    _customers = value;
+                }
+                UpdateListBox();
+            }
+        }
+
+        /// <summary>
+        /// Инициализация визуальной валидации полей
+        /// </summary>
         private void InitializeVisualValidation()
         {
             CustomerNameTextBox.TextChanged += (s, e) => ValidateFullNameVisual();
         }
+
         /// <summary>
         /// Очищает текстовые поля ввода данных о покупателе.
         /// </summary>
@@ -51,20 +79,13 @@ namespace ObjectOrientedPractics.View.Tabs
 
         /// <summary>
         /// Обновляет содержимое списка покупателей в ListBox.
-        /// Загружает всех покупателей из коллекции _customers.
+        /// Использует DataSource для эффективного обновления.
         /// </summary>
-        public void ListBoxUpdate()
+        public void UpdateListBox()
         {
-            int selectedIndex = CustomersListBox.SelectedIndex;
-            CustomersListBox.Items.Clear();
-            foreach (var customer in _customers)
-            {
-                CustomersListBox.Items.Add(customer);
-            }
-            if (selectedIndex >= 0 && selectedIndex < CustomersListBox.Items.Count)
-            {
-                CustomersListBox.SelectedIndex = selectedIndex;
-            }
+            CustomersListBox.DataSource = null;
+            CustomersListBox.DataSource = _customers;
+            CustomersListBox.DisplayMember = "FullName";
         }
 
         /// <summary>
@@ -75,15 +96,14 @@ namespace ObjectOrientedPractics.View.Tabs
         private bool ValidateFullNameVisual()
         {
             bool isValid = string.IsNullOrEmpty(CustomerNameTextBox.Text) ||
-                          (CustomerNameTextBox.Text.Length >= 500) ||
-                          CustomerNameTextBox.Text.All(char.IsLetter);
+                          (CustomerNameTextBox.Text.Length <= 500);
             CustomerNameTextBox.BackColor = isValid ? Color.White : Color.LightPink;
             return isValid;
         }
+
         /// <summary>
         /// Выполняет комплексную валидацию всех полей ввода.
         /// </summary>
-
         private bool CustomerValidating()
         {
             bool isAddressValid = addressControl1.ValidateAddress();
@@ -100,18 +120,15 @@ namespace ObjectOrientedPractics.View.Tabs
         /// Обрабатывает событие изменения выбранного элемента в списке покупателей.
         /// Загружает данные выбранного покупателя в текстовые поля для редактирования.
         /// </summary>
-        private void CustomersListBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void CustomersListBox_SelectedIndexChanged_1(object sender, EventArgs e)
         {
-            try
+            if (CustomersListBox.SelectedItem is Customer selectedCustomer)
             {
-                Customer selectedCustomer = (Customer)CustomersListBox.SelectedItem;
                 CustomerNameTextBox.Text = selectedCustomer.FullName;
                 CustomerIdTextBox.Text = selectedCustomer.Id.ToString();
                 addressControl1.Address = selectedCustomer.Address;
-
-
             }
-            catch (System.NullReferenceException)
+            else
             {
                 ClearFields();
             }
@@ -131,18 +148,19 @@ namespace ObjectOrientedPractics.View.Tabs
                     Address address = addressControl1.Address;
                     Customer customer = new Customer(customerName, address);
                     _customers.Add(customer);
-                    ListBoxUpdate();
-                    //ClearFields();
+                    UpdateListBox();
+                    CustomersListBox.SelectedItem = customer;
                 }
                 else
                 {
-                    MessageBox.Show("Невозможно добавить предмет, введите корректные данные в выделенные поля",
+                    MessageBox.Show("Невозможно добавить покупателя, введите корректные данные в выделенные поля",
                         "Ошибка валидации", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    
                 }
             }
             catch (ArgumentException)
             {
-                MessageBox.Show("Невозможно добавить предмет, входные данные некорректны",
+                MessageBox.Show("Невозможно добавить покупателя, входные данные некорректны",
                     "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -153,10 +171,14 @@ namespace ObjectOrientedPractics.View.Tabs
         /// </summary>
         private void CustomerRemoveButton_Click(object sender, EventArgs e)
         {
-            Customer selectedItem = (Customer)CustomersListBox.SelectedItem;
-            _customers.Remove(selectedItem);
-            ListBoxUpdate();
-            ClearFields();
+            if (CustomersListBox.SelectedItem is Customer selectedItem)
+            {
+                _customers.Remove(selectedItem);
+                UpdateListBox();
+                ClearFields();
+            }
         }
+
+        
     }
 }

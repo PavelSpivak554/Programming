@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ObjectOrientedPractics.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,7 +15,11 @@ namespace ObjectOrientedPractics
     {
         public MainForm()
         {
+            
             InitializeComponent();
+            Store _store = new Store();
+            itemsTab1.Items = _store.Items;
+            customersTab1.Customers = _store.Customers;
         }
     }
 }

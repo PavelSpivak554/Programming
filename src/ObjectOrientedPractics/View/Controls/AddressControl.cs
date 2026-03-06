@@ -62,6 +62,7 @@ namespace ObjectOrientedPractics.View.Controls
                            index <= 999999);
 
             PostIndexTextBox.BackColor = isValid ? Color.White : Color.LightPink;
+            
         }
 
         /// <summary>
@@ -184,7 +185,20 @@ namespace ObjectOrientedPractics.View.Controls
 
         private void PostIndexTextBox_TextChanged(object sender, EventArgs e)
         {
-            // Обработчик уже настроен в InitializeVisualValidation()
+            
+        }
+        /// <summary>
+        /// Принудительно обновляет визуальную валидацию всех полей
+        /// </summary>
+        public void RefreshValidation()
+        {
+
+            ValidatePostIndexVisual();
+            ValidateCountryVisual();
+            ValidateCityVisual();
+            ValidateStreetVisual();
+            ValidateBuildingVisual();
+            ValidateApartmentVisual();
         }
     }
 }

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ObjectOrientedPractics.Model
 {
+    /// <summary>
+    /// Представляет категории товаров, доступные в магазине.
+    /// </summary>
     public enum Category
     {
         /// <summary>

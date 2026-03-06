@@ -157,15 +157,12 @@ namespace ObjectOrientedPractics.Model
             get { return _apartment; }
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
+                // Убираем проверку на пустоту - квартиры может не быть
+                if (value != null && value.Length > 10)
                 {
                     throw new ArgumentException("Номер квартиры не должен превышать 10 символов.");
                 }
-                if (value.Length > 10)
-                {
-                    throw new ArgumentException("Номер квартиры не должен превышать 10 символов.");
-                }
-                _apartment = value;
+                _apartment = value ?? string.Empty; // Если null, присваиваем пустую строку
             }
         }
     }

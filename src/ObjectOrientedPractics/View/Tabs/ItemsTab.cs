@@ -19,6 +19,11 @@ namespace ObjectOrientedPractics.View.Tabs
     public partial class ItemsTab : UserControl
     {
         /// <summary>
+        /// Список товаров, отображаемых на вкладке.
+        /// </summary>
+        private List<Item> _items;
+
+        /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="ItemsTab"/>.
         /// </summary>
         public ItemsTab()
@@ -26,15 +31,32 @@ namespace ObjectOrientedPractics.View.Tabs
             InitializeComponent();
             ItemsCategoryComboBox.DataSource = Enum.GetValues(typeof(Category));
             InitializeVisualValidation();
-            InitializeSampleData();
+            _items = new List<Item>();
         }
 
         /// <summary>
-        /// Список товаров, отображаемых на вкладке.
+        /// Получает или задает список товаров для отображения на вкладке.
+        /// При установке нового списка обновляет отображение в ListBox.
         /// </summary>
-        private List<Item> _items = new List<Item>();
-
-
+        public List<Item> Items
+        {
+            get
+            {
+                return _items;
+            }
+            set
+            {
+                if (value == null)
+                {
+                    _items = new List<Item>();
+                }
+                else
+                {
+                    _items = value;
+                }
+                UpdateListBox(); // Обновляем отображение при изменении списка
+            }
+        }
 
         /// <summary>
         /// Инициализация визуальной валидации полей
@@ -45,15 +67,7 @@ namespace ObjectOrientedPractics.View.Tabs
             ItemCostTextBox.TextChanged += (s, e) => ValidateCostTextBoxVisual();
             ItemNameTextBox.TextChanged += (s, e) => ValidateNameTextBoxVisual();
         }
-        private void InitializeSampleData()
-        {
-            _items.Add(new Item("Ноутбук", "Игровой ноутбук с RTX 4060", 89999.99, Category.Electronics));
-            _items.Add(new Item("Книга", "Программирование на C#", 2499.99, Category.Books));
-            _items.Add(new Item("Кофе", "Арабика, 250г", 599.99, Category.Food));
-            _items.Add(new Item("Футболка", "Хлопковая, черная", 1299.99, Category.Clothing));
-            _items.Add(new Item("Наушники", "Беспроводные, шумоподавление", 5999.99, Category.Electronics));
-            ListBoxUpdate();
-        }
+
         /// <summary>
         /// Выполняет валидацию поля наименования товара.
         /// Проверяет, что строка не пустая и не превышает 200 символов.
@@ -65,6 +79,7 @@ namespace ObjectOrientedPractics.View.Tabs
                           (ItemNameTextBox.Text.Length <= 200);
             ItemNameTextBox.BackColor = isValid ? Color.White : Color.LightPink;
         }
+
         /// <summary>
         /// Выполняет валидацию поля описания товара.
         /// Проверяет, что строка не пустая и не превышает 1000 символов.
@@ -76,6 +91,7 @@ namespace ObjectOrientedPractics.View.Tabs
                          (ItemInfoTextBox.Text.Length <= 1000);
             ItemInfoTextBox.BackColor = isValid ? Color.White : Color.LightPink;
         }
+
         /// <summary>
         /// Выполняет валидацию поля стоимости товара.
         /// Проверяет, что значение может быть преобразовано в double и является неотрицательным.
@@ -87,6 +103,7 @@ namespace ObjectOrientedPractics.View.Tabs
                           (double.TryParse(ItemCostTextBox.Text, out double index) && index >= 0 && index <= 100000);
             ItemCostTextBox.BackColor = isValid ? Color.White : Color.LightPink;
         }
+
         /// <summary>
         /// Проверка всех полей Item
         /// </summary>
@@ -98,12 +115,14 @@ namespace ObjectOrientedPractics.View.Tabs
                 cost <= 100000;
             bool nameValid = !string.IsNullOrEmpty(ItemNameTextBox.Text) && ItemNameTextBox.Text.Length <= 200;
             bool infoValid = !string.IsNullOrEmpty(ItemInfoTextBox.Text) && ItemInfoTextBox.Text.Length <= 1000;
+
             ItemCostTextBox.BackColor = costValid ? Color.White : Color.LightPink;
             ItemNameTextBox.BackColor = nameValid ? Color.White : Color.LightPink;
             ItemInfoTextBox.BackColor = infoValid ? Color.White : Color.LightPink;
 
             return costValid && nameValid && infoValid;
         }
+
         /// <summary>
         /// Обрабатывает событие нажатия кнопки добавления товара.
         /// Создает новый товар на основе введенных данных и добавляет его в коллекцию.
@@ -118,9 +137,12 @@ namespace ObjectOrientedPractics.View.Tabs
                     string itemInfo = ItemInfoTextBox.Text;
                     double itemCost = Convert.ToDouble(ItemCostTextBox.Text);
                     Category itemCategory = (Category)Enum.Parse(typeof(Category), ItemsCategoryComboBox.Text);
+
                     Item item = new Item(itemName, itemInfo, itemCost, itemCategory);
                     _items.Add(item);
-                    ListBoxUpdate();
+
+                    UpdateListBox();
+                    ItemsListBox.SelectedItem = item; // Выбираем новый товар
                 }
                 else
                 {
@@ -146,10 +168,13 @@ namespace ObjectOrientedPractics.View.Tabs
         /// </summary>
         private void RemoveButton_Click(object sender, EventArgs e)
         {
-            Item selectedItem = (Item)ItemsListBox.SelectedItem;
-            _items.Remove(selectedItem);
-            ListBoxUpdate();
-            ClearFields();
+            if (ItemsListBox.SelectedItem != null)
+            {
+                Item selectedItem = (Item)ItemsListBox.SelectedItem;
+                _items.Remove(selectedItem);
+                UpdateListBox();
+                ClearFields();
+            }
         }
 
         /// <summary>
@@ -158,32 +183,36 @@ namespace ObjectOrientedPractics.View.Tabs
         /// </summary>
         private void ItemsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            try
+            // Важно! Нужно получать Item по индексу, а не из SelectedItem
+            if (ItemsListBox.SelectedIndex >= 0 && ItemsListBox.SelectedIndex < _items.Count)
             {
-                Item selectedItem = (Item)ItemsListBox.SelectedItem;
+                Item selectedItem = _items[ItemsListBox.SelectedIndex]; // Получаем из списка по индексу!
+
                 ItemNameTextBox.Text = selectedItem.Name;
                 ItemInfoTextBox.Text = selectedItem.Info;
                 ItemCostTextBox.Text = selectedItem.Cost.ToString();
                 ItemIdTextBox.Text = selectedItem.Id.ToString();
-                ItemsCategoryComboBox.Text = selectedItem.Category.ToString();
+                ItemsCategoryComboBox.SelectedItem = selectedItem.Category;
             }
-            catch (System.NullReferenceException)
+            else
             {
+                ClearFields();
             }
         }
+
         /// <summary>
-        /// при выборе нового значения в выпадающем списке, категория присваиваевается товару.
-        /// </summary>>
+        /// при выборе нового значения в выпадающем списке, категория присваивается товару.
+        /// </summary>
         private void ItemsCategoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Category newCategory = (Category)ItemsCategoryComboBox.SelectedItem;
-            Item selectedItem = (Item)ItemsListBox.SelectedItem;
-            if (ItemsListBox.SelectedItem != null)
+            if (ItemsListBox.SelectedItem is Item selectedItem &&
+                ItemsCategoryComboBox.SelectedItem is Category newCategory)
             {
                 selectedItem.Category = newCategory;
-                ListBoxUpdate();
+                UpdateListBox(); // Обновляем отображение в списке
             }
         }
+
         /// <summary>
         /// Очищает текстовые поля ввода данных о товаре.
         /// </summary>
@@ -193,54 +222,76 @@ namespace ObjectOrientedPractics.View.Tabs
             ItemInfoTextBox.Text = string.Empty;
             ItemCostTextBox.Text = string.Empty;
             ItemIdTextBox.Text = string.Empty;
+            ItemsCategoryComboBox.SelectedIndex = -1;
         }
+
         /// <summary>
         /// Обновляет содержимое списка товаров в ListBox.
-        /// Загружает все товары из коллекции _items.
+        /// Использует DataSource для более эффективного обновления.
         /// </summary>
-        public void ListBoxUpdate()
+        public void UpdateListBox()
         {
             ItemsListBox.Items.Clear();
             foreach (var item in _items)
             {
                 ItemsListBox.Items.Add(item);
             }
+
         }
+
         /// <summary>
         /// сохранение данных при редактировании названия
         /// </summary>
         private void ItemNameTextBox_TextChanged(object sender, EventArgs e)
         {
-            string newName = ItemNameTextBox.Text;
-            Item selectedItem = (Item)ItemsListBox.SelectedItem;
-            if (ItemsListBox.SelectedItem != null)
+            if (ItemsListBox.SelectedItem is Item selectedItem &&
+                !string.IsNullOrEmpty(ItemNameTextBox.Text))
             {
-                selectedItem.Name = newName;
+                try
+                {
+                    selectedItem.Name = ItemNameTextBox.Text;
+                }
+                catch (ArgumentException)
+                {
+                    
+                }
             }
         }
+
         /// <summary>
         /// сохранение данных при редактировании описания
         /// </summary>
         private void ItemInfoTextBox_TextChanged(object sender, EventArgs e)
         {
-            string newInfo = ItemInfoTextBox.Text;
-            Item selectedItem = (Item)ItemsListBox.SelectedItem;
-            if (ItemsListBox.SelectedItem != null)
+            if (ItemsListBox.SelectedItem is Item selectedItem)
             {
-                selectedItem.Info = newInfo;
+                try
+                {
+                    selectedItem.Info = ItemInfoTextBox.Text;
+                }
+                catch (ArgumentException)
+                {
+                    
+                }
             }
         }
+
         /// <summary>
         /// сохранение данных при редактировании цены
         /// </summary>
         private void ItemCostTextBox_TextChanged(object sender, EventArgs e)
         {
-            if (ItemsListBox.SelectedItem != null &&
-                double.TryParse(ItemCostTextBox.Text, out double newCost) &&
-                                newCost >= 0 && newCost <= 100000)
+            if (ItemsListBox.SelectedItem is Item selectedItem &&
+                double.TryParse(ItemCostTextBox.Text, out double newCost))
             {
-                Item selectedItem = (Item)ItemsListBox.SelectedItem;
-                selectedItem.Cost = newCost;
+                try
+                {
+                    selectedItem.Cost = newCost;
+                }
+                catch (ArgumentException)
+                {
+                    
+                }
             }
         }
     }

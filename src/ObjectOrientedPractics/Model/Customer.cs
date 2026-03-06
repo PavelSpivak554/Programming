@@ -11,7 +11,7 @@ namespace ObjectOrientedPractics.Model
     /// <summary>
     /// Представляет покупателя с Id, именем и адресом доставки.
     /// </summary>
-    internal class Customer
+    public class Customer
     {
         /// <summary>
         /// Счетчик для генерации Id
@@ -61,7 +61,7 @@ namespace ObjectOrientedPractics.Model
         }
 
         /// <summary>
-        /// Возвращает полное имя покупателя.
+        /// Возвращает или задает полное имя покупателя.
         /// </summary>
         public string FullName
         {
@@ -77,7 +77,7 @@ namespace ObjectOrientedPractics.Model
             }
         }
         /// <summary>
-        /// Возвращает  адрес доставки покупателя.
+        /// Возвращает или задает адрес доставки покупателя.
         /// </summary>
         public Address Address
         {
