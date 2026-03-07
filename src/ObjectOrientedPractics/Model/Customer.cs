@@ -37,7 +37,10 @@ namespace ObjectOrientedPractics.Model
         /// Композиция: время жизни корзины совпадает с временем жизни покупателя.
         /// </summary>
         private Cart _cart;
-
+        /// <summary>
+        /// Список заказов покупателя
+        /// </summary>
+        private List<Order> _orders;
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Customer"/>
         /// </summary>
@@ -48,7 +51,9 @@ namespace ObjectOrientedPractics.Model
             _id = idCounter++;
             FullName = fullname;
             Address = address;
-            Cart = new Cart();// Создаем корзину внутри конструктора (композиция)
+            // Создаем внутри конструктора(композиция)
+            Cart = new Cart();
+            Orders = new List<Order>();
         }
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Customer"/>
@@ -67,7 +72,7 @@ namespace ObjectOrientedPractics.Model
         }
 
         /// <summary>
-        /// Возвращает полное имя покупателя.
+        /// Возвращает или задает полное имя покупателя.
         /// </summary>
         public string FullName
         {
@@ -83,7 +88,7 @@ namespace ObjectOrientedPractics.Model
             }
         }
         /// <summary>
-        /// Возвращает  адрес доставки покупателя.
+        /// Возвращает или задает адрес доставки покупателя.
         /// </summary>
         public Address Address
         {
@@ -96,8 +101,15 @@ namespace ObjectOrientedPractics.Model
                 _address = value;
             }
         }
-
         public Cart Cart { get { return _cart; } set { _cart = value; } }
+        /// <summary>
+        /// Возвращает и задает список заказов
+        /// </summary>
+        public List<Order> Orders
+        {
+            get { return _orders; }
+            set { _orders = value; }
+        }
         /// <summary>
         /// Переопределение ToString()
         /// </summary>
