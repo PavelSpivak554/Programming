@@ -26,14 +26,26 @@ namespace ObjectOrientedPractics.View.Tabs
             InitializeComponent();
             ItemsCategoryComboBox.DataSource = Enum.GetValues(typeof(Category));
             InitializeVisualValidation();
-            InitializeSampleData();
+            
         }
 
         /// <summary>
         /// Список товаров, отображаемых на вкладке.
         /// </summary>
         private List<Item> _items = new List<Item>();
-        
+        /// <summary>
+        /// Список товаров, отображаемых в элементе управления.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public List<Item> Items
+        {
+            get => _items;
+            set
+            {
+                _items = value ?? new List<Item>();
+                ListBoxUpdate();
+            }
+        }
 
 
         /// <summary>

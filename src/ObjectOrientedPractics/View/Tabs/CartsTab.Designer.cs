@@ -129,6 +129,7 @@
             this.AddToCartBtn.TabIndex = 0;
             this.AddToCartBtn.Text = "Add To Cart";
             this.AddToCartBtn.UseVisualStyleBackColor = true;
+            this.AddToCartBtn.Click += new System.EventHandler(this.AddToCartBtn_Click);
             // 
             // panel2
             // 
@@ -264,6 +265,7 @@
             this.CreateOrderBtn.TabIndex = 0;
             this.CreateOrderBtn.Text = "Create Order";
             this.CreateOrderBtn.UseVisualStyleBackColor = true;
+            this.CreateOrderBtn.Click += new System.EventHandler(this.CreateOrderBtn_Click);
             // 
             // RemoveItemBtn
             // 
@@ -274,6 +276,7 @@
             this.RemoveItemBtn.TabIndex = 1;
             this.RemoveItemBtn.Text = "Remove Item";
             this.RemoveItemBtn.UseVisualStyleBackColor = true;
+            this.RemoveItemBtn.Click += new System.EventHandler(this.RemoveItemBtn_Click);
             // 
             // ClearCartBtn
             // 
@@ -284,6 +287,7 @@
             this.ClearCartBtn.TabIndex = 2;
             this.ClearCartBtn.Text = "Clear Cart";
             this.ClearCartBtn.UseVisualStyleBackColor = true;
+            this.ClearCartBtn.Click += new System.EventHandler(this.ClearCartBtn_Click);
             // 
             // CartsTab
             // 

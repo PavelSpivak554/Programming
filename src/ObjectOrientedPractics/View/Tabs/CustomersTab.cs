@@ -24,6 +24,21 @@ namespace ObjectOrientedPractics.View.Tabs
         /// Список покупателей, отображаемых на вкладке.
         /// </summary>
         private List<Customer> _customers = new List<Customer>();
+        /// <summary>
+        /// Открытое свойство для доступа к списку покупателей вкладки
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public List<Customer> Customers
+        {
+            get { return _customers; }
+            set
+            {
+                _customers = value ?? new List<Customer>();
+                ListBoxUpdate();
+            }
+        }
+
+
         private AddressControl _addressControl1 = new AddressControl();
         private Customer _selectedCustomer = null;
 
@@ -34,6 +49,7 @@ namespace ObjectOrientedPractics.View.Tabs
         {
             InitializeComponent();
             InitializeVisualValidation();
+            
         }
         private void InitializeVisualValidation()
         {
