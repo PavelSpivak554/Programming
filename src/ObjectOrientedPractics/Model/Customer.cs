@@ -11,7 +11,7 @@ namespace ObjectOrientedPractics.Model
     /// <summary>
     /// Представляет покупателя с Id, именем и адресом доставки.
     /// </summary>
-    internal class Customer
+    public class Customer
     {
         /// <summary>
         /// Счетчик для генерации Id
@@ -32,6 +32,11 @@ namespace ObjectOrientedPractics.Model
         /// Адрес доставки покупателя.
         /// </summary>
         private Address _address;
+        /// <summary>
+        /// Корзина товаров покупателя
+        /// Композиция: время жизни корзины совпадает с временем жизни покупателя.
+        /// </summary>
+        private Cart _cart;
 
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Customer"/>
@@ -43,6 +48,7 @@ namespace ObjectOrientedPractics.Model
             _id = idCounter++;
             FullName = fullname;
             Address = address;
+            Cart = new Cart();// Создаем корзину внутри конструктора (композиция)
         }
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Customer"/>
@@ -90,6 +96,8 @@ namespace ObjectOrientedPractics.Model
                 _address = value;
             }
         }
+
+        public Cart Cart { get { return _cart; } set { _cart = value; } }
         /// <summary>
         /// Переопределение ToString()
         /// </summary>
