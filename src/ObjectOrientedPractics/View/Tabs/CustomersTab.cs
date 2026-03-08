@@ -24,6 +24,9 @@ namespace ObjectOrientedPractics.View.Tabs
         /// Список покупателей, отображаемых на вкладке.
         /// </summary>
         private List<Customer> _customers = new List<Customer>();
+        private AddressControl _addressControl1 = new AddressControl();
+        private Customer _selectedCustomer = null;
+
         /// <summary>
         /// Открытое свойство для доступа к списку покупателей вкладки
         /// </summary>
@@ -38,10 +41,6 @@ namespace ObjectOrientedPractics.View.Tabs
             }
         }
 
-
-        private AddressControl _addressControl1 = new AddressControl();
-        private Customer _selectedCustomer = null;
-
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="CustomersTab"/>.
         /// </summary>
@@ -49,8 +48,8 @@ namespace ObjectOrientedPractics.View.Tabs
         {
             InitializeComponent();
             InitializeVisualValidation();
-            
-        }
+
+        }        
         private void InitializeVisualValidation()
         {
             CustomerNameTextBox.TextChanged += (s, e) => ValidateFullNameVisual();
@@ -118,17 +117,17 @@ namespace ObjectOrientedPractics.View.Tabs
         /// </summary>
         private void CustomersListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            try
+            if (CustomersListBox.SelectedItem is Customer selectedCustomer)
             {
-                Customer selectedCustomer = (Customer)CustomersListBox.SelectedItem;
+                _selectedCustomer = selectedCustomer;
+
                 CustomerNameTextBox.Text = selectedCustomer.FullName;
                 CustomerIdTextBox.Text = selectedCustomer.Id.ToString();
                 addressControl1.Address = selectedCustomer.Address;
-
-
             }
-            catch (System.NullReferenceException)
+            else
             {
+                _selectedCustomer = null;
                 ClearFields();
             }
         }
@@ -173,6 +172,18 @@ namespace ObjectOrientedPractics.View.Tabs
             _customers.Remove(selectedItem);
             ListBoxUpdate();
             ClearFields();
+        }
+
+        private void CustomerNameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (_selectedCustomer != null && ValidateFullNameVisual())
+            {
+                _selectedCustomer.FullName = CustomerNameTextBox.Text;
+
+                // обновляем ListBox чтобы имя изменилось
+                ListBoxUpdate();
+                CustomersListBox.SelectedItem = _selectedCustomer;
+            }
         }
     }
 }

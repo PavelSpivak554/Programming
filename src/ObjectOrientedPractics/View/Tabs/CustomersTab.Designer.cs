@@ -56,6 +56,7 @@
             this.CustomerNameTextBox.Name = "CustomerNameTextBox";
             this.CustomerNameTextBox.Size = new System.Drawing.Size(327, 22);
             this.CustomerNameTextBox.TabIndex = 21;
+            this.CustomerNameTextBox.TextChanged += new System.EventHandler(this.CustomerNameTextBox_TextChanged);
             // 
             // CustomerIdTextBox
             // 
@@ -183,6 +184,7 @@
             this.CustomersListBox.Name = "CustomersListBox";
             this.CustomersListBox.Size = new System.Drawing.Size(309, 392);
             this.CustomersListBox.TabIndex = 0;
+            this.CustomersListBox.SelectedIndexChanged += new System.EventHandler(this.CustomersListBox_SelectedIndexChanged);
             // 
             // panel2
             // 
