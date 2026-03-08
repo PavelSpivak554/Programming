@@ -117,7 +117,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.PostIndexTextBox.Location = new System.Drawing.Point(79, 36);
             this.PostIndexTextBox.Name = "PostIndexTextBox";
-            this.PostIndexTextBox.Size = new System.Drawing.Size(92, 22);
+            this.PostIndexTextBox.Size = new System.Drawing.Size(138, 22);
             this.PostIndexTextBox.TabIndex = 7;
             // 
             // CountryTextBox
@@ -144,7 +144,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.BuildingTextBox.Location = new System.Drawing.Point(79, 123);
             this.BuildingTextBox.Name = "BuildingTextBox";
-            this.BuildingTextBox.Size = new System.Drawing.Size(92, 22);
+            this.BuildingTextBox.Size = new System.Drawing.Size(138, 22);
             this.BuildingTextBox.TabIndex = 10;
             // 
             // CityTextBox
@@ -162,7 +162,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ApartmentTextBox.Location = new System.Drawing.Point(312, 125);
             this.ApartmentTextBox.Name = "ApartmentTextBox";
-            this.ApartmentTextBox.Size = new System.Drawing.Size(92, 22);
+            this.ApartmentTextBox.Size = new System.Drawing.Size(186, 22);
             this.ApartmentTextBox.TabIndex = 12;
             // 
             // tableLayoutPanel1

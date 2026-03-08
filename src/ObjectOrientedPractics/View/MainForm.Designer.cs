@@ -35,10 +35,13 @@
             this.customersTab1 = new ObjectOrientedPractics.View.Tabs.CustomersTab();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.cartsTab1 = new ObjectOrientedPractics.View.Tabs.CartsTab();
+            this.OrdersPage = new System.Windows.Forms.TabPage();
+            this.ordersTab1 = new ObjectOrientedPractics.View.Tabs.OrdersTab();
             this.tabControl1.SuspendLayout();
             this.ItemsPage.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.OrdersPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -46,6 +49,7 @@
             this.tabControl1.Controls.Add(this.ItemsPage);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.OrdersPage);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -111,6 +115,25 @@
             this.cartsTab1.Size = new System.Drawing.Size(786, 449);
             this.cartsTab1.TabIndex = 0;
             // 
+            // OrdersPage
+            // 
+            this.OrdersPage.Controls.Add(this.ordersTab1);
+            this.OrdersPage.Location = new System.Drawing.Point(4, 25);
+            this.OrdersPage.Name = "OrdersPage";
+            this.OrdersPage.Padding = new System.Windows.Forms.Padding(3);
+            this.OrdersPage.Size = new System.Drawing.Size(792, 455);
+            this.OrdersPage.TabIndex = 3;
+            this.OrdersPage.Text = "Orders";
+            this.OrdersPage.UseVisualStyleBackColor = true;
+            // 
+            // ordersTab1
+            // 
+            this.ordersTab1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ordersTab1.Location = new System.Drawing.Point(3, 3);
+            this.ordersTab1.Name = "ordersTab1";
+            this.ordersTab1.Size = new System.Drawing.Size(786, 449);
+            this.ordersTab1.TabIndex = 0;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -123,6 +146,7 @@
             this.ItemsPage.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.OrdersPage.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -136,6 +160,8 @@
         private View.Tabs.CustomersTab customersTab1;
         private System.Windows.Forms.TabPage tabPage1;
         private View.Tabs.CartsTab cartsTab1;
+        private System.Windows.Forms.TabPage OrdersPage;
+        private View.Tabs.OrdersTab ordersTab1;
     }
 }
 
