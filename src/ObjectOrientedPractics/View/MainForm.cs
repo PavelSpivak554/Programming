@@ -25,15 +25,13 @@ namespace ObjectOrientedPractics
             // Инициализация данных
             InitializeStore();
 
-            // Передача данных во вкладки (пункт 5)
+            // Передача данных во вкладки
             itemsTab1.Items = _store.Items;
             customersTab1.Customers = _store.Customers;
-
-            // Пункт 6 - передача тех же экземпляров списков
             cartsTab1.Items = _store.Items;
             cartsTab1.Customers = _store.Customers;
 
-            // Подписка на событие смены вкладки (пункт 19)
+            // Смена вкладки
             tabControl1.SelectedIndexChanged += TabControl_SelectedIndexChanged;
         }
 
@@ -46,6 +44,7 @@ namespace ObjectOrientedPractics
             _store.Items.Add(new Item("Кофе", "Арабика, 250г", 599.99, Category.Food));
             _store.Items.Add(new Item("Футболка", "Хлопковая, черная", 1299.99, Category.Clothing));
             _store.Items.Add(new Item("Наушники", "Беспроводные, шумоподавление", 5999.99, Category.Electronics));
+            _store.Customers.Add(new Customer("никитос", new Address()));
 
         }
 

@@ -188,6 +188,7 @@
             this.CustomersComboBox.Name = "CustomersComboBox";
             this.CustomersComboBox.Size = new System.Drawing.Size(383, 24);
             this.CustomersComboBox.TabIndex = 1;
+            this.CustomersComboBox.SelectedIndexChanged += new System.EventHandler(this.CustomersComboBox_SelectedIndexChanged);
             // 
             // CartLabel
             // 
