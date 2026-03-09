@@ -12,12 +12,32 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ObjectOrientedPractics.View.Tabs
 {
+    /// <summary>
+    /// Представляет вкладку для управления покупателями.
+    /// Позволяет добавлять, удалять и редактировать информацию о покупателях,
+    /// включая их персональные данные и адреса доставки.
+    /// </summary>
     public partial class CustomersTab : UserControl
     {
+        /// <summary>
+        /// Список покупателей.
+        /// </summary>
         private List<Customer> _customers = new List<Customer>();
-        private Customer _selectedCustomer = null;
-        private bool _isSelectedIndexChanging = false; // Флаг для предотвращения рекурсии
 
+        /// <summary>
+        /// Выбранный покупатель.
+        /// </summary>
+        private Customer _selectedCustomer = null;
+
+        /// <summary>
+        /// Флаг для предотвращения рекурсивных вызовов при изменении выбранного индекса.
+        /// </summary>
+        private bool _isSelectedIndexChanging = false;
+
+        /// <summary>
+        /// Получает или задает список покупателей.
+        /// При установке нового значения обновляет список в интерфейсе.
+        /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public List<Customer> Customers
         {
@@ -29,6 +49,10 @@ namespace ObjectOrientedPractics.View.Tabs
             }
         }
 
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="CustomersTab"/>.
+        /// Выполняет начальную настройку компонентов и подписывается на события.
+        /// </summary>
         public CustomersTab()
         {
             InitializeComponent();
@@ -36,14 +60,23 @@ namespace ObjectOrientedPractics.View.Tabs
             addressControl1.AddressChanged += AddressControl_AddressChanged;
         }
 
+        /// <summary>
+        /// Инициализирует визуальную валидацию полей ввода.
+        /// Подписывает обработчики проверки на события изменения текста.
+        /// </summary>
         private void InitializeVisualValidation()
         {
             CustomerNameTextBox.TextChanged += (s, e) => ValidateFullNameVisual();
         }
 
+        /// <summary>
+        /// Обрабатывает изменение адреса в элементе управления AddressControl.
+        /// Обновляет адрес выбранного покупателя.
+        /// </summary>
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Аргументы события.</param>
         private void AddressControl_AddressChanged(object sender, EventArgs e)
         {
-            // Обновляем адрес только если есть выбранный покупатель и это не режим создания нового
             if (_selectedCustomer != null && !_isSelectedIndexChanging)
             {
                 _selectedCustomer.Address = addressControl1.Address;
@@ -52,11 +85,15 @@ namespace ObjectOrientedPractics.View.Tabs
             }
         }
 
+        /// <summary>
+        /// Выполняет визуальную проверку поля имени покупателя.
+        /// Подсвечивает поле красным, если имя не соответствует требованиям.
+        /// </summary>
+        /// <returns>Возвращает true, если имя корректно; иначе false.</returns>
         private bool ValidateFullNameVisual()
         {
             string fullName = CustomerNameTextBox.Text;
 
-            // Если поле пустое - не подсвечиваем
             if (string.IsNullOrEmpty(fullName))
             {
                 CustomerNameTextBox.BackColor = Color.White;
@@ -70,6 +107,10 @@ namespace ObjectOrientedPractics.View.Tabs
             return isValid;
         }
 
+        /// <summary>
+        /// Выполняет комплексную проверку всех полей покупателя.
+        /// </summary>
+        /// <returns>Возвращает true, если все поля заполнены корректно; иначе false.</returns>
         private bool CustomerValidating()
         {
             bool isAddressValid = addressControl1.ValidateAddress();
@@ -81,6 +122,9 @@ namespace ObjectOrientedPractics.View.Tabs
             return isNameValid && isAddressValid;
         }
 
+        /// <summary>
+        /// Очищает все поля ввода информации о покупателе.
+        /// </summary>
         public void ClearFields()
         {
             CustomerNameTextBox.Text = string.Empty;
@@ -88,6 +132,9 @@ namespace ObjectOrientedPractics.View.Tabs
             addressControl1.ClearFields();
         }
 
+        /// <summary>
+        /// Обновляет содержимое списка покупателей в интерфейсе.
+        /// </summary>
         public void ListBoxUpdate()
         {
             CustomersListBox.Items.Clear();
@@ -97,6 +144,12 @@ namespace ObjectOrientedPractics.View.Tabs
             }
         }
 
+        /// <summary>
+        /// Обрабатывает изменение выбранного элемента в списке покупателей.
+        /// Загружает данные выбранного покупателя в поля для редактирования.
+        /// </summary>
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Аргументы события.</param>
         private void CustomersListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_isSelectedIndexChanging) return;
@@ -124,18 +177,22 @@ namespace ObjectOrientedPractics.View.Tabs
             }
         }
 
+        /// <summary>
+        /// Обрабатывает нажатие кнопки добавления покупателя.
+        /// Создает нового покупателя на основе введенных данных.
+        /// </summary>
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Аргументы события.</param>
         private void CustomerAddButton_Click(object sender, EventArgs e)
         {
             try
             {
                 if (CustomerValidating())
                 {
-                    // Снимаем выделение с текущего элемента перед созданием нового
                     _isSelectedIndexChanging = true;
                     CustomersListBox.SelectedItem = null;
                     _isSelectedIndexChanging = false;
 
-                    // Создаем нового покупателя
                     string customerName = CustomerNameTextBox.Text;
 
                     Address address = new Address(
@@ -150,11 +207,7 @@ namespace ObjectOrientedPractics.View.Tabs
                     Customer customer = new Customer(customerName, address);
                     _customers.Add(customer);
 
-                    // Обновляем список
                     ListBoxUpdate();
-
-
-                    
                 }
                 else
                 {
@@ -169,30 +222,34 @@ namespace ObjectOrientedPractics.View.Tabs
             }
         }
 
+        /// <summary>
+        /// Обрабатывает нажатие кнопки удаления покупателя.
+        /// Удаляет выбранного покупателя из списка.
+        /// </summary>
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Аргументы события.</param>
         private void CustomerRemoveButton_Click(object sender, EventArgs e)
         {
             if (CustomersListBox.SelectedItem is Customer selectedItem)
             {
                 int selectedIndex = CustomersListBox.SelectedIndex;
-
-                // Удаляем покупателя
                 _customers.Remove(selectedItem);
-
-                // Обновляем список
                 ListBoxUpdate();
-
-                
             }
         }
 
+        /// <summary>
+        /// Обрабатывает изменение текста в поле имени покупателя.
+        /// Обновляет имя выбранного покупателя в реальном времени.
+        /// </summary>
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Аргументы события.</param>
         private void CustomerNameTextBox_TextChanged(object sender, EventArgs e)
         {
-            // Обновляем имя только если есть выбранный покупатель и это не режим создания нового
             if (_selectedCustomer != null && ValidateFullNameVisual() && !_isSelectedIndexChanging)
             {
                 _selectedCustomer.FullName = CustomerNameTextBox.Text;
 
-                // Обновляем отображение в ListBox
                 int currentIndex = CustomersListBox.SelectedIndex;
                 ListBoxUpdate();
                 if (currentIndex >= 0)

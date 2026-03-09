@@ -7,13 +7,32 @@ using System.Windows.Forms;
 
 namespace ObjectOrientedPractics.View.Controls
 {
+    /// <summary>
+    /// Представляет пользовательский элемент управления для ввода и редактирования адреса доставки.
+    /// Содержит поля для почтового индекса, страны, города, улицы, номера дома и квартиры.
+    /// Обеспечивает визуальную валидацию вводимых данных.
+    /// </summary>
     public partial class AddressControl : UserControl
     {
+        /// <summary>
+        /// Объект адреса, связанный с элементом управления.
+        /// </summary>
         private Address _address;
-        private bool _isAddressUpdating = false; // Флаг для предотвращения рекурсии
 
+        /// <summary>
+        /// Флаг для предотвращения рекурсивных вызовов при обновлении данных.
+        /// </summary>
+        private bool _isAddressUpdating = false;
+
+        /// <summary>
+        /// Событие, возникающее при изменении адреса.
+        /// </summary>
         public event EventHandler AddressChanged;
 
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="AddressControl"/>.
+        /// Выполняет начальную настройку компонентов и подписывается на события.
+        /// </summary>
         public AddressControl()
         {
             InitializeComponent();
@@ -21,28 +40,29 @@ namespace ObjectOrientedPractics.View.Controls
             SubscribeToTextChangedEvents();
         }
 
+        /// <summary>
+        /// Получает или задает объект адреса, отображаемый и редактируемый в элементе управления.
+        /// При установке нового значения автоматически обновляет поля на форме.
+        /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Address Address
         {
             get
             {
-                // При получении возвращаем текущий адрес
                 return _address;
             }
             set
             {
-                // Если адрес изменился
                 if (_address != value)
                 {
                     _address = value;
-                    // Обновляем поля на форме
                     UpdateControlsFromAddress();
                 }
             }
         }
 
         /// <summary>
-        /// Подписка на события изменения текста
+        /// Подписывается на события изменения текста во всех текстовых полях.
         /// </summary>
         private void SubscribeToTextChangedEvents()
         {
@@ -55,14 +75,15 @@ namespace ObjectOrientedPractics.View.Controls
         }
 
         /// <summary>
-        /// Общий обработчик изменения текста
+        /// Обрабатывает изменение текста в любом из полей адреса.
+        /// Обновляет объект Address и вызывает событие AddressChanged.
         /// </summary>
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Аргументы события.</param>
         private void TextBox_TextChanged(object sender, EventArgs e)
         {
-            // Если идет обновление полей из адреса - игнорируем
             if (_isAddressUpdating) return;
 
-            // Если адрес не инициализирован - создаем новый
             if (_address == null)
             {
                 _address = new Address();
@@ -70,9 +91,7 @@ namespace ObjectOrientedPractics.View.Controls
 
             try
             {
-                // Пытаемся обновить адрес из полей
                 UpdateAddressFromControls();
-                // Вызываем событие об изменении адреса
                 AddressChanged?.Invoke(this, EventArgs.Empty);
             }
             catch
@@ -82,7 +101,8 @@ namespace ObjectOrientedPractics.View.Controls
         }
 
         /// <summary>
-        /// Визуальная подсветка полей
+        /// Инициализирует визуальную валидацию полей.
+        /// Подписывает обработчики проверки на события изменения текста.
         /// </summary>
         private void InitializeVisualValidation()
         {
@@ -94,6 +114,10 @@ namespace ObjectOrientedPractics.View.Controls
             ApartmentTextBox.TextChanged += (s, e) => ValidateApartmentVisual();
         }
 
+        /// <summary>
+        /// Выполняет визуальную проверку почтового индекса.
+        /// Подсвечивает поле красным, если значение не соответствует требованиям.
+        /// </summary>
         private void ValidatePostIndexVisual()
         {
             bool isValid = string.IsNullOrEmpty(PostIndexTextBox.Text) ||
@@ -102,30 +126,50 @@ namespace ObjectOrientedPractics.View.Controls
             PostIndexTextBox.BackColor = isValid ? Color.White : Color.LightPink;
         }
 
+        /// <summary>
+        /// Выполняет визуальную проверку названия страны.
+        /// Подсвечивает поле красным, если длина превышает 50 символов.
+        /// </summary>
         private void ValidateCountryVisual()
         {
             bool isValid = string.IsNullOrEmpty(CountryTextBox.Text) || CountryTextBox.Text.Length <= 50;
             CountryTextBox.BackColor = isValid ? Color.White : Color.LightPink;
         }
 
+        /// <summary>
+        /// Выполняет визуальную проверку названия города.
+        /// Подсвечивает поле красным, если длина превышает 50 символов.
+        /// </summary>
         private void ValidateCityVisual()
         {
             bool isValid = string.IsNullOrEmpty(CityTextBox.Text) || CityTextBox.Text.Length <= 50;
             CityTextBox.BackColor = isValid ? Color.White : Color.LightPink;
         }
 
+        /// <summary>
+        /// Выполняет визуальную проверку названия улицы.
+        /// Подсвечивает поле красным, если длина превышает 100 символов.
+        /// </summary>
         private void ValidateStreetVisual()
         {
             bool isValid = string.IsNullOrEmpty(StreetTextBox.Text) || StreetTextBox.Text.Length <= 100;
             StreetTextBox.BackColor = isValid ? Color.White : Color.LightPink;
         }
 
+        /// <summary>
+        /// Выполняет визуальную проверку номера дома.
+        /// Подсвечивает поле красным, если длина превышает 10 символов.
+        /// </summary>
         private void ValidateBuildingVisual()
         {
             bool isValid = string.IsNullOrEmpty(BuildingTextBox.Text) || BuildingTextBox.Text.Length <= 10;
             BuildingTextBox.BackColor = isValid ? Color.White : Color.LightPink;
         }
 
+        /// <summary>
+        /// Выполняет визуальную проверку номера квартиры.
+        /// Подсвечивает поле красным, если длина превышает 10 символов.
+        /// </summary>
         private void ValidateApartmentVisual()
         {
             bool isValid = string.IsNullOrEmpty(ApartmentTextBox.Text) || ApartmentTextBox.Text.Length <= 10;
@@ -133,11 +177,10 @@ namespace ObjectOrientedPractics.View.Controls
         }
 
         /// <summary>
-        /// Обновляет поля на форме из объекта Address
+        /// Обновляет значения текстовых полей на основе данных объекта Address.
         /// </summary>
         private void UpdateControlsFromAddress()
         {
-            // Устанавливаем флаг, чтобы не вызывать TextChanged события
             _isAddressUpdating = true;
 
             try
@@ -158,33 +201,22 @@ namespace ObjectOrientedPractics.View.Controls
             }
             finally
             {
-                // Снимаем флаг
                 _isAddressUpdating = false;
             }
         }
 
         /// <summary>
-        /// Обновляет объект Address из полей формы
+        /// Обновляет данные объекта Address на основе значений текстовых полей.
         /// </summary>
         private void UpdateAddressFromControls()
         {
             if (_address == null) return;
 
-            // Сохраняем старые значения для проверки изменений
-            int oldIndex = _address.Index;
-            string oldCountry = _address.Country;
-            string oldCity = _address.City;
-            string oldStreet = _address.Street;
-            string oldBuilding = _address.Building;
-            string oldApartment = _address.Apartment;
-
-            // Обновляем индекс
             if (int.TryParse(PostIndexTextBox.Text, out int index))
             {
                 _address.Index = index;
             }
 
-            // Обновляем остальные поля
             _address.Country = CountryTextBox.Text ?? "";
             _address.City = CityTextBox.Text ?? "";
             _address.Street = StreetTextBox.Text ?? "";
@@ -193,8 +225,9 @@ namespace ObjectOrientedPractics.View.Controls
         }
 
         /// <summary>
-        /// Проверка всех полей адреса
+        /// Выполняет полную проверку всех полей адреса.
         /// </summary>
+        /// <returns>Возвращает true, если все поля заполнены корректно; иначе false.</returns>
         public bool ValidateAddress()
         {
             bool postIndexValid = !string.IsNullOrEmpty(PostIndexTextBox.Text) &&
@@ -217,7 +250,7 @@ namespace ObjectOrientedPractics.View.Controls
         }
 
         /// <summary>
-        /// Очистка всех полей
+        /// Очищает все текстовые поля элемента управления.
         /// </summary>
         public void ClearFields()
         {

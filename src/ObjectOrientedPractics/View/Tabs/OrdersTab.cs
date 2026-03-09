@@ -6,12 +6,32 @@ using System.Windows.Forms;
 
 namespace ObjectOrientedPractics.View.Tabs
 {
+    /// <summary>
+    /// Представляет вкладку для управления заказами.
+    /// Отображает список всех заказов покупателей и позволяет просматривать детали заказа
+    /// и изменять статус заказа.
+    /// </summary>
     public partial class OrdersTab : UserControl
     {
+        /// <summary>
+        /// Список покупателей, полученный из главного окна.
+        /// </summary>
         private List<Customer> _customers;
+
+        /// <summary>
+        /// Общий список всех заказов от всех покупателей.
+        /// </summary>
         private List<Order> _orders = new List<Order>();
+
+        /// <summary>
+        /// Выбранный в данный момент заказ.
+        /// </summary>
         private Order _selectedOrder;
 
+        /// <summary>
+        /// Получает или задает список покупателей.
+        /// При установке нового значения автоматически обновляет список заказов.
+        /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public List<Customer> Customers
         {
@@ -23,26 +43,25 @@ namespace ObjectOrientedPractics.View.Tabs
             }
         }
 
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="OrdersTab"/>.
+        /// Выполняет настройку таблицы, комбобокса и подписывается на события.
+        /// </summary>
         public OrdersTab()
         {
             InitializeComponent();
 
-            // Настройка DataGridView
             ConfigureDataGridView();
-
-            // Настройка комбобокса
             StatusComboBox.DataSource = Enum.GetValues(typeof(OrderStatus));
-
-            // Устанавливаем поля только для чтения
             SetReadOnlyMode();
 
-            // Подписка на события
             dataGridView1.SelectionChanged += DataGridView1_SelectionChanged;
             StatusComboBox.SelectedIndexChanged += StatusComboBox_SelectedIndexChanged;
         }
 
         /// <summary>
-        /// Настройка колонок DataGridView
+        /// Настраивает колонки DataGridView для отображения информации о заказах.
+        /// Устанавливает режим только для чтения и отключает автоматическую генерацию колонок.
         /// </summary>
         private void ConfigureDataGridView()
         {
@@ -90,22 +109,22 @@ namespace ObjectOrientedPractics.View.Tabs
         }
 
         /// <summary>
-        /// Установка режима только для чтения для всех полей кроме статуса
+        /// Устанавливает режим только для чтения для всех полей, кроме статуса заказа.
         /// </summary>
         private void SetReadOnlyMode()
         {
             IdTextBox.ReadOnly = true;
             CreatedTextBox.ReadOnly = true;
 
-            // AddressControl в режим только для чтения
             SetAddressControlReadOnly(true);
 
             OrderItemsListBox.Enabled = false;
         }
 
         /// <summary>
-        /// Установка режима только для чтения для AddressControl
+        /// Устанавливает режим только для чтения для элементов управления AddressControl.
         /// </summary>
+        /// <param name="readOnly">True - режим только для чтения, False - режим редактирования.</param>
         private void SetAddressControlReadOnly(bool readOnly)
         {
             foreach (Control control in addressControl1.Controls)
@@ -152,7 +171,7 @@ namespace ObjectOrientedPractics.View.Tabs
         }
 
         /// <summary>
-        /// Метод для обновления данных на вкладке.
+        /// Обновляет данные на вкладке.
         /// Вызывается из главного окна при необходимости.
         /// </summary>
         public void RefreshData()
@@ -161,9 +180,11 @@ namespace ObjectOrientedPractics.View.Tabs
         }
 
         /// <summary>
-        /// Обработчик выбора строки в таблице.
-        /// При выборе заказа инициализирует правую панель с данными заказа.
+        /// Обрабатывает выбор строки в таблице заказов.
+        /// Загружает информацию о выбранном заказе в поля для просмотра.
         /// </summary>
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Аргументы события.</param>
         private void DataGridView1_SelectionChanged(object sender, EventArgs e)
         {
             if (dataGridView1.SelectedRows.Count == 0)
@@ -187,9 +208,9 @@ namespace ObjectOrientedPractics.View.Tabs
         }
 
         /// <summary>
-        /// Отображает информацию о заказе на правой панели.
+        /// Отображает информацию о заказе в соответствующих полях интерфейса.
         /// </summary>
-        /// <param name="order">Выбранный заказ.</param>
+        /// <param name="order">Заказ для отображения.</param>
         private void DisplayOrderInfo(Order order)
         {
             if (order == null) return;
@@ -213,7 +234,7 @@ namespace ObjectOrientedPractics.View.Tabs
         }
 
         /// <summary>
-        /// Очищает поля информации о заказе.
+        /// Очищает все поля с информацией о заказе.
         /// </summary>
         private void ClearOrderInfo()
         {
@@ -226,9 +247,11 @@ namespace ObjectOrientedPractics.View.Tabs
         }
 
         /// <summary>
-        /// Обработчик изменения статуса заказа.
-        /// Присваивает новое значение статуса выбранному заказу и обновляет таблицу.
+        /// Обрабатывает изменение статуса заказа.
+        /// Обновляет статус выбранного заказа и соответствующую ячейку в таблице.
         /// </summary>
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Аргументы события.</param>
         private void StatusComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_selectedOrder == null || StatusComboBox.SelectedItem == null) return;

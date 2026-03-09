@@ -13,28 +13,41 @@ using static System.Windows.Forms.AxHost;
 
 namespace ObjectOrientedPractics
 {
+    /// <summary>
+    /// Представляет главное окно приложения.
+    /// Содержит вкладки для управления товарами, покупателями, корзинами и заказами.
+    /// </summary>
     public partial class MainForm : Form
     {
+        /// <summary>
+        /// Хранилище данных приложения, содержащее списки товаров и покупателей.
+        /// </summary>
         private Store _store = new Store();
 
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="MainForm"/>.
+        /// Выполняет инициализацию компонентов, загрузку тестовых данных
+        /// и передачу данных во вкладки.
+        /// </summary>
         public MainForm()
         {
             InitializeComponent();
 
-            // Инициализация данных
             InitializeStore();
 
-            // Передача данных во вкладки
             itemsTab1.Items = _store.Items;
             customersTab1.Customers = _store.Customers;
             cartsTab1.Items = _store.Items;
             cartsTab1.Customers = _store.Customers;
             ordersTab1.Customers = _store.Customers;
 
-            // Смена вкладки
             tabControl1.SelectedIndexChanged += TabControl_SelectedIndexChanged;
         }
 
+        /// <summary>
+        /// Инициализирует хранилище тестовыми данными.
+        /// Создает товары, покупателей, наполняет корзины и создает заказы.
+        /// </summary>
         private void InitializeStore()
         {
             // Добавление тестовых товаров
@@ -73,9 +86,11 @@ namespace ObjectOrientedPractics
         }
 
         /// <summary>
-        /// Обработчик смены выбранной вкладки.
-        /// При переключении на вкладки Carts и Orders обновляет данные.
+        /// Обрабатывает смену выбранной вкладки.
+        /// При переключении на вкладки Carts и Orders обновляет их данные.
         /// </summary>
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Аргументы события.</param>
         private void TabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Обновляем данные при переключении на вкладку Carts (индекс 2)
