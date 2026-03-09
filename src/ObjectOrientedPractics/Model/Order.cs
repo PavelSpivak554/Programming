@@ -40,6 +40,7 @@ namespace ObjectOrientedPractics.Model
         /// </summary>
         private double _amount;
 
+        private OrderStatus _status;
         /// <summary>
         /// Создает новый экземпляр класса <see cref="Order"/> на основе корзины покупателя.
         /// </summary>
@@ -59,6 +60,7 @@ namespace ObjectOrientedPractics.Model
                 }
             }
             _amount = cart?.Amount ?? 0.0; // Используем стоимость из корзины
+            _status = OrderStatus.New;
         }
 
         /// <summary>
@@ -111,7 +113,14 @@ namespace ObjectOrientedPractics.Model
             get { return _amount; } set { _amount = value; }
         }
 
-
+        /// <summary>
+        /// перечисление статусов.
+        /// </summary>
+        public OrderStatus Status
+        {
+            get => _status;
+            set => _status = value;
+        }
 
     }
 

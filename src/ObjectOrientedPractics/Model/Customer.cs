@@ -121,6 +121,7 @@ namespace ObjectOrientedPractics.Model
             }
         }
         public Cart Cart { get { return _cart; } set { _cart = value; } }
+
         /// <summary>
         /// Возвращает и задает список заказов
         /// </summary>

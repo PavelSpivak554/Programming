@@ -36,12 +36,12 @@ namespace ObjectOrientedPractics.View.Tabs
             this.label2 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.OrderItemsListBox = new System.Windows.Forms.ListBox();
-            this.Pricelabel8 = new System.Windows.Forms.Label();
+            this.AmountValueLabel = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.StatusComboBox = new System.Windows.Forms.ComboBox();
+            this.CreatedTextBox = new System.Windows.Forms.TextBox();
+            this.IdTextBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -104,12 +104,12 @@ namespace ObjectOrientedPractics.View.Tabs
             // panel1
             // 
             this.panel1.Controls.Add(this.OrderItemsListBox);
-            this.panel1.Controls.Add(this.Pricelabel8);
+            this.panel1.Controls.Add(this.AmountValueLabel);
             this.panel1.Controls.Add(this.label7);
             this.panel1.Controls.Add(this.label6);
-            this.panel1.Controls.Add(this.comboBox1);
-            this.panel1.Controls.Add(this.textBox2);
-            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Controls.Add(this.StatusComboBox);
+            this.panel1.Controls.Add(this.CreatedTextBox);
+            this.panel1.Controls.Add(this.IdTextBox);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.label3);
@@ -133,16 +133,16 @@ namespace ObjectOrientedPractics.View.Tabs
             this.OrderItemsListBox.Size = new System.Drawing.Size(429, 68);
             this.OrderItemsListBox.TabIndex = 10;
             // 
-            // Pricelabel8
+            // AmountValueLabel
             // 
-            this.Pricelabel8.AutoSize = true;
-            this.Pricelabel8.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Bold);
-            this.Pricelabel8.Location = new System.Drawing.Point(342, 368);
-            this.Pricelabel8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.Pricelabel8.Name = "Pricelabel8";
-            this.Pricelabel8.Size = new System.Drawing.Size(29, 35);
-            this.Pricelabel8.TabIndex = 9;
-            this.Pricelabel8.Text = "0";
+            this.AmountValueLabel.AutoSize = true;
+            this.AmountValueLabel.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Bold);
+            this.AmountValueLabel.Location = new System.Drawing.Point(342, 368);
+            this.AmountValueLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.AmountValueLabel.Name = "AmountValueLabel";
+            this.AmountValueLabel.Size = new System.Drawing.Size(29, 35);
+            this.AmountValueLabel.TabIndex = 9;
+            this.AmountValueLabel.Text = "0";
             // 
             // label7
             // 
@@ -166,34 +166,33 @@ namespace ObjectOrientedPractics.View.Tabs
             this.label6.TabIndex = 6;
             this.label6.Text = "Order Items";
             // 
-            // comboBox1
+            // StatusComboBox
             // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.Enabled = false;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(88, 55);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(2);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(146, 24);
-            this.comboBox1.TabIndex = 5;
+            this.StatusComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.StatusComboBox.FormattingEnabled = true;
+            this.StatusComboBox.Location = new System.Drawing.Point(88, 55);
+            this.StatusComboBox.Margin = new System.Windows.Forms.Padding(2);
+            this.StatusComboBox.Name = "StatusComboBox";
+            this.StatusComboBox.Size = new System.Drawing.Size(146, 24);
+            this.StatusComboBox.TabIndex = 5;
             // 
-            // textBox2
+            // CreatedTextBox
             // 
-            this.textBox2.Location = new System.Drawing.Point(88, 33);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(2);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(146, 22);
-            this.textBox2.TabIndex = 4;
+            this.CreatedTextBox.Location = new System.Drawing.Point(88, 33);
+            this.CreatedTextBox.Margin = new System.Windows.Forms.Padding(2);
+            this.CreatedTextBox.Name = "CreatedTextBox";
+            this.CreatedTextBox.ReadOnly = true;
+            this.CreatedTextBox.Size = new System.Drawing.Size(146, 22);
+            this.CreatedTextBox.TabIndex = 4;
             // 
-            // textBox1
+            // IdTextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(88, 10);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(146, 22);
-            this.textBox1.TabIndex = 1;
+            this.IdTextBox.Location = new System.Drawing.Point(88, 10);
+            this.IdTextBox.Margin = new System.Windows.Forms.Padding(2);
+            this.IdTextBox.Name = "IdTextBox";
+            this.IdTextBox.ReadOnly = true;
+            this.IdTextBox.Size = new System.Drawing.Size(146, 22);
+            this.IdTextBox.TabIndex = 1;
             // 
             // label5
             // 
@@ -354,16 +353,16 @@ namespace ObjectOrientedPractics.View.Tabs
         private Label label3;
         private Panel panel2;
         private Label label1;
-        private TextBox textBox2;
-        private TextBox textBox1;
-        private ComboBox comboBox1;
+        private TextBox CreatedTextBox;
+        private TextBox IdTextBox;
+        private ComboBox StatusComboBox;
         private DataGridView dataGridView1;
         private DataGridViewTextBoxColumn Id;
         private DataGridViewTextBoxColumn Created;
         private DataGridViewTextBoxColumn OrderStatus;
         private DataGridViewTextBoxColumn CustomerFullName;
         private Label label6;
-        private Label Pricelabel8;
+        private Label AmountValueLabel;
         private Label label7;
         private ListBox OrderItemsListBox;
         private DataGridViewTextBoxColumn DeliveryAddress;
