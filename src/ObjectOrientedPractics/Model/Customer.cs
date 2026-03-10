@@ -11,7 +11,7 @@ namespace ObjectOrientedPractics.Model
     /// <summary>
     /// Представляет покупателя с Id, именем и адресом доставки.
     /// </summary>
-    internal class Customer
+    public class Customer
     {
         /// <summary>
         /// Счетчик для генерации Id
@@ -32,7 +32,15 @@ namespace ObjectOrientedPractics.Model
         /// Адрес доставки покупателя.
         /// </summary>
         private Address _address;
-
+        /// <summary>
+        /// Корзина товаров покупателя
+        /// Композиция: время жизни корзины совпадает с временем жизни покупателя.
+        /// </summary>
+        private Cart _cart;
+        /// <summary>
+        /// Список заказов покупателя
+        /// </summary>
+        private List<Order> _orders;
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Customer"/>
         /// </summary>
@@ -43,7 +51,29 @@ namespace ObjectOrientedPractics.Model
             _id = idCounter++;
             FullName = fullname;
             Address = address;
+            // Создаем внутри конструктора(композиция)
+            Cart = new Cart();
+            Orders = new List<Order>();
         }
+        public Customer(string fullname, int index, string country, string city,
+                       string street, string building, string apartment, int id = 0)
+        {
+            if (id == 0)
+            {
+                _id = idCounter++;
+            }
+            else
+            {
+                _id = id;
+            }
+
+            _fullname = fullname;
+            // СОЗДАЕМ адрес внутри конструктора - это композиция
+            _address = new Address(index, country, city, street, building, apartment);
+            _cart = new Cart(); // композиция т.к при удаление покупателя удалиться и корзина
+            _orders = new List<Order>();
+        }
+
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Customer"/>
         /// </summary>
@@ -61,7 +91,7 @@ namespace ObjectOrientedPractics.Model
         }
 
         /// <summary>
-        /// Возвращает полное имя покупателя.
+        /// Возвращает или задает полное имя покупателя.
         /// </summary>
         public string FullName
         {
@@ -77,7 +107,7 @@ namespace ObjectOrientedPractics.Model
             }
         }
         /// <summary>
-        /// Возвращает  адрес доставки покупателя.
+        /// Возвращает или задает адрес доставки покупателя.
         /// </summary>
         public Address Address
         {
@@ -89,6 +119,16 @@ namespace ObjectOrientedPractics.Model
             {
                 _address = value;
             }
+        }
+        public Cart Cart { get { return _cart; } set { _cart = value; } }
+
+        /// <summary>
+        /// Возвращает и задает список заказов
+        /// </summary>
+        public List<Order> Orders
+        {
+            get { return _orders; }
+            set { _orders = value; }
         }
         /// <summary>
         /// Переопределение ToString()
