@@ -7,40 +7,123 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ObjectOrientedPractics.View.Tabs
 {
     /// <summary>
-    /// Представляет вкладку для работы с покупателями.
-    /// Обеспечивает добавление, удаление и редактирование информации о покупателях.
+    /// Представляет вкладку для управления покупателями.
+    /// Позволяет добавлять, удалять и редактировать информацию о покупателях,
+    /// включая их персональные данные и адреса доставки.
     /// </summary>
     public partial class CustomersTab : UserControl
     {
         /// <summary>
-        /// Список покупателей, отображаемых на вкладке.
+        /// Список покупателей.
         /// </summary>
         private List<Customer> _customers = new List<Customer>();
-        private AddressControl _addressControl1 = new AddressControl();
+
+        /// <summary>
+        /// Выбранный покупатель.
+        /// </summary>
         private Customer _selectedCustomer = null;
 
         /// <summary>
+        /// Флаг для предотвращения рекурсивных вызовов при изменении выбранного индекса.
+        /// </summary>
+        private bool _isSelectedIndexChanging = false;
+
+        /// <summary>
+        /// Получает или задает список покупателей.
+        /// При установке нового значения обновляет список в интерфейсе.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public List<Customer> Customers
+        {
+            get { return _customers; }
+            set
+            {
+                _customers = value ?? new List<Customer>();
+                ListBoxUpdate();
+            }
+        }
+
+        /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="CustomersTab"/>.
+        /// Выполняет начальную настройку компонентов и подписывается на события.
         /// </summary>
         public CustomersTab()
         {
             InitializeComponent();
             InitializeVisualValidation();
+            addressControl1.AddressChanged += AddressControl_AddressChanged;
         }
+
+        /// <summary>
+        /// Инициализирует визуальную валидацию полей ввода.
+        /// Подписывает обработчики проверки на события изменения текста.
+        /// </summary>
         private void InitializeVisualValidation()
         {
             CustomerNameTextBox.TextChanged += (s, e) => ValidateFullNameVisual();
         }
+
         /// <summary>
-        /// Очищает текстовые поля ввода данных о покупателе.
+        /// Обрабатывает изменение адреса в элементе управления AddressControl.
+        /// Обновляет адрес выбранного покупателя.
+        /// </summary>
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Аргументы события.</param>
+        private void AddressControl_AddressChanged(object sender, EventArgs e)
+        {
+            if (_selectedCustomer != null && !_isSelectedIndexChanging)
+            {
+                _selectedCustomer.Address = addressControl1.Address;
+                ListBoxUpdate();
+                CustomersListBox.SelectedItem = _selectedCustomer;
+            }
+        }
+
+        /// <summary>
+        /// Выполняет визуальную проверку поля имени покупателя.
+        /// Подсвечивает поле красным, если имя не соответствует требованиям.
+        /// </summary>
+        /// <returns>Возвращает true, если имя корректно; иначе false.</returns>
+        private bool ValidateFullNameVisual()
+        {
+            string fullName = CustomerNameTextBox.Text;
+
+            if (string.IsNullOrEmpty(fullName))
+            {
+                CustomerNameTextBox.BackColor = Color.White;
+                return false;
+            }
+
+            bool isValid = fullName.Length <= 500 &&
+                           fullName.All(c => char.IsLetter(c) || char.IsWhiteSpace(c) || c == '-');
+
+            CustomerNameTextBox.BackColor = isValid ? Color.White : Color.LightPink;
+            return isValid;
+        }
+
+        /// <summary>
+        /// Выполняет комплексную проверку всех полей покупателя.
+        /// </summary>
+        /// <returns>Возвращает true, если все поля заполнены корректно; иначе false.</returns>
+        private bool CustomerValidating()
+        {
+            bool isAddressValid = addressControl1.ValidateAddress();
+            bool isNameValid = !string.IsNullOrEmpty(CustomerNameTextBox.Text) &&
+                              CustomerNameTextBox.Text.Length <= 200;
+
+            CustomerNameTextBox.BackColor = isNameValid ? Color.White : Color.LightPink;
+
+            return isNameValid && isAddressValid;
+        }
+
+        /// <summary>
+        /// Очищает все поля ввода информации о покупателе.
         /// </summary>
         public void ClearFields()
         {
@@ -50,113 +133,130 @@ namespace ObjectOrientedPractics.View.Tabs
         }
 
         /// <summary>
-        /// Обновляет содержимое списка покупателей в ListBox.
-        /// Загружает всех покупателей из коллекции _customers.
+        /// Обновляет содержимое списка покупателей в интерфейсе.
         /// </summary>
         public void ListBoxUpdate()
         {
-            int selectedIndex = CustomersListBox.SelectedIndex;
             CustomersListBox.Items.Clear();
             foreach (var customer in _customers)
             {
                 CustomersListBox.Items.Add(customer);
             }
-            if (selectedIndex >= 0 && selectedIndex < CustomersListBox.Items.Count)
-            {
-                CustomersListBox.SelectedIndex = selectedIndex;
-            }
         }
 
         /// <summary>
-        /// Выполняет валидацию поля имени покупателя.
-        /// Проверяет, что строка не пустая и содержит только буквы.
-        /// Изменяет цвет фона текстового поля в зависимости от результата проверки.
+        /// Обрабатывает изменение выбранного элемента в списке покупателей.
+        /// Загружает данные выбранного покупателя в поля для редактирования.
         /// </summary>
-        private bool ValidateFullNameVisual()
-        {
-            bool isValid = string.IsNullOrEmpty(CustomerNameTextBox.Text) ||
-                          (CustomerNameTextBox.Text.Length >= 500) ||
-                          CustomerNameTextBox.Text.All(char.IsLetter);
-            CustomerNameTextBox.BackColor = isValid ? Color.White : Color.LightPink;
-            return isValid;
-        }
-        /// <summary>
-        /// Выполняет комплексную валидацию всех полей ввода.
-        /// </summary>
-
-        private bool CustomerValidating()
-        {
-            bool isAddressValid = addressControl1.ValidateAddress();
-            bool isNameValid = !string.IsNullOrEmpty(CustomerNameTextBox.Text) &&
-                              CustomerNameTextBox.Text.Length <= 500;
-
-            // Подсвечиваем поле имени
-            CustomerNameTextBox.BackColor = isNameValid ? Color.White : Color.LightPink;
-
-            return isNameValid && isAddressValid;
-        }
-
-        /// <summary>
-        /// Обрабатывает событие изменения выбранного элемента в списке покупателей.
-        /// Загружает данные выбранного покупателя в текстовые поля для редактирования.
-        /// </summary>
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Аргументы события.</param>
         private void CustomersListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (_isSelectedIndexChanging) return;
+
+            _isSelectedIndexChanging = true;
+
             try
             {
-                Customer selectedCustomer = (Customer)CustomersListBox.SelectedItem;
-                CustomerNameTextBox.Text = selectedCustomer.FullName;
-                CustomerIdTextBox.Text = selectedCustomer.Id.ToString();
-                addressControl1.Address = selectedCustomer.Address;
-
-
+                if (CustomersListBox.SelectedItem is Customer selectedCustomer)
+                {
+                    _selectedCustomer = selectedCustomer;
+                    CustomerNameTextBox.Text = selectedCustomer.FullName;
+                    CustomerIdTextBox.Text = selectedCustomer.Id.ToString();
+                    addressControl1.Address = selectedCustomer.Address;
+                }
+                else
+                {
+                    _selectedCustomer = null;
+                    ClearFields();
+                }
             }
-            catch (System.NullReferenceException)
+            finally
             {
-                ClearFields();
+                _isSelectedIndexChanging = false;
             }
         }
 
         /// <summary>
-        /// Обрабатывает событие нажатия кнопки добавления покупателя.
-        /// Создает нового покупателя на основе введенных данных и добавляет его в коллекцию.
+        /// Обрабатывает нажатие кнопки добавления покупателя.
+        /// Создает нового покупателя на основе введенных данных.
         /// </summary>
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Аргументы события.</param>
         private void CustomerAddButton_Click(object sender, EventArgs e)
         {
             try
             {
                 if (CustomerValidating())
                 {
+                    _isSelectedIndexChanging = true;
+                    CustomersListBox.SelectedItem = null;
+                    _isSelectedIndexChanging = false;
+
                     string customerName = CustomerNameTextBox.Text;
-                    Address address = addressControl1.Address;
+
+                    Address address = new Address(
+                        addressControl1.Address.Index,
+                        addressControl1.Address.Country,
+                        addressControl1.Address.City,
+                        addressControl1.Address.Street,
+                        addressControl1.Address.Building,
+                        addressControl1.Address.Apartment
+                    );
+
                     Customer customer = new Customer(customerName, address);
                     _customers.Add(customer);
+
                     ListBoxUpdate();
-                    //ClearFields();
                 }
                 else
                 {
-                    MessageBox.Show("Невозможно добавить предмет, введите корректные данные в выделенные поля",
+                    MessageBox.Show("Невозможно добавить покупателя, введите корректные данные в выделенные поля",
                         "Ошибка валидации", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            catch (ArgumentException)
+            catch (ArgumentException ex)
             {
-                MessageBox.Show("Невозможно добавить предмет, входные данные некорректны",
+                MessageBox.Show($"Ошибка при добавлении покупателя: {ex.Message}",
                     "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         /// <summary>
-        /// Обрабатывает событие нажатия кнопки удаления покупателя.
-        /// Удаляет выбранного покупателя из коллекции и обновляет интерфейс.
+        /// Обрабатывает нажатие кнопки удаления покупателя.
+        /// Удаляет выбранного покупателя из списка.
         /// </summary>
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Аргументы события.</param>
         private void CustomerRemoveButton_Click(object sender, EventArgs e)
         {
-            Customer selectedItem = (Customer)CustomersListBox.SelectedItem;
-            _customers.Remove(selectedItem);
-            ListBoxUpdate();
-            ClearFields();
+            if (CustomersListBox.SelectedItem is Customer selectedItem)
+            {
+                int selectedIndex = CustomersListBox.SelectedIndex;
+                _customers.Remove(selectedItem);
+                ListBoxUpdate();
+            }
+        }
+
+        /// <summary>
+        /// Обрабатывает изменение текста в поле имени покупателя.
+        /// Обновляет имя выбранного покупателя в реальном времени.
+        /// </summary>
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Аргументы события.</param>
+        private void CustomerNameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (_selectedCustomer != null && ValidateFullNameVisual() && !_isSelectedIndexChanging)
+            {
+                _selectedCustomer.FullName = CustomerNameTextBox.Text;
+
+                int currentIndex = CustomersListBox.SelectedIndex;
+                ListBoxUpdate();
+                if (currentIndex >= 0)
+                {
+                    CustomersListBox.SelectedIndex = currentIndex;
+                }
+            }
         }
     }
 }
