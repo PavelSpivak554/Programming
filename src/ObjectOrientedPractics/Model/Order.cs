@@ -52,6 +52,7 @@ namespace ObjectOrientedPractics.Model
             _date = DateTime.Now;
             _address = address;
             _items = new List<Item>();
+
             if (cart?.Items != null)
             {
                 foreach (var item in cart.Items)
