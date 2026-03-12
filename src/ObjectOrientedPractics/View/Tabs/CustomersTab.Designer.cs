@@ -42,6 +42,7 @@
             this.CustomersListBox = new System.Windows.Forms.ListBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.addressControl1 = new ObjectOrientedPractics.View.Controls.AddressControl();
+            this.PriorityCheckBox = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -189,6 +190,7 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.White;
+            this.panel2.Controls.Add(this.PriorityCheckBox);
             this.panel2.Controls.Add(this.addressControl1);
             this.panel2.Controls.Add(this.SelectedCustomerLabel);
             this.panel2.Controls.Add(this.FullNameLabel);
@@ -203,10 +205,21 @@
             // 
             // addressControl1
             // 
-            this.addressControl1.Location = new System.Drawing.Point(3, 92);
+            this.addressControl1.Location = new System.Drawing.Point(3, 121);
             this.addressControl1.Name = "addressControl1";
             this.addressControl1.Size = new System.Drawing.Size(477, 184);
             this.addressControl1.TabIndex = 24;
+            // 
+            // PriorityCheckBox
+            // 
+            this.PriorityCheckBox.AutoSize = true;
+            this.PriorityCheckBox.Location = new System.Drawing.Point(9, 95);
+            this.PriorityCheckBox.Name = "PriorityCheckBox";
+            this.PriorityCheckBox.Size = new System.Drawing.Size(83, 20);
+            this.PriorityCheckBox.TabIndex = 25;
+            this.PriorityCheckBox.Text = "is Priority";
+            this.PriorityCheckBox.UseVisualStyleBackColor = true;
+            this.PriorityCheckBox.CheckedChanged += new System.EventHandler(this.PriorityCheckBox_CheckedChanged);
             // 
             // CustomersTab
             // 
@@ -240,5 +253,6 @@
         private System.Windows.Forms.Label itemsLabel;
         private System.Windows.Forms.ListBox CustomersListBox;
         private Controls.AddressControl addressControl1;
+        private System.Windows.Forms.CheckBox PriorityCheckBox;
     }
 }

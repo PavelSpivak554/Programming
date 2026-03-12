@@ -269,6 +269,7 @@ namespace ObjectOrientedPractics.View.Tabs
         /// <summary>
         /// Обрабатывает нажатие кнопки создания заказа.
         /// Создает заказ из товаров в корзине текущего покупателя.
+        /// В зависимости от приоритетности покупателя, создает приоритетные заказы
         /// </summary>
         /// <param name="sender">Источник события.</param>
         /// <param name="e">Аргументы события.</param>
@@ -286,13 +287,29 @@ namespace ObjectOrientedPractics.View.Tabs
                 return;
             }
 
-            var order = new Order(CurrentCustomer.Cart, CurrentCustomer.Address);
-            CurrentCustomer.Orders.Add(order);
+            if(CurrentCustomer.IsPriority)
+            {
+                var priorityOrder = new PriorityOrder(CurrentCustomer.Cart, CurrentCustomer.Address);
+                CurrentCustomer.Orders.Add(priorityOrder);
+                CurrentCustomer.Cart.Items.Clear();
+                UpdateCartListBox();
+                MessageBox.Show($"Приоритетный заказ №{priorityOrder.Id} успешно создан!\nКоличество товаров:" +
+                    $" {priorityOrder.Items.Count}\nСумма заказа:" +
+                    $" {priorityOrder.Amount:C2}", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                var order = new Order(CurrentCustomer.Cart, CurrentCustomer.Address);
+                CurrentCustomer.Orders.Add(order);
 
-            CurrentCustomer.Cart.Items.Clear();
-            UpdateCartListBox();
+                CurrentCustomer.Cart.Items.Clear();
+                UpdateCartListBox();
 
-            MessageBox.Show($"Заказ №{order.Id} успешно создан!\nКоличество товаров: {order.Items.Count}\nСумма заказа: {order.Amount:C2}", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"Заказ №{order.Id} успешно создан!\nКоличество товаров:" +
+                    $" {order.Items.Count}\nСумма заказа:" +
+                    $" {order.Amount:C2}", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            
         }
     }
 }
