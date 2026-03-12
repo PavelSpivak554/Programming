@@ -1,4 +1,6 @@
 ﻿using ObjectOrientedPractics.Model;
+using ObjectOrientedPractics.Model.Discounts;
+using ObjectOrientedPractics.Model.Enums;
 using ObjectOrientedPractics.Services;
 using ObjectOrientedPractics.View.Controls;
 using System;
@@ -8,14 +10,14 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using ObjectOrientedPractics.View.Forms; 
 
 namespace ObjectOrientedPractics.View.Tabs
 {
     /// <summary>
     /// Представляет вкладку для управления покупателями.
     /// Позволяет добавлять, удалять и редактировать информацию о покупателях,
-    /// включая их персональные данные и адреса доставки.
+    /// включая их персональные данные, адреса доставки и скидки.
     /// </summary>
     public partial class CustomersTab : UserControl
     {
@@ -33,8 +35,6 @@ namespace ObjectOrientedPractics.View.Tabs
         /// Флаг для предотвращения рекурсивных вызовов при изменении выбранного индекса.
         /// </summary>
         private bool _isSelectedIndexChanging = false;
-
-        private bool _isPriority = false;
 
         /// <summary>
         /// Получает или задает список покупателей.
@@ -133,6 +133,7 @@ namespace ObjectOrientedPractics.View.Tabs
             CustomerIdTextBox.Text = string.Empty;
             addressControl1.ClearFields();
             PriorityCheckBox.Checked = false;
+            DiscountsListBox.Items.Clear();
         }
 
         /// <summary>
@@ -144,6 +145,22 @@ namespace ObjectOrientedPractics.View.Tabs
             foreach (var customer in _customers)
             {
                 CustomersListBox.Items.Add(customer);
+            }
+        }
+
+        /// <summary>
+        /// Обновляет список скидок для выбранного покупателя.
+        /// </summary>
+        private void UpdateDiscountsListBox()
+        {
+            DiscountsListBox.Items.Clear();
+
+            if (_selectedCustomer?.Discounts != null)
+            {
+                foreach (var discount in _selectedCustomer.Discounts)
+                {
+                    DiscountsListBox.Items.Add(discount.Info);
+                }
             }
         }
 
@@ -168,6 +185,9 @@ namespace ObjectOrientedPractics.View.Tabs
                     CustomerIdTextBox.Text = selectedCustomer.Id.ToString();
                     addressControl1.Address = selectedCustomer.Address;
                     PriorityCheckBox.Checked = _selectedCustomer.IsPriority;
+
+                    // Обновляем список скидок
+                    UpdateDiscountsListBox();
                 }
                 else
                 {
@@ -237,9 +257,9 @@ namespace ObjectOrientedPractics.View.Tabs
         {
             if (CustomersListBox.SelectedItem is Customer selectedItem)
             {
-                int selectedIndex = CustomersListBox.SelectedIndex;
                 _customers.Remove(selectedItem);
                 ListBoxUpdate();
+                ClearFields();
             }
         }
 
@@ -264,12 +284,80 @@ namespace ObjectOrientedPractics.View.Tabs
             }
         }
 
+        /// <summary>
+        /// Обрабатывает изменение состояния флажка IsPriority.
+        /// Обновляет свойство IsPriority у выбранного покупателя.
+        /// </summary>
         private void PriorityCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (_selectedCustomer != null)
             {
-                _selectedCustomer.IsPriority = PriorityCheckBox.Checked; 
+                _selectedCustomer.IsPriority = PriorityCheckBox.Checked;
             }
+        }
+
+        /// <summary>
+        /// Обрабатывает нажатие кнопки добавления скидки.
+        /// Открывает диалог выбора категории для новой процентной скидки.
+        /// </summary>
+        private void AddDiscountButton_Click(object sender, EventArgs e)
+        {
+            if (_selectedCustomer == null)
+            {
+                MessageBox.Show("Выберите покупателя!", "Предупреждение",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Создаем форму выбора категории
+            using (var form = new AddDiscountForm())
+            {
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    Category selectedCategory = form.SelectedCategory;
+
+                    // Создаем новую процентную скидку
+                    PercentDiscount newDiscount = new PercentDiscount(selectedCategory);
+
+                    // Добавляем в список скидок покупателя
+                    _selectedCustomer.Discounts.Add(newDiscount);
+
+                    // Обновляем отображение
+                    UpdateDiscountsListBox();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Обрабатывает нажатие кнопки удаления скидки.
+        /// Удаляет выбранную скидку (нельзя удалить накопительную скидку).
+        /// </summary>
+        private void RemoveDiscountButton_Click(object sender, EventArgs e)
+        {
+            if (_selectedCustomer == null)
+            {
+                MessageBox.Show("Выберите покупателя!", "Предупреждение",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (DiscountsListBox.SelectedIndex < 0)
+            {
+                MessageBox.Show("Выберите скидку для удаления!", "Предупреждение",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Нельзя удалить накопительную скидку (она всегда первая)
+            if (DiscountsListBox.SelectedIndex == 0)
+            {
+                MessageBox.Show("Невозможно удалить накопительную скидку!", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            _selectedCustomer.Discounts.RemoveAt(DiscountsListBox.SelectedIndex);
+            UpdateDiscountsListBox();
         }
     }
 }

@@ -5,6 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using ObjectOrientedPractics.Model.Orders;
+using ObjectOrientedPractics.Model.Discounts;
+
 
 namespace ObjectOrientedPractics.Model
 {
@@ -45,7 +48,10 @@ namespace ObjectOrientedPractics.Model
         /// Список скидок покупателя
         /// </summary>
         private List<IDiscount> _discounts;
-
+        /// <summary>
+        /// Флаг приоритета заказа
+        /// </summary>
+        private bool _isPriority;
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Customer"/>
         /// </summary>
@@ -135,6 +141,14 @@ namespace ObjectOrientedPractics.Model
         {
             get { return _discounts; }
             set { _discounts = value; }
+        }
+        /// <summary>
+        /// Возвращает или задает значение, указывающее, является ли покупатель приоритетным.
+        /// </summary>
+        public bool IsPriority
+        {
+            get { return _isPriority; }
+            set { _isPriority = value; }
         }
     }
 }

@@ -41,12 +41,20 @@
             this.itemsLabel = new System.Windows.Forms.Label();
             this.CustomersListBox = new System.Windows.Forms.ListBox();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.addressControl1 = new ObjectOrientedPractics.View.Controls.AddressControl();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.RemoveDiscountButton = new System.Windows.Forms.Button();
+            this.AddDiscountButton = new System.Windows.Forms.Button();
+            this.DiscountsListBox = new System.Windows.Forms.ListBox();
             this.PriorityCheckBox = new System.Windows.Forms.CheckBox();
+            this.addressControl1 = new ObjectOrientedPractics.View.Controls.AddressControl();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // CustomerNameTextBox
@@ -190,6 +198,8 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.White;
+            this.panel2.Controls.Add(this.label1);
+            this.panel2.Controls.Add(this.tableLayoutPanel4);
             this.panel2.Controls.Add(this.PriorityCheckBox);
             this.panel2.Controls.Add(this.addressControl1);
             this.panel2.Controls.Add(this.SelectedCustomerLabel);
@@ -203,12 +213,83 @@
             this.panel2.Size = new System.Drawing.Size(477, 469);
             this.panel2.TabIndex = 0;
             // 
-            // addressControl1
+            // label1
             // 
-            this.addressControl1.Location = new System.Drawing.Point(3, 121);
-            this.addressControl1.Name = "addressControl1";
-            this.addressControl1.Size = new System.Drawing.Size(477, 184);
-            this.addressControl1.TabIndex = 24;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(7, 271);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(75, 16);
+            this.label1.TabIndex = 28;
+            this.label1.Text = "Discounts";
+            // 
+            // tableLayoutPanel4
+            // 
+            this.tableLayoutPanel4.ColumnCount = 2;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70.37037F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 29.62963F));
+            this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel3, 1, 0);
+            this.tableLayoutPanel4.Controls.Add(this.DiscountsListBox, 0, 0);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(7, 290);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 2;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(432, 107);
+            this.tableLayoutPanel4.TabIndex = 27;
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel3.ColumnCount = 1;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.Controls.Add(this.RemoveDiscountButton, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.AddDiscountButton, 0, 0);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(307, 3);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 2;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(122, 81);
+            this.tableLayoutPanel3.TabIndex = 26;
+            // 
+            // RemoveDiscountButton
+            // 
+            this.RemoveDiscountButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.RemoveDiscountButton.Location = new System.Drawing.Point(3, 43);
+            this.RemoveDiscountButton.Name = "RemoveDiscountButton";
+            this.RemoveDiscountButton.Size = new System.Drawing.Size(116, 35);
+            this.RemoveDiscountButton.TabIndex = 4;
+            this.RemoveDiscountButton.Text = "Remove";
+            this.RemoveDiscountButton.UseVisualStyleBackColor = true;
+            this.RemoveDiscountButton.Click += new System.EventHandler(this.RemoveDiscountButton_Click);
+            // 
+            // AddDiscountButton
+            // 
+            this.AddDiscountButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AddDiscountButton.Location = new System.Drawing.Point(3, 3);
+            this.AddDiscountButton.Name = "AddDiscountButton";
+            this.AddDiscountButton.Size = new System.Drawing.Size(116, 34);
+            this.AddDiscountButton.TabIndex = 2;
+            this.AddDiscountButton.Text = "Add";
+            this.AddDiscountButton.UseVisualStyleBackColor = true;
+            this.AddDiscountButton.Click += new System.EventHandler(this.AddDiscountButton_Click);
+            // 
+            // DiscountsListBox
+            // 
+            this.DiscountsListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.DiscountsListBox.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.DiscountsListBox.FormattingEnabled = true;
+            this.DiscountsListBox.IntegralHeight = false;
+            this.DiscountsListBox.ItemHeight = 16;
+            this.DiscountsListBox.Location = new System.Drawing.Point(3, 3);
+            this.DiscountsListBox.Name = "DiscountsListBox";
+            this.tableLayoutPanel4.SetRowSpan(this.DiscountsListBox, 2);
+            this.DiscountsListBox.Size = new System.Drawing.Size(298, 101);
+            this.DiscountsListBox.TabIndex = 3;
             // 
             // PriorityCheckBox
             // 
@@ -220,6 +301,13 @@
             this.PriorityCheckBox.Text = "is Priority";
             this.PriorityCheckBox.UseVisualStyleBackColor = true;
             this.PriorityCheckBox.CheckedChanged += new System.EventHandler(this.PriorityCheckBox_CheckedChanged);
+            // 
+            // addressControl1
+            // 
+            this.addressControl1.Location = new System.Drawing.Point(3, 121);
+            this.addressControl1.Name = "addressControl1";
+            this.addressControl1.Size = new System.Drawing.Size(471, 161);
+            this.addressControl1.TabIndex = 24;
             // 
             // CustomersTab
             // 
@@ -234,6 +322,8 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.tableLayoutPanel4.ResumeLayout(false);
+            this.tableLayoutPanel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -254,5 +344,11 @@
         private System.Windows.Forms.ListBox CustomersListBox;
         private Controls.AddressControl addressControl1;
         private System.Windows.Forms.CheckBox PriorityCheckBox;
+        private System.Windows.Forms.ListBox DiscountsListBox;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.Button RemoveDiscountButton;
+        private System.Windows.Forms.Button AddDiscountButton;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+        private System.Windows.Forms.Label label1;
     }
 }

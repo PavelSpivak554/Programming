@@ -67,6 +67,12 @@
     <Compile Include="View\Controls\AddressControl.Designer.cs">
       <DependentUpon>AddressControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\Forms\AddDiscountForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Forms\AddDiscountForm.Designer.cs">
+      <DependentUpon>AddDiscountForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
