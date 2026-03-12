@@ -35,6 +35,8 @@ namespace ObjectOrientedPractics.View.Tabs
             this.panel3 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.DeliveryTimeComboBox = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.OrderItemsListBox = new System.Windows.Forms.ListBox();
             this.AmountValueLabel = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -45,7 +47,6 @@ namespace ObjectOrientedPractics.View.Tabs
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.addressControl1 = new ObjectOrientedPractics.View.Controls.AddressControl();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -55,6 +56,7 @@ namespace ObjectOrientedPractics.View.Tabs
             this.CustomerFullName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DeliveryAddress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TotalAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.addressControl1 = new ObjectOrientedPractics.View.Controls.AddressControl();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -103,6 +105,8 @@ namespace ObjectOrientedPractics.View.Tabs
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.DeliveryTimeComboBox);
+            this.panel1.Controls.Add(this.label8);
             this.panel1.Controls.Add(this.OrderItemsListBox);
             this.panel1.Controls.Add(this.AmountValueLabel);
             this.panel1.Controls.Add(this.label7);
@@ -120,6 +124,26 @@ namespace ObjectOrientedPractics.View.Tabs
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(467, 433);
             this.panel1.TabIndex = 0;
+            // 
+            // DeliveryTimeComboBox
+            // 
+            this.DeliveryTimeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.DeliveryTimeComboBox.FormattingEnabled = true;
+            this.DeliveryTimeComboBox.Location = new System.Drawing.Point(316, 8);
+            this.DeliveryTimeComboBox.Margin = new System.Windows.Forms.Padding(2);
+            this.DeliveryTimeComboBox.Name = "DeliveryTimeComboBox";
+            this.DeliveryTimeComboBox.Size = new System.Drawing.Size(146, 24);
+            this.DeliveryTimeComboBox.TabIndex = 22;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(218, 10);
+            this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(94, 16);
+            this.label8.TabIndex = 21;
+            this.label8.Text = "Delivery Time:";
             // 
             // OrderItemsListBox
             // 
@@ -170,7 +194,7 @@ namespace ObjectOrientedPractics.View.Tabs
             // 
             this.StatusComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.StatusComboBox.FormattingEnabled = true;
-            this.StatusComboBox.Location = new System.Drawing.Point(88, 55);
+            this.StatusComboBox.Location = new System.Drawing.Point(68, 55);
             this.StatusComboBox.Margin = new System.Windows.Forms.Padding(2);
             this.StatusComboBox.Name = "StatusComboBox";
             this.StatusComboBox.Size = new System.Drawing.Size(146, 24);
@@ -178,7 +202,7 @@ namespace ObjectOrientedPractics.View.Tabs
             // 
             // CreatedTextBox
             // 
-            this.CreatedTextBox.Location = new System.Drawing.Point(88, 33);
+            this.CreatedTextBox.Location = new System.Drawing.Point(68, 33);
             this.CreatedTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.CreatedTextBox.Name = "CreatedTextBox";
             this.CreatedTextBox.ReadOnly = true;
@@ -187,7 +211,7 @@ namespace ObjectOrientedPractics.View.Tabs
             // 
             // IdTextBox
             // 
-            this.IdTextBox.Location = new System.Drawing.Point(88, 10);
+            this.IdTextBox.Location = new System.Drawing.Point(68, 10);
             this.IdTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.IdTextBox.Name = "IdTextBox";
             this.IdTextBox.ReadOnly = true;
@@ -197,7 +221,7 @@ namespace ObjectOrientedPractics.View.Tabs
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(22, 55);
+            this.label5.Location = new System.Drawing.Point(2, 55);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(47, 16);
@@ -207,7 +231,7 @@ namespace ObjectOrientedPractics.View.Tabs
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(22, 32);
+            this.label4.Location = new System.Drawing.Point(2, 32);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(58, 16);
@@ -217,21 +241,12 @@ namespace ObjectOrientedPractics.View.Tabs
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(22, 10);
+            this.label3.Location = new System.Drawing.Point(2, 10);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(23, 16);
             this.label3.TabIndex = 1;
             this.label3.Text = "ID:";
-            // 
-            // addressControl1
-            // 
-            this.addressControl1.AutoValidate = System.Windows.Forms.AutoValidate.Disable;
-            this.addressControl1.Location = new System.Drawing.Point(4, 83);
-            this.addressControl1.Margin = new System.Windows.Forms.Padding(2);
-            this.addressControl1.Name = "addressControl1";
-            this.addressControl1.Size = new System.Drawing.Size(452, 165);
-            this.addressControl1.TabIndex = 0;
             // 
             // panel2
             // 
@@ -259,7 +274,7 @@ namespace ObjectOrientedPractics.View.Tabs
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.AllowUserToResizeColumns = false;
             this.dataGridView1.AllowUserToResizeRows = false;
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Id,
@@ -285,6 +300,7 @@ namespace ObjectOrientedPractics.View.Tabs
             this.Id.MinimumWidth = 8;
             this.Id.Name = "Id";
             this.Id.ReadOnly = true;
+            this.Id.Width = 47;
             // 
             // Created
             // 
@@ -292,6 +308,7 @@ namespace ObjectOrientedPractics.View.Tabs
             this.Created.MinimumWidth = 8;
             this.Created.Name = "Created";
             this.Created.ReadOnly = true;
+            this.Created.Width = 84;
             // 
             // OrderStatus
             // 
@@ -299,6 +316,7 @@ namespace ObjectOrientedPractics.View.Tabs
             this.OrderStatus.MinimumWidth = 8;
             this.OrderStatus.Name = "OrderStatus";
             this.OrderStatus.ReadOnly = true;
+            this.OrderStatus.Width = 101;
             // 
             // CustomerFullName
             // 
@@ -306,6 +324,7 @@ namespace ObjectOrientedPractics.View.Tabs
             this.CustomerFullName.MinimumWidth = 8;
             this.CustomerFullName.Name = "CustomerFullName";
             this.CustomerFullName.ReadOnly = true;
+            this.CustomerFullName.Width = 110;
             // 
             // DeliveryAddress
             // 
@@ -313,6 +332,7 @@ namespace ObjectOrientedPractics.View.Tabs
             this.DeliveryAddress.MinimumWidth = 8;
             this.DeliveryAddress.Name = "DeliveryAddress";
             this.DeliveryAddress.ReadOnly = true;
+            this.DeliveryAddress.Width = 128;
             // 
             // TotalAmount
             // 
@@ -320,6 +340,16 @@ namespace ObjectOrientedPractics.View.Tabs
             this.TotalAmount.MinimumWidth = 8;
             this.TotalAmount.Name = "TotalAmount";
             this.TotalAmount.ReadOnly = true;
+            this.TotalAmount.Width = 106;
+            // 
+            // addressControl1
+            // 
+            this.addressControl1.AutoValidate = System.Windows.Forms.AutoValidate.Disable;
+            this.addressControl1.Location = new System.Drawing.Point(4, 83);
+            this.addressControl1.Margin = new System.Windows.Forms.Padding(2);
+            this.addressControl1.Name = "addressControl1";
+            this.addressControl1.Size = new System.Drawing.Size(452, 165);
+            this.addressControl1.TabIndex = 0;
             // 
             // OrdersTab
             // 
@@ -367,5 +397,7 @@ namespace ObjectOrientedPractics.View.Tabs
         private ListBox OrderItemsListBox;
         private DataGridViewTextBoxColumn DeliveryAddress;
         private DataGridViewTextBoxColumn TotalAmount;
+        private ComboBox DeliveryTimeComboBox;
+        private Label label8;
     }
 }
