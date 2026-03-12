@@ -59,8 +59,8 @@ namespace ObjectOrientedPractics.Model
             // Создаем внутри конструктора(композиция)
             Cart = new Cart();
             Orders = new List<Order>();
-            _discounts = new List<IDiscount>();
-            _discounts.Add(new PointsDiscount());
+            Discounts = new List<IDiscount>();
+            Discounts.Add(new PointsDiscount());
         }
 
 
@@ -127,6 +127,14 @@ namespace ObjectOrientedPractics.Model
         public override string ToString()
         {
             return $"{Id} | {FullName}";
+        }
+        /// <summary>
+        /// Возвращает или задает список скидок покупателя.
+        /// </summary>
+        public List<IDiscount> Discounts
+        {
+            get { return _discounts; }
+            set { _discounts = value; }
         }
     }
 }
