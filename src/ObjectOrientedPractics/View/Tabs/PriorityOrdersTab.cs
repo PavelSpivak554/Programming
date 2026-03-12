@@ -11,12 +11,26 @@ using System.Windows.Forms;
 
 namespace ObjectOrientedPractics.View.Tabs
 {
+    /// <summary>
+    /// Представляет вкладку для управления приоритетными заказами.
+    /// Позволяет просматривать и редактировать приоритетный заказ,
+    /// добавлять и удалять товары, выбирать время доставки.
+    /// </summary>
     public partial class PriorityOrdersTab : UserControl
     {
+        /// <summary>
+        /// Текущий приоритетный заказ.
+        /// </summary>
         private PriorityOrder _currentPriorityOrder;
-        // Свойство для получения товаров из Store
+
+        /// <summary>
+        /// Ссылка на хранилище данных магазина для доступа к товарам.
+        /// </summary>
         private Store _store;
 
+        /// <summary>
+        /// Получает или задает хранилище данных магазина.
+        /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Store Store
         {
@@ -27,6 +41,11 @@ namespace ObjectOrientedPractics.View.Tabs
             }
         }
 
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="PriorityOrdersTab"/>.
+        /// Создает новый приоритетный заказ, инициализирует компоненты,
+        /// заполняет выпадающие списки и отображает информацию о заказе.
+        /// </summary>
         public PriorityOrdersTab()
         {
             _currentPriorityOrder = new PriorityOrder(DateTime.Now, "", new Cart(), new Address());
@@ -44,6 +63,10 @@ namespace ObjectOrientedPractics.View.Tabs
             this.DeliveryTimeComboBox.SelectedIndexChanged += DeliveryTimeComboBox_SelectedIndexChanged;
         }
 
+        /// <summary>
+        /// Инициализирует выпадающий список времени доставки.
+        /// Заполняет список строковыми представлениями временных интервалов.
+        /// </summary>
         private void InitializeTimeComboBox()
         {
             DeliveryTimeComboBox.Items.Clear();
@@ -53,6 +76,11 @@ namespace ObjectOrientedPractics.View.Tabs
             }
         }
 
+        /// <summary>
+        /// Обрабатывает изменение выбранного статуса заказа.
+        /// </summary>
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Аргументы события.</param>
         private void StatusComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_currentPriorityOrder == null || StatusComboBox.SelectedItem == null) return;
@@ -60,6 +88,10 @@ namespace ObjectOrientedPractics.View.Tabs
             _currentPriorityOrder.Status = (OrderStatus)StatusComboBox.SelectedItem;
         }
 
+        /// <summary>
+        /// Отображает информацию о текущем приоритетном заказе.
+        /// Заполняет все поля интерфейса данными из заказа.
+        /// </summary>
         private void DisplayPriorityOrderInfo()
         {
             IdTextBox.Text = _currentPriorityOrder.Id.ToString();
@@ -84,6 +116,11 @@ namespace ObjectOrientedPractics.View.Tabs
             }
         }
 
+        /// <summary>
+        /// Обрабатывает изменение выбранного времени доставки.
+        /// </summary>
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Аргументы события.</param>
         private void DeliveryTimeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_currentPriorityOrder == null || DeliveryTimeComboBox.SelectedItem == null) return;
@@ -91,6 +128,12 @@ namespace ObjectOrientedPractics.View.Tabs
             _currentPriorityOrder.DesiredTime = DeliveryTimeComboBox.SelectedItem.ToString();
         }
 
+        /// <summary>
+        /// Обрабатывает нажатие кнопки добавления товара.
+        /// Добавляет случайный товар из магазина в заказ.
+        /// </summary>
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Аргументы события.</param>
         private void AddButton_Click(object sender, EventArgs e)
         {
             if (_store == null || _store.Items.Count == 0)
@@ -122,6 +165,12 @@ namespace ObjectOrientedPractics.View.Tabs
             ItemsListBox.SelectedIndex = _currentPriorityOrder.Items.Count - 1;
         }
 
+        /// <summary>
+        /// Обрабатывает нажатие кнопки удаления товара.
+        /// Удаляет выбранный товар из заказа и обновляет выделение.
+        /// </summary>
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Аргументы события.</param>
         private void Removebutton_Click(object sender, EventArgs e)
         {
             // Проверяем, выбран ли товар
@@ -151,8 +200,10 @@ namespace ObjectOrientedPractics.View.Tabs
         }
 
         /// <summary>
-        /// Устанавливает выделение после удаления товара
+        /// Устанавливает выделение после удаления товара.
+        /// Выделяет следующий товар или последний, если следующего нет.
         /// </summary>
+        /// <param name="removedIndex">Индекс удаленного товара.</param>
         private void SetSelectionAfterRemove(int removedIndex)
         {
             if (_currentPriorityOrder.Items.Count == 0)
@@ -175,6 +226,10 @@ namespace ObjectOrientedPractics.View.Tabs
             }
         }
 
+        /// <summary>
+        /// Обновляет отображение списка товаров в заказе.
+        /// Очищает ListBox и заполняет его актуальными товарами.
+        /// </summary>
         private void UpdateItemsListbox()
         {
             ItemsListBox.Items.Clear();
@@ -189,7 +244,7 @@ namespace ObjectOrientedPractics.View.Tabs
         }
 
         /// <summary>
-        /// Обновляет отображение общей суммы товаров в корзине.
+        /// Обновляет отображение общей суммы товаров в заказе.
         /// </summary>
         private void UpdateTotalAmount()
         {
@@ -208,6 +263,12 @@ namespace ObjectOrientedPractics.View.Tabs
             }
         }
 
+        /// <summary>
+        /// Обрабатывает нажатие кнопки очистки заказа.
+        /// Создает новый экземпляр приоритетного заказа.
+        /// </summary>
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Аргументы события.</param>
         private void Clearbutton_Click(object sender, EventArgs e)
         {
             _currentPriorityOrder = new PriorityOrder(DateTime.Now, "", new Cart(), new Address());
