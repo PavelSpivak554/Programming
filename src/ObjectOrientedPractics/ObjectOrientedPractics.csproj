@@ -50,6 +50,14 @@
     <Compile Include="Model\Cart.cs" />
     <Compile Include="Model\Category.cs" />
     <Compile Include="Model\Customer.cs" />
+<<<<<<< HEAD
+    <Compile Include="Model\IDiscount.cs" />
+    <Compile Include="Model\Item.cs" />
+    <Compile Include="Model\Order.cs" />
+    <Compile Include="Model\OrderStatus.cs" />
+    <Compile Include="Model\PercentDiscount.cs" />
+    <Compile Include="Model\PointsDiscount.cs" />
+=======
     <Compile Include="Model\DeliveryTime.cs" />
     <Compile Include="Model\IDiscount.cs" />
     <Compile Include="Model\Item.cs" />
@@ -58,6 +66,7 @@
     <Compile Include="Model\PercentDiscount.cs" />
     <Compile Include="Model\PointsDiscount.cs" />
     <Compile Include="Model\PriorityOrder.cs" />
+>>>>>>> 58fedf705b64b08ff7f0430494acc5337ec203f2
     <Compile Include="Model\Store.cs" />
     <Compile Include="Services\IdGenerator.cs" />
     <Compile Include="Services\ValueValidator.cs" />

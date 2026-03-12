@@ -42,9 +42,9 @@ namespace ObjectOrientedPractics.Model
         /// </summary>
         private List<Order> _orders;
         /// <summary>
-        /// Флаг приоритета заказа
+        /// Список скидок покупателя
         /// </summary>
-        private bool _isPrioryty;
+        private List<IDiscount> _discounts;
 
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Customer"/>
@@ -59,9 +59,10 @@ namespace ObjectOrientedPractics.Model
             // Создаем внутри конструктора(композиция)
             Cart = new Cart();
             Orders = new List<Order>();
-            IsPriority = false;
+            _discounts = new List<IDiscount>();
+            _discounts.Add(new PointsDiscount());
         }
-        
+
 
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Customer"/>
@@ -118,14 +119,6 @@ namespace ObjectOrientedPractics.Model
         {
             get { return _orders; }
             set { _orders = value; }
-        }
-        /// <summary>
-        /// Возвращает и задает приоритетность заказа
-        /// </summary>
-        public bool IsPriority
-        {
-            get { return _isPrioryty; }
-            set {_isPrioryty = value;}
         }
         /// <summary>
         /// Переопределение ToString()
