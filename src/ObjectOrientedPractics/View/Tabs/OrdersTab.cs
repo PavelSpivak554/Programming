@@ -29,6 +29,11 @@ namespace ObjectOrientedPractics.View.Tabs
         private Order _selectedOrder;
 
         /// <summary>
+        /// Текущий приоритетный заказ (если выбранный заказ приоритетный).
+        /// </summary>
+        private PriorityOrder _selectedPriorityOrder;
+
+        /// <summary>
         /// Получает или задает список покупателей.
         /// При установке нового значения автоматически обновляет список заказов.
         /// </summary>
@@ -44,19 +49,110 @@ namespace ObjectOrientedPractics.View.Tabs
         }
 
         /// <summary>
+        /// Получает или задает выбранный заказ.
+        /// При изменении определяет тип заказа и обновляет видимость панели приоритетных опций.
+        /// </summary>
+        private Order SelectedOrder
+        {
+            get { return _selectedOrder; }
+            set
+            {
+                _selectedOrder = value;
+
+                // Определяем, является ли выбранный заказ приоритетным
+                _selectedPriorityOrder = _selectedOrder as PriorityOrder;
+
+                // Обновляем видимость и содержимое панели приоритетных опций
+                UpdatePriorityOptionsPanel();
+            }
+        }
+
+        /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="OrdersTab"/>.
         /// Выполняет настройку таблицы, комбобокса и подписывается на события.
         /// </summary>
         public OrdersTab()
         {
             InitializeComponent();
-
             ConfigureDataGridView();
             StatusComboBox.DataSource = Enum.GetValues(typeof(OrderStatus));
             SetReadOnlyMode();
 
+            // Изначально скрываем панель приоритетных опций
+            HidePriorityOptionsPanel();
+
             dataGridView1.SelectionChanged += DataGridView1_SelectionChanged;
             StatusComboBox.SelectedIndexChanged += StatusComboBox_SelectedIndexChanged;
+            DeliveryTimeComboBox.SelectedIndexChanged += DeliveryTimeComboBox_SelectedIndexChanged;
+        }
+
+        /// <summary>
+        /// Скрывает панель приоритетных опций.
+        /// </summary>
+        private void HidePriorityOptionsPanel()
+        {
+            label8.Visible = false;            // "Delivery Time"
+            DeliveryTimeComboBox.Visible = false;
+        }
+
+        /// <summary>
+        /// Показывает панель приоритетных опций.
+        /// </summary>
+        private void ShowPriorityOptionsPanel()
+        {
+            label8.Visible = true;
+            DeliveryTimeComboBox.Visible = true;
+        }
+
+        /// <summary>
+        /// Обновляет видимость и содержимое панели приоритетных опций.
+        /// </summary>
+        private void UpdatePriorityOptionsPanel()
+        {
+            if (_selectedPriorityOrder != null)
+            {
+                // Заполняем ComboBox значениями времени доставки
+                InitializeTimeComboBox();
+
+                // Устанавливаем выбранное значение из заказа
+                if (!string.IsNullOrEmpty(_selectedPriorityOrder.DesiredTime))
+                {
+                    DeliveryTimeComboBox.SelectedItem = _selectedPriorityOrder.DesiredTime;
+                }
+
+                ShowPriorityOptionsPanel();
+            }
+            else
+            {
+                HidePriorityOptionsPanel();
+            }
+        }
+
+        /// <summary>
+        /// Инициализирует выпадающий список времени доставки.
+        /// Заполняет список строковыми представлениями временных интервалов.
+        /// </summary>
+        private void InitializeTimeComboBox()
+        {
+            DeliveryTimeComboBox.Items.Clear();
+
+            // Создаем временный объект для получения строковых представлений
+            var tempOrder = new PriorityOrder(new Cart(), new Address());
+
+            foreach (DeliveryTime time in Enum.GetValues(typeof(DeliveryTime)))
+            {
+                DeliveryTimeComboBox.Items.Add(tempOrder.GetDesiredTime(time));
+            }
+        }
+
+        /// <summary>
+        /// Обрабатывает изменение выбранного времени доставки.
+        /// </summary>
+        private void DeliveryTimeComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (_selectedPriorityOrder == null || DeliveryTimeComboBox.SelectedItem == null) return;
+
+            _selectedPriorityOrder.DesiredTime = DeliveryTimeComboBox.SelectedItem.ToString();
         }
 
         /// <summary>
@@ -166,7 +262,7 @@ namespace ObjectOrientedPractics.View.Tabs
                 }
             }
 
-            _selectedOrder = null;
+            SelectedOrder = null;
             ClearOrderInfo();
         }
 
@@ -189,7 +285,7 @@ namespace ObjectOrientedPractics.View.Tabs
         {
             if (dataGridView1.SelectedRows.Count == 0)
             {
-                _selectedOrder = null;
+                SelectedOrder = null;
                 ClearOrderInfo();
                 return;
             }
@@ -198,12 +294,13 @@ namespace ObjectOrientedPractics.View.Tabs
 
             if (selectedIndex < 0 || selectedIndex >= _orders.Count)
             {
-                _selectedOrder = null;
+                SelectedOrder = null;
                 ClearOrderInfo();
                 return;
             }
 
-            _selectedOrder = _orders[selectedIndex];
+            // Используем свойство SelectedOrder для установки выбранного заказа
+            SelectedOrder = _orders[selectedIndex];
             DisplayOrderInfo(_selectedOrder);
         }
 
@@ -244,6 +341,9 @@ namespace ObjectOrientedPractics.View.Tabs
             addressControl1.ClearFields();
             OrderItemsListBox.Items.Clear();
             AmountValueLabel.Text = "0";
+
+            // Скрываем панель приоритетных опций при очистке
+            HidePriorityOptionsPanel();
         }
 
         /// <summary>

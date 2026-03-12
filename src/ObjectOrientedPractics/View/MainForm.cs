@@ -40,7 +40,7 @@ namespace ObjectOrientedPractics
             cartsTab1.Items = _store.Items;
             cartsTab1.Customers = _store.Customers;
             ordersTab1.Customers = _store.Customers;
-            priorityOrdersTab1.Store = _store;
+            //priorityOrdersTab1.Store = _store;
             tabControl1.SelectedIndexChanged += TabControl_SelectedIndexChanged;
         }
 

@@ -35,6 +35,14 @@ namespace ObjectOrientedPractics.Model
             DesiredDate = desiredDate;
             DesiredTime = desiredTime;
         }
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="PriorityOrder" /> только с данными стандартного заказа.
+        /// </summary>
+        /// <param name="cart"></param>
+        /// <param name="address"></param>
+        public PriorityOrder(Cart cart, Address address) : base (cart, address)
+        { }
+        public PriorityOrder() { }
 
         /// <summary>
         /// Получает или задает желаемую дату доставки.

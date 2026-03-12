@@ -34,6 +34,8 @@ namespace ObjectOrientedPractics.View.Tabs
         /// </summary>
         private bool _isSelectedIndexChanging = false;
 
+        private bool _isPriority = false;
+
         /// <summary>
         /// Получает или задает список покупателей.
         /// При установке нового значения обновляет список в интерфейсе.
@@ -130,6 +132,7 @@ namespace ObjectOrientedPractics.View.Tabs
             CustomerNameTextBox.Text = string.Empty;
             CustomerIdTextBox.Text = string.Empty;
             addressControl1.ClearFields();
+            PriorityCheckBox.Checked = false;
         }
 
         /// <summary>
@@ -164,6 +167,7 @@ namespace ObjectOrientedPractics.View.Tabs
                     CustomerNameTextBox.Text = selectedCustomer.FullName;
                     CustomerIdTextBox.Text = selectedCustomer.Id.ToString();
                     addressControl1.Address = selectedCustomer.Address;
+                    PriorityCheckBox.Checked = _selectedCustomer.IsPriority;
                 }
                 else
                 {
@@ -205,6 +209,7 @@ namespace ObjectOrientedPractics.View.Tabs
                     );
 
                     Customer customer = new Customer(customerName, address);
+                    customer.IsPriority = PriorityCheckBox.Checked;
                     _customers.Add(customer);
 
                     ListBoxUpdate();
@@ -256,6 +261,14 @@ namespace ObjectOrientedPractics.View.Tabs
                 {
                     CustomersListBox.SelectedIndex = currentIndex;
                 }
+            }
+        }
+
+        private void PriorityCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_selectedCustomer != null)
+            {
+                _selectedCustomer.IsPriority = PriorityCheckBox.Checked; 
             }
         }
     }

@@ -42,6 +42,11 @@ namespace ObjectOrientedPractics.Model
         /// </summary>
         private List<Order> _orders;
         /// <summary>
+        /// Флаг приоритета заказа
+        /// </summary>
+        private bool _isPrioryty;
+
+        /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Customer"/>
         /// </summary>
         /// <param name="fullname">Полное имя покупателя</param>
@@ -54,25 +59,9 @@ namespace ObjectOrientedPractics.Model
             // Создаем внутри конструктора(композиция)
             Cart = new Cart();
             Orders = new List<Order>();
+            IsPriority = false;
         }
-        public Customer(string fullname, int index, string country, string city,
-                       string street, string building, string apartment, int id = 0)
-        {
-            if (id == 0)
-            {
-                _id = idCounter++;
-            }
-            else
-            {
-                _id = id;
-            }
-
-            _fullname = fullname;
-            // СОЗДАЕМ адрес внутри конструктора - это композиция
-            _address = new Address(index, country, city, street, building, apartment);
-            _cart = new Cart(); // композиция т.к при удаление покупателя удалиться и корзина
-            _orders = new List<Order>();
-        }
+        
 
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Customer"/>
@@ -129,6 +118,14 @@ namespace ObjectOrientedPractics.Model
         {
             get { return _orders; }
             set { _orders = value; }
+        }
+        /// <summary>
+        /// Возвращает и задает приоритетность заказа
+        /// </summary>
+        public bool IsPriority
+        {
+            get { return _isPrioryty; }
+            set {_isPrioryty = value;}
         }
         /// <summary>
         /// Переопределение ToString()
