@@ -218,7 +218,7 @@ namespace ObjectOrientedPractics.Model
         {
             unchecked
             {
-                int hash = 17;
+                int hash = 17;  
                 hash = hash * 23 + _index.GetHashCode();
                 hash = hash * 23 + (_country?.GetHashCode() ?? 0);
                 hash = hash * 23 + (_city?.GetHashCode() ?? 0);
