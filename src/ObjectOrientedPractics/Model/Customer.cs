@@ -5,6 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using ObjectOrientedPractics.Model.Orders;
+using ObjectOrientedPractics.Model.Discounts;
+
 
 namespace ObjectOrientedPractics.Model
 {
@@ -42,10 +45,13 @@ namespace ObjectOrientedPractics.Model
         /// </summary>
         private List<Order> _orders;
         /// <summary>
+        /// Список скидок покупателя
+        /// </summary>
+        private List<IDiscount> _discounts;
+        /// <summary>
         /// Флаг приоритета заказа
         /// </summary>
-        private bool _isPrioryty;
-
+        private bool _isPriority;
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Customer"/>
         /// </summary>
@@ -59,9 +65,10 @@ namespace ObjectOrientedPractics.Model
             // Создаем внутри конструктора(композиция)
             Cart = new Cart();
             Orders = new List<Order>();
-            IsPriority = false;
+            Discounts = new List<IDiscount>();
+            Discounts.Add(new PointsDiscount());
         }
-        
+
 
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Customer"/>
@@ -120,20 +127,28 @@ namespace ObjectOrientedPractics.Model
             set { _orders = value; }
         }
         /// <summary>
-        /// Возвращает и задает приоритетность заказа
-        /// </summary>
-        public bool IsPriority
-        {
-            get { return _isPrioryty; }
-            set {_isPrioryty = value;}
-        }
-        /// <summary>
         /// Переопределение ToString()
         /// </summary>
         /// <returns>Id и полное имя покупателя</returns>
         public override string ToString()
         {
             return $"{Id} | {FullName}";
+        }
+        /// <summary>
+        /// Возвращает или задает список скидок покупателя.
+        /// </summary>
+        public List<IDiscount> Discounts
+        {
+            get { return _discounts; }
+            set { _discounts = value; }
+        }
+        /// <summary>
+        /// Возвращает или задает значение, указывающее, является ли покупатель приоритетным.
+        /// </summary>
+        public bool IsPriority
+        {
+            get { return _isPriority; }
+            set { _isPriority = value; }
         }
     }
 }
