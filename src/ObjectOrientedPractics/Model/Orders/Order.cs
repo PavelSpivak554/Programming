@@ -46,6 +46,8 @@ namespace ObjectOrientedPractics.Model.Orders
         /// Размер примененной скидки.
         /// </summary>
         private double _discountAmount;
+
+        protected bool _isPriority;
         /// <summary>
         /// Создает новый экземпляр класса <see cref="Order"/> на основе корзины покупателя.
         /// </summary>
@@ -146,7 +148,94 @@ namespace ObjectOrientedPractics.Model.Orders
         {
             get { return Amount - DiscountAmount; }
         }
-    }
 
-    
+    /// <summary>
+        /// Определяет, равен ли указанный объект текущему объекту Order.
+        /// </summary>
+        /// <param name="obj">Объект для сравнения с текущим объектом.</param>
+        /// <returns>true, если указанный объект равен текущему объекту; в противном случае — false.</returns>
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Order);
+        }
+
+        /// <summary>
+        /// Определяет, равен ли указанный объект Order текущему объекту Order.
+        /// </summary>
+        /// <param name="other">Объект Order для сравнения с текущим объектом.</param>
+        /// <returns>true, если указанный объект равен текущему объекту; в противном случае — false.</returns>
+        public bool Equals(Order other)
+        {
+            if (other is null) return false;
+            if (ReferenceEquals(this, other)) return true;
+
+            // Сравниваем простые поля
+            if (_id != other._id ||
+                _date != other._date ||
+                _amount != other._amount ||
+                _status != other._status ||
+                _isPriority != other._isPriority ||
+                _discountAmount != other._discountAmount)
+            {
+                return false;
+            }
+
+            // Сравниваем адрес
+            if (_address == null && other._address != null) return false;
+            if (_address != null && !_address.Equals(other._address)) return false;
+
+            // Сравниваем списки товаров
+            if (_items == null && other._items != null) return false;
+            if (_items != null && other._items == null) return false;
+            if (_items != null && other._items != null)
+            {
+                if (_items.Count != other._items.Count) return false;
+
+                for (int i = 0; i < _items.Count; i++)
+                {
+                    if (!_items[i].Equals(other._items[i]))
+                        return false;
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Возвращает хэш-код для текущего объекта Order.
+        /// </summary>
+        /// <returns>Хэш-код для текущего объекта Order.</returns>
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 17;
+                hash = hash * 23 + _id.GetHashCode();
+                hash = hash * 23 + _date.GetHashCode();
+                hash = hash * 23 + _amount.GetHashCode();
+                hash = hash * 23 + _status.GetHashCode();
+                hash = hash * 23 + _isPriority.GetHashCode();
+                hash = hash * 23 + _discountAmount.GetHashCode();
+
+                // Включаем хэш адреса
+                hash = hash * 23 + (_address?.GetHashCode() ?? 0);
+
+                // Включаем хэш списка товаров
+                if (_items != null)
+                {
+                    foreach (var item in _items)
+                    {
+                        hash = hash * 23 + item.GetHashCode();
+                    }
+                }
+                else
+                {
+                    hash = hash * 23 + 0;
+                }
+
+                return hash;
+            }
+        }
+
+    }
 }

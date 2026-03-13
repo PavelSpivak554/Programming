@@ -10,7 +10,7 @@ namespace ObjectOrientedPractics.Model
     /// Представляет корзину покупок покупателя.
     /// Содержит список товаров и общую стоимость корзины.
     /// </summary>
-    public class Cart
+    public class Cart : ICloneable
 
     {   /// <summary>
         /// Список товаров в корзине.
@@ -56,6 +56,18 @@ namespace ObjectOrientedPractics.Model
                 return 0.0;
             }
         }
+
+
+        public object Clone()
+        {
+            var clonedCart = new Cart();
+            foreach (var item in _items)
+            {
+                clonedCart.Items.Add((Item)item.Clone());
+            }
+            return clonedCart;
+        }
+
     }
 
 }
