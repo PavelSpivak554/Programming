@@ -46,12 +46,19 @@
             this.CreateOrderBtn = new System.Windows.Forms.Button();
             this.RemoveItemBtn = new System.Windows.Forms.Button();
             this.ClearCartBtn = new System.Windows.Forms.Button();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.DiscountAmountlabel = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.Totallabel = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.DiscountsCheckedListBox = new System.Windows.Forms.CheckedListBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
+            this.tableLayoutPanel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -153,6 +160,7 @@
             this.tableLayoutPanel3.Controls.Add(this.AmountTitleLabel, 1, 3);
             this.tableLayoutPanel3.Controls.Add(this.AmountLabel, 1, 4);
             this.tableLayoutPanel3.Controls.Add(this.tableLayoutPanel4, 0, 5);
+            this.tableLayoutPanel3.Controls.Add(this.tableLayoutPanel5, 1, 6);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -164,6 +172,7 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 170F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(477, 469);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
@@ -290,6 +299,85 @@
             this.ClearCartBtn.UseVisualStyleBackColor = true;
             this.ClearCartBtn.Click += new System.EventHandler(this.ClearCartBtn_Click);
             // 
+            // tableLayoutPanel5
+            // 
+            this.tableLayoutPanel5.ColumnCount = 2;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 52.74152F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 47.25848F));
+            this.tableLayoutPanel5.Controls.Add(this.DiscountAmountlabel, 1, 1);
+            this.tableLayoutPanel5.Controls.Add(this.label4, 1, 0);
+            this.tableLayoutPanel5.Controls.Add(this.Totallabel, 1, 3);
+            this.tableLayoutPanel5.Controls.Add(this.label1, 1, 2);
+            this.tableLayoutPanel5.Controls.Add(this.DiscountsCheckedListBox, 0, 0);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(91, 302);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 4;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 63F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 8F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(383, 164);
+            this.tableLayoutPanel5.TabIndex = 7;
+            // 
+            // DiscountAmountlabel
+            // 
+            this.DiscountAmountlabel.AutoSize = true;
+            this.DiscountAmountlabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DiscountAmountlabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.DiscountAmountlabel.Location = new System.Drawing.Point(205, 63);
+            this.DiscountAmountlabel.Name = "DiscountAmountlabel";
+            this.DiscountAmountlabel.Size = new System.Drawing.Size(175, 45);
+            this.DiscountAmountlabel.TabIndex = 21;
+            this.DiscountAmountlabel.Text = "0,00 ₽";
+            this.DiscountAmountlabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label4.Location = new System.Drawing.Point(205, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(175, 63);
+            this.label4.TabIndex = 19;
+            this.label4.Text = "Discount Amount:";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // Totallabel
+            // 
+            this.Totallabel.AutoSize = true;
+            this.Totallabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Totallabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Totallabel.Location = new System.Drawing.Point(205, 131);
+            this.Totallabel.Name = "Totallabel";
+            this.Totallabel.Size = new System.Drawing.Size(175, 33);
+            this.Totallabel.TabIndex = 12;
+            this.Totallabel.Text = "0,00 ₽";
+            this.Totallabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(205, 108);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(175, 23);
+            this.label1.TabIndex = 11;
+            this.label1.Text = "Total";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // DiscountsCheckedListBox
+            // 
+            this.DiscountsCheckedListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.DiscountsCheckedListBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DiscountsCheckedListBox.FormattingEnabled = true;
+            this.DiscountsCheckedListBox.Location = new System.Drawing.Point(3, 3);
+            this.DiscountsCheckedListBox.Name = "DiscountsCheckedListBox";
+            this.tableLayoutPanel5.SetRowSpan(this.DiscountsCheckedListBox, 4);
+            this.DiscountsCheckedListBox.Size = new System.Drawing.Size(196, 158);
+            this.DiscountsCheckedListBox.TabIndex = 8;
+            // 
             // CartsTab
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -305,6 +393,8 @@
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
             this.tableLayoutPanel4.ResumeLayout(false);
+            this.tableLayoutPanel5.ResumeLayout(false);
+            this.tableLayoutPanel5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -329,5 +419,11 @@
         private System.Windows.Forms.Button CreateOrderBtn;
         private System.Windows.Forms.Button RemoveItemBtn;
         private System.Windows.Forms.Button ClearCartBtn;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label DiscountAmountlabel;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label Totallabel;
+        private System.Windows.Forms.CheckedListBox DiscountsCheckedListBox;
     }
 }

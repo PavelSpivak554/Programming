@@ -30,74 +30,80 @@ namespace ObjectOrientedPractics.View.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
-            label2 = new Label();
-            CategoryComboBox = new ComboBox();
-            OkButton = new Button();
-            CancelButton = new Button();
-            SuspendLayout();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.CategoryComboBox = new System.Windows.Forms.ComboBox();
+            this.OkButton = new System.Windows.Forms.Button();
+            this.CancelButton = new System.Windows.Forms.Button();
+            this.SuspendLayout();
             // 
             // label1
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            label1.Location = new Point(12, 9);
-            label1.Name = "label1";
-            label1.Size = new Size(166, 25);
-            label1.TabIndex = 0;
-            label1.Text = "Percent Discount: ";
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.label1.Location = new System.Drawing.Point(10, 6);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(136, 20);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Percent Discount: ";
             // 
             // label2
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(12, 61);
-            label2.Name = "label2";
-            label2.Size = new Size(88, 25);
-            label2.TabIndex = 1;
-            label2.Text = "Category:";
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(10, 39);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(65, 16);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Category:";
             // 
             // CategoryComboBox
             // 
-            CategoryComboBox.FormattingEnabled = true;
-            CategoryComboBox.Location = new Point(106, 58);
-            CategoryComboBox.Name = "CategoryComboBox";
-            CategoryComboBox.Size = new Size(238, 33);
-            CategoryComboBox.TabIndex = 2;
+            this.CategoryComboBox.FormattingEnabled = true;
+            this.CategoryComboBox.Location = new System.Drawing.Point(85, 37);
+            this.CategoryComboBox.Margin = new System.Windows.Forms.Padding(2);
+            this.CategoryComboBox.Name = "CategoryComboBox";
+            this.CategoryComboBox.Size = new System.Drawing.Size(191, 24);
+            this.CategoryComboBox.TabIndex = 2;
             // 
             // OkButton
             // 
-            OkButton.Location = new Point(106, 114);
-            OkButton.Name = "OkButton";
-            OkButton.Size = new Size(112, 34);
-            OkButton.TabIndex = 3;
-            OkButton.Text = "OK";
-            OkButton.UseVisualStyleBackColor = true;
-            OkButton.Click += OkButton_Click;
+            this.OkButton.Location = new System.Drawing.Point(85, 73);
+            this.OkButton.Margin = new System.Windows.Forms.Padding(2);
+            this.OkButton.Name = "OkButton";
+            this.OkButton.Size = new System.Drawing.Size(90, 22);
+            this.OkButton.TabIndex = 3;
+            this.OkButton.Text = "OK";
+            this.OkButton.UseVisualStyleBackColor = true;
+            this.OkButton.Click += new System.EventHandler(this.OkButton_Click);  // ← добавить
             // 
             // CancelButton
             // 
-            CancelButton.Location = new Point(232, 114);
-            CancelButton.Name = "CancelButton";
-            CancelButton.Size = new Size(112, 34);
-            CancelButton.TabIndex = 4;
-            CancelButton.Text = "Cancel";
-            CancelButton.UseVisualStyleBackColor = true;
-            CancelButton.Click += CancelButton_Click;
+            this.CancelButton.Location = new System.Drawing.Point(186, 73);
+            this.CancelButton.Margin = new System.Windows.Forms.Padding(2);
+            this.CancelButton.Name = "CancelButton";
+            this.CancelButton.Size = new System.Drawing.Size(90, 22);
+            this.CancelButton.TabIndex = 4;
+            this.CancelButton.Text = "Cancel";
+            this.CancelButton.UseVisualStyleBackColor = true;
+            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);  // ← добавить
             // 
             // AddDiscountForm
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(376, 180);
-            Controls.Add(CancelButton);
-            Controls.Add(OkButton);
-            Controls.Add(CategoryComboBox);
-            Controls.Add(label2);
-            Controls.Add(label1);
-            Name = "AddDiscountForm";
-            Text = "AddDiscountForm";
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(307, 129);
+            this.Controls.Add(this.CancelButton);
+            this.Controls.Add(this.OkButton);
+            this.Controls.Add(this.CategoryComboBox);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Name = "AddDiscountForm";
+            this.Text = "Add Discount";
+            this.ResumeLayout(false);
+            this.PerformLayout();
         }
 
         #endregion

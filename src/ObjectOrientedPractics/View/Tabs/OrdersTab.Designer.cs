@@ -47,6 +47,9 @@ namespace ObjectOrientedPractics.View.Tabs
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.addressControl1 = new ObjectOrientedPractics.View.Controls.AddressControl();
+            this.TotalTitleLabel = new System.Windows.Forms.Label();
+            this.TotalValueLabel = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -56,7 +59,8 @@ namespace ObjectOrientedPractics.View.Tabs
             this.CustomerFullName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DeliveryAddress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TotalAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.addressControl1 = new ObjectOrientedPractics.View.Controls.AddressControl();
+            this.TotalColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label9 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -105,6 +109,7 @@ namespace ObjectOrientedPractics.View.Tabs
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.label9);
             this.panel1.Controls.Add(this.DeliveryTimeComboBox);
             this.panel1.Controls.Add(this.label8);
             this.panel1.Controls.Add(this.OrderItemsListBox);
@@ -118,6 +123,8 @@ namespace ObjectOrientedPractics.View.Tabs
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.addressControl1);
+            this.panel1.Controls.Add(this.TotalTitleLabel);
+            this.panel1.Controls.Add(this.TotalValueLabel);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(315, 38);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
@@ -161,7 +168,7 @@ namespace ObjectOrientedPractics.View.Tabs
             // 
             this.AmountValueLabel.AutoSize = true;
             this.AmountValueLabel.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Bold);
-            this.AmountValueLabel.Location = new System.Drawing.Point(342, 368);
+            this.AmountValueLabel.Location = new System.Drawing.Point(159, 368);
             this.AmountValueLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.AmountValueLabel.Name = "AmountValueLabel";
             this.AmountValueLabel.Size = new System.Drawing.Size(29, 35);
@@ -172,7 +179,7 @@ namespace ObjectOrientedPractics.View.Tabs
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.label7.Location = new System.Drawing.Point(343, 343);
+            this.label7.Location = new System.Drawing.Point(343, 318);
             this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(90, 25);
@@ -248,6 +255,37 @@ namespace ObjectOrientedPractics.View.Tabs
             this.label3.TabIndex = 1;
             this.label3.Text = "ID:";
             // 
+            // addressControl1
+            // 
+            this.addressControl1.AutoValidate = System.Windows.Forms.AutoValidate.Disable;
+            this.addressControl1.Location = new System.Drawing.Point(4, 83);
+            this.addressControl1.Margin = new System.Windows.Forms.Padding(2);
+            this.addressControl1.Name = "addressControl1";
+            this.addressControl1.Size = new System.Drawing.Size(452, 165);
+            this.addressControl1.TabIndex = 0;
+            // 
+            // TotalTitleLabel
+            // 
+            this.TotalTitleLabel.AutoSize = true;
+            this.TotalTitleLabel.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.TotalTitleLabel.Location = new System.Drawing.Point(343, 343);
+            this.TotalTitleLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.TotalTitleLabel.Name = "TotalTitleLabel";
+            this.TotalTitleLabel.Size = new System.Drawing.Size(60, 25);
+            this.TotalTitleLabel.TabIndex = 23;
+            this.TotalTitleLabel.Text = "Total:";
+            // 
+            // TotalValueLabel
+            // 
+            this.TotalValueLabel.AutoSize = true;
+            this.TotalValueLabel.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Bold);
+            this.TotalValueLabel.Location = new System.Drawing.Point(342, 368);
+            this.TotalValueLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.TotalValueLabel.Name = "TotalValueLabel";
+            this.TotalValueLabel.Size = new System.Drawing.Size(29, 35);
+            this.TotalValueLabel.TabIndex = 24;
+            this.TotalValueLabel.Text = "0";
+            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.label1);
@@ -282,7 +320,8 @@ namespace ObjectOrientedPractics.View.Tabs
             this.OrderStatus,
             this.CustomerFullName,
             this.DeliveryAddress,
-            this.TotalAmount});
+            this.TotalAmount,
+            this.TotalColumn});
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(2, 38);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
@@ -336,20 +375,30 @@ namespace ObjectOrientedPractics.View.Tabs
             // 
             // TotalAmount
             // 
-            this.TotalAmount.HeaderText = "Total Amount";
+            this.TotalAmount.HeaderText = "Amount";
             this.TotalAmount.MinimumWidth = 8;
             this.TotalAmount.Name = "TotalAmount";
             this.TotalAmount.ReadOnly = true;
-            this.TotalAmount.Width = 106;
+            this.TotalAmount.Width = 81;
             // 
-            // addressControl1
+            // TotalColumn
             // 
-            this.addressControl1.AutoValidate = System.Windows.Forms.AutoValidate.Disable;
-            this.addressControl1.Location = new System.Drawing.Point(4, 83);
-            this.addressControl1.Margin = new System.Windows.Forms.Padding(2);
-            this.addressControl1.Name = "addressControl1";
-            this.addressControl1.Size = new System.Drawing.Size(452, 165);
-            this.addressControl1.TabIndex = 0;
+            this.TotalColumn.HeaderText = "Total";
+            this.TotalColumn.MinimumWidth = 8;
+            this.TotalColumn.Name = "TotalColumn";
+            this.TotalColumn.ReadOnly = true;
+            this.TotalColumn.Width = 67;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.label9.Location = new System.Drawing.Point(150, 343);
+            this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(90, 25);
+            this.label9.TabIndex = 25;
+            this.label9.Text = "Amount:";
             // 
             // OrdersTab
             // 
@@ -399,5 +448,10 @@ namespace ObjectOrientedPractics.View.Tabs
         private DataGridViewTextBoxColumn TotalAmount;
         private ComboBox DeliveryTimeComboBox;
         private Label label8;
+        // <-- NEW: Добавить объявления в конец
+        private Label TotalTitleLabel;
+        private Label TotalValueLabel;
+        private DataGridViewTextBoxColumn TotalColumn;
+        private Label label9;
     }
 }

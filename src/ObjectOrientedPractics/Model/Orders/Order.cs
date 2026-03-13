@@ -43,6 +43,10 @@ namespace ObjectOrientedPractics.Model.Orders
 
         private OrderStatus _status;
         /// <summary>
+        /// Размер примененной скидки.
+        /// </summary>
+        private double _discountAmount;
+        /// <summary>
         /// Создает новый экземпляр класса <see cref="Order"/> на основе корзины покупателя.
         /// </summary>
         /// <param name="cart">Корзина с товарами.</param>
@@ -58,11 +62,12 @@ namespace ObjectOrientedPractics.Model.Orders
             {
                 foreach (var item in cart.Items)
                 {
-                    _items.Add(item); // Добавляем товары в заказ
+                    _items.Add(item);
                 }
             }
-            _amount = cart?.Amount ?? 0.0; // Используем стоимость из корзины
+            _amount = cart?.Amount ?? 0.0;
             _status = OrderStatus.New;
+            _discountAmount = 0.0;
         }
 
         /// <summary>
@@ -73,6 +78,7 @@ namespace ObjectOrientedPractics.Model.Orders
             _id = idCounter++;
             _date = DateTime.Now;
             _items = new List<Item>();
+            _discountAmount = 0.0;
         }
 
         /// <summary>
@@ -123,7 +129,23 @@ namespace ObjectOrientedPractics.Model.Orders
             get => _status;
             set => _status = value;
         }
+        /// <summary>
+        /// Возвращает или задает размер примененной скидки.
+        /// </summary>
+        public double DiscountAmount
+        {
+            get { return _discountAmount; }
+            set { _discountAmount = value; }
+        }
 
+
+        /// <summary>
+        /// Возвращает конечную стоимость заказа с учетом скидки.
+        /// </summary>
+        public double Total
+        {
+            get { return Amount - DiscountAmount; }
+        }
     }
 
     
