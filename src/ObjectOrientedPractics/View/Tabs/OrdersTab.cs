@@ -190,8 +190,12 @@ namespace ObjectOrientedPractics.View.Tabs
             addressColumn.HeaderText = "Delivery Address";
 
             DataGridViewTextBoxColumn amountColumn = new DataGridViewTextBoxColumn();
-            amountColumn.Name = "TotalAmount";
-            amountColumn.HeaderText = "Total Amount";
+            amountColumn.Name = "Amount";
+            amountColumn.HeaderText = "Amount";
+
+            DataGridViewTextBoxColumn totalColumn = new DataGridViewTextBoxColumn();
+            totalColumn.Name = "Total";
+            totalColumn.HeaderText = "Total";
 
             dataGridView1.Columns.Add(idColumn);
             dataGridView1.Columns.Add(createdColumn);
@@ -199,6 +203,7 @@ namespace ObjectOrientedPractics.View.Tabs
             dataGridView1.Columns.Add(customerColumn);
             dataGridView1.Columns.Add(addressColumn);
             dataGridView1.Columns.Add(amountColumn);
+            dataGridView1.Columns.Add(totalColumn);  
 
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
@@ -207,6 +212,7 @@ namespace ObjectOrientedPractics.View.Tabs
             dataGridView1.MultiSelect = false;
             dataGridView1.RowHeadersVisible = false;
         }
+        
 
         /// <summary>
         /// Устанавливает режим только для чтения для всех полей, кроме статуса заказа.
@@ -261,7 +267,8 @@ namespace ObjectOrientedPractics.View.Tabs
                         order.Status,
                         customer.FullName,
                         $"{order.Address.Index}, {order.Address.Country}, {order.Address.City}, {order.Address.Street} {order.Address.Building}-{order.Address.Apartment}",
-                        order.Amount.ToString("F2")
+                        order.Amount.ToString("F2"),
+                        order.Total.ToString("F2")  
                     );
                 }
             }
@@ -332,6 +339,7 @@ namespace ObjectOrientedPractics.View.Tabs
             }
 
             AmountValueLabel.Text = order.Amount.ToString("F2");
+            TotalValueLabel.Text = order.Total.ToString("F2");
         }
 
         /// <summary>
@@ -345,6 +353,7 @@ namespace ObjectOrientedPractics.View.Tabs
             addressControl1.ClearFields();
             OrderItemsListBox.Items.Clear();
             AmountValueLabel.Text = "0";
+            TotalValueLabel.Text = "0";
 
             // Скрываем панель приоритетных опций при очистке
             HidePriorityOptionsPanel();
