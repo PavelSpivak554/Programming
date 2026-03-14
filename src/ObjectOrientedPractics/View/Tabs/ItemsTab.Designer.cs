@@ -46,6 +46,10 @@
             this.ItemsCategoryComboBox = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.OrderComboBox = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.FindItemsTextBox = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -62,9 +66,9 @@
             this.ItemsListBox.FormattingEnabled = true;
             this.ItemsListBox.IntegralHeight = false;
             this.ItemsListBox.ItemHeight = 16;
-            this.ItemsListBox.Location = new System.Drawing.Point(3, 28);
+            this.ItemsListBox.Location = new System.Drawing.Point(3, 56);
             this.ItemsListBox.Name = "ItemsListBox";
-            this.ItemsListBox.Size = new System.Drawing.Size(309, 392);
+            this.ItemsListBox.Size = new System.Drawing.Size(309, 328);
             this.ItemsListBox.TabIndex = 0;
             this.ItemsListBox.SelectedIndexChanged += new System.EventHandler(this.ItemsListBox_SelectedIndexChanged);
             // 
@@ -248,6 +252,10 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.OrderComboBox);
+            this.panel1.Controls.Add(this.label7);
+            this.panel1.Controls.Add(this.FindItemsTextBox);
+            this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.tableLayoutPanel2);
             this.panel1.Controls.Add(this.itemsLabel);
             this.panel1.Controls.Add(this.ItemsListBox);
@@ -256,6 +264,49 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(315, 469);
             this.panel1.TabIndex = 0;
+            // 
+            // OrderComboBox
+            // 
+            this.OrderComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.OrderComboBox.FormattingEnabled = true;
+            this.OrderComboBox.Items.AddRange(new object[] {
+            "alphabetical",
+            "Cost (Ascending)",
+            "Cost (Descending)"});
+            this.OrderComboBox.Location = new System.Drawing.Point(75, 365);
+            this.OrderComboBox.Name = "OrderComboBox";
+            this.OrderComboBox.Size = new System.Drawing.Size(237, 24);
+            this.OrderComboBox.TabIndex = 15;
+            this.OrderComboBox.SelectedIndexChanged += new System.EventHandler(this.OrderComboBox_SelectedIndexChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(3, 368);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(63, 16);
+            this.label7.TabIndex = 15;
+            this.label7.Text = "Order By:";
+            // 
+            // FindItemsTextBox
+            // 
+            this.FindItemsTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.FindItemsTextBox.Location = new System.Drawing.Point(45, 31);
+            this.FindItemsTextBox.Name = "FindItemsTextBox";
+            this.FindItemsTextBox.Size = new System.Drawing.Size(264, 22);
+            this.FindItemsTextBox.TabIndex = 15;
+            this.FindItemsTextBox.TextChanged += new System.EventHandler(this.FindItemsTextBox_TextChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(3, 34);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(36, 16);
+            this.label6.TabIndex = 15;
+            this.label6.Text = "Find:";
             // 
             // tableLayoutPanel2
             // 
@@ -312,5 +363,9 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox ItemsCategoryComboBox;
+        private System.Windows.Forms.TextBox FindItemsTextBox;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox OrderComboBox;
+        private System.Windows.Forms.Label label7;
     }
 }
