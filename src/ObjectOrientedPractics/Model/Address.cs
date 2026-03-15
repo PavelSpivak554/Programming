@@ -50,6 +50,12 @@ namespace ObjectOrientedPractics.Model
             Apartment = apartment;
         }
         /// <summary>
+        /// Событие возникающее при измненеии адреса
+        /// </summary>
+        public event EventHandler AddressChanged;
+
+
+        /// <summary>
         /// Почтовый индекс. Должен быть шестизначным числом.
         /// </summary>
         /// <exception cref="ArgumentException">Выбрасывается, если значение не является шестизначным числом</exception>
@@ -62,6 +68,7 @@ namespace ObjectOrientedPractics.Model
                 {
                     throw new ArgumentException("Индекс должен быть шестизначным числом.");
                 }
+                AddressChanged?.Invoke(this, EventArgs.Empty);
                 _index = value;
             }
         }
@@ -83,6 +90,7 @@ namespace ObjectOrientedPractics.Model
                 {
                     throw new ArgumentException("Название страны не должно превышать 50 символов.");
                 }
+                AddressChanged?.Invoke(this, EventArgs.Empty);
                 _country = value;
             }
         }
@@ -104,6 +112,7 @@ namespace ObjectOrientedPractics.Model
                 {
                     throw new ArgumentException("Название города не должно превышать 50 символов.");
                 }
+                AddressChanged?.Invoke(this, EventArgs.Empty);
                 _city = value;
             }
         }
@@ -125,6 +134,7 @@ namespace ObjectOrientedPractics.Model
                 {
                     throw new ArgumentException("Название улицы не должно превышать 100 символов.");
                 }
+                AddressChanged?.Invoke(this, EventArgs.Empty);
                 _street = value;
             }
         }
@@ -146,6 +156,7 @@ namespace ObjectOrientedPractics.Model
                 {
                     throw new ArgumentException("Номер дома не должен превышать 10 символов.");
                 }
+                AddressChanged?.Invoke(this, EventArgs.Empty);
                 _building = value;
             }
         }
@@ -166,6 +177,8 @@ namespace ObjectOrientedPractics.Model
                 {
                     throw new ArgumentException("Номер квартиры не должен превышать 10 символов.");
                 }
+                AddressChanged?.Invoke(this, EventArgs.Empty);
+
                 _apartment = value;
             }
         }

@@ -66,6 +66,19 @@ namespace ObjectOrientedPractics.Model
             _id = idCounter++;
         }
 
+
+        /// <summary>
+        /// Событитие возникающее при измненеии имени
+        /// </summary>
+        public event EventHandler NameChanged;
+        /// <summary>
+        /// Событие возникающее при изменении описания
+        /// </summary>
+        public event EventHandler InfoChanged;
+        /// <summary>
+        /// Событие возникающее при измненении цены
+        /// </summary>
+        public event EventHandler CostChanged;
         /// <summary>
         /// Возвращает Id товара.
         /// </summary>
@@ -83,6 +96,7 @@ namespace ObjectOrientedPractics.Model
             set
             {
                 ValueValidator.AssertStringOnLength(value, 200, nameof(Name));
+                NameChanged?.Invoke(this, EventArgs.Empty);
                 _name = value;
             }
         }
@@ -96,6 +110,7 @@ namespace ObjectOrientedPractics.Model
             set
             {
                 ValueValidator.AssertStringOnLength(value, 1000, nameof(Info));
+                InfoChanged?.Invoke(this, EventArgs.Empty);
                 _info = value;
             }
         }
@@ -109,6 +124,7 @@ namespace ObjectOrientedPractics.Model
             set
             {
                 ValueValidator.AssertValueInRange(value, 0, 100000, nameof(Cost));
+                CostChanged?.Invoke(this, EventArgs.Empty);
                 _cost = value;
             }
         }
