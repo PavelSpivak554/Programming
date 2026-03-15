@@ -21,6 +21,7 @@ namespace ObjectOrientedPractics.View.Tabs
     /// </summary>
     public partial class CustomersTab : UserControl
     {
+
         /// <summary>
         /// Список покупателей.
         /// </summary>
@@ -60,6 +61,7 @@ namespace ObjectOrientedPractics.View.Tabs
             InitializeComponent();
             InitializeVisualValidation();
             addressControl1.AddressChanged += AddressControl_AddressChanged;
+            
         }
 
         /// <summary>

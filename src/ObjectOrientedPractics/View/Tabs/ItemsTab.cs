@@ -24,6 +24,10 @@ namespace ObjectOrientedPractics.View.Tabs
         /// Поле для хранения выбранного товара.
         /// </summary>
         private Item _selectedItem;
+        /// <summary>
+        /// Событие, возникающее при измненении товара
+        /// </summary>
+        public event EventHandler ItemsChanged;
 
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="ItemsTab"/>.
@@ -162,6 +166,7 @@ namespace ObjectOrientedPractics.View.Tabs
                     Item item = new Item(itemName, itemInfo, itemCost, itemCategory);
                     _items.Add(item);
                     ApplySortAndFilter();
+                    ItemsChanged?.Invoke(this, EventArgs.Empty);
                 }
                 else
                 {
@@ -192,6 +197,7 @@ namespace ObjectOrientedPractics.View.Tabs
             _selectedItem = null;
             ApplySortAndFilter();
             ClearFields();
+            ItemsChanged?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -228,6 +234,7 @@ namespace ObjectOrientedPractics.View.Tabs
             {
                 selectedItem.Category = newCategory;
                 //ListBoxUpdate(_items);
+                ItemsChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -265,6 +272,7 @@ namespace ObjectOrientedPractics.View.Tabs
             if (ItemsListBox.SelectedItem != null)
             {
                 selectedItem.Name = newName;
+                ItemsChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -278,6 +286,7 @@ namespace ObjectOrientedPractics.View.Tabs
             if (ItemsListBox.SelectedItem != null)
             {
                 selectedItem.Info = newInfo;
+                ItemsChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -292,6 +301,8 @@ namespace ObjectOrientedPractics.View.Tabs
             {
                 Item selectedItem = (Item)ItemsListBox.SelectedItem;
                 selectedItem.Cost = newCost;
+                ItemsChanged?.Invoke(this, EventArgs.Empty);
+
             }
         }
         /// <summary>

@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using static System.Windows.Forms.AxHost;
 using ObjectOrientedPractics.Model.Enums;
 using ObjectOrientedPractics.Model.Orders;
+using ObjectOrientedPractics.View.Tabs;
 
 
 namespace ObjectOrientedPractics
@@ -45,6 +46,14 @@ namespace ObjectOrientedPractics
             ordersTab1.Customers = _store.Customers;
             //priorityOrdersTab1.Store = _store;
             tabControl1.SelectedIndexChanged += TabControl_SelectedIndexChanged;
+
+            itemsTab1.ItemsChanged += (s, e) =>
+            {
+                cartsTab1.RefreshData();
+                ordersTab1.RefreshData();
+
+
+            };
         }
 
         /// <summary>
