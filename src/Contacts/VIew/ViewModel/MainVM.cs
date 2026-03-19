@@ -14,7 +14,7 @@ namespace View.ViewModel
     /// <summary>
     /// ViewModel для главного окна приложения.
     /// </summary>
-    class MainVM : INotifyPropertyChanged
+    public class MainVM : INotifyPropertyChanged
     {
         /// <summary>
         /// Поле контакта, хранящее актуальные данные.
@@ -22,9 +22,13 @@ namespace View.ViewModel
         private Contact _contact;
 
         /// <summary>
-        /// Поле для сереализатора
+        /// Поле для сериализатора
         /// </summary>
         private readonly ContactSerializer _serializer;
+        /// <summary>
+        /// Поле для интерфейса сообщений
+        /// </summary>
+        private readonly IMessageService _messageService;
 
         /// <summary>
         /// Свойство для команды сохранения
@@ -35,16 +39,15 @@ namespace View.ViewModel
         /// </summary>
         public ICommand LoadCommand { get; }
 
-
-
         /// <summary>
         /// Конструктор по умолчанию.
         /// Инициализирует сериализатор, создает тестовый контакт и команду сохранения.
         /// </summary>
-        public MainVM()
+        public MainVM(IMessageService messageService)
         {
             // Инициализация сериализатора
             _serializer = new ContactSerializer();
+            _messageService = messageService;
             // Инициализация контакта с тестовыми данными
             _contact = new Contact
             {
@@ -58,25 +61,13 @@ namespace View.ViewModel
                 {
                     if (_serializer.SaveContact(contact))
                     {
-                        System.Windows.MessageBox.Show("Контакт успешно сохранен!", "Сохранение",
-                                            System.Windows.MessageBoxButton.OK,
-                                            System.Windows.MessageBoxImage.Information);
-                    }
-                    else
-                    {
-                        System.Windows.MessageBox.Show("Ошибка при сохранении", "Ошибка",
-                            System.Windows.MessageBoxButton.OK,
-                            System.Windows.MessageBoxImage.Error);
+                        _messageService.SuccessSaveMessage();
                     }
 
                 }
                 catch (Exception ex)
                 {
-                    System.Windows.MessageBox.Show(
-                $"Ошибка при сохранении:{ex.Message}",
-                "Ошибка",
-                System.Windows.MessageBoxButton.OK,
-                System.Windows.MessageBoxImage.Error);
+                    _messageService.FailureMessage(ex);
                 }
 
             });
@@ -92,26 +83,15 @@ namespace View.ViewModel
                     PhoneNumber = loadedContact.PhoneNumber;
                     Email = loadedContact.Email;
 
-                    System.Windows.MessageBox.Show(
-                        "Контакт успешно загружен!",
-                        "Загрузка",
-                        System.Windows.MessageBoxButton.OK,
-                        System.Windows.MessageBoxImage.Information);
+                    _messageService.SuccessLoadMessage();
                 }
                 catch (Exception ex)
                 {
-                    System.Windows.MessageBox.Show(
-                        $"Ошибка при загрузке: {ex.Message}",
-                        "Ошибка",
-                        System.Windows.MessageBoxButton.OK,
-                        System.Windows.MessageBoxImage.Error);
+                    _messageService.FailureMessage(ex);
                 }
             });
         }
 
-
-
-        
         /// <summary>
         /// Событие для уведомления об изменениях свойств.
         /// </summary>
@@ -163,7 +143,7 @@ namespace View.ViewModel
         }
 
         /// <summary>
-        /// Медод для вызова события PropertyChanged
+        /// Метод для вызова события PropertyChanged
         /// </summary>
         /// <param name="propertyName"></param>
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)

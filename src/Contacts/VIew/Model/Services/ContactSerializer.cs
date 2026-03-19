@@ -12,7 +12,7 @@ namespace View.Model.Services
     /// <summary>
     /// Класс отвечающий за сериализацию и десериализацию данных (контакты)
     /// </summary>
-    class ContactSerializer
+    public class ContactSerializer
     {
         /// <summary>
         /// Имя файла куда сохраняются данные, не хранит путь 
@@ -22,18 +22,18 @@ namespace View.Model.Services
         /// <summary>
         /// Хранит путь к папке "Мои документы".
         /// </summary>
-        private static readonly string DocumentsPath =
+        private static readonly string ContactsFolderPath =
             Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
         /// <summary>
         /// Хранит полный путь к файлу (Папка + имя файла).
         /// </summary>
         private static readonly string ContactsDirectory =
-            Path.Combine(DocumentsPath, "Contacts");
+            Path.Combine(ContactsFolderPath, "Contacts");
         /// <summary>
         /// Полный путь к файлу контакта
         /// </summary>
-        public string FilePath { get; set; }
+        public string FilePath { get; }
 
         /// <summary>
         /// Конструктор по умолчанию.
@@ -46,7 +46,7 @@ namespace View.Model.Services
         /// <summary>
         /// Метод сериализации данных контакта
         /// </summary>
-        /// <param name="contact"></param>
+        /// <param name="contact">Контакт для сохранения</param>
         /// <returns>true, при успешной записи и false, при исключении</returns>
         public bool SaveContact(Contact contact)
         {
@@ -73,7 +73,7 @@ namespace View.Model.Services
         /// <summary>
         /// Метод десериализации данных контакта
         /// </summary>
-        /// <returns>Контакт, при успеном превращении из JSON строки в объект С#, иначе пустой контакт</returns>
+        /// <returns>Контакт, при успешом превращении из JSON строки в объект С#, иначе пустой контакт</returns>
         public Contact LoadContact()
         {
             try
