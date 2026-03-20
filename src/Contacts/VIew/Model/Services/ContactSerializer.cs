@@ -1,100 +1,96 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using View.Model;
 
-namespace View.Model.Services
+namespace View.Model.Services;
+
+/// <summary>
+/// Класс отвечающий за сериализацию и десериализацию данных (контакты)
+/// </summary>
+public class ContactSerializer
 {
     /// <summary>
-    /// Класс отвечающий за сериализацию и десериализацию данных (контакты)
+    /// Имя файла куда сохраняются данные, не хранит путь 
     /// </summary>
-    public class ContactSerializer
+    private const string FileName = "contacts.json";
+
+    /// <summary>
+    /// Хранит путь к папке "Мои документы".
+    /// </summary>
+    private static readonly string ContactsFolderPath =
+        Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+    /// <summary>
+    /// Хранит полный путь к файлу (Папка + имя файла).
+    /// </summary>
+    private static readonly string ContactsDirectory =
+        Path.Combine(ContactsFolderPath, "Contacts");
+
+    /// <summary>
+    /// Полный путь к файлу контакта
+    /// </summary>
+    public string FilePath { get; }
+
+    /// <summary>
+    /// Конструктор по умолчанию.
+    /// Использует путь: Мои документы\Contacts\contacts.json
+    /// </summary>
+    public ContactSerializer() 
     {
-        /// <summary>
-        /// Имя файла куда сохраняются данные, не хранит путь 
-        /// </summary>
-        private const string FileName = "contacts.json";
+        FilePath = Path.Combine(ContactsDirectory, FileName);
+    }
 
-        /// <summary>
-        /// Хранит путь к папке "Мои документы".
-        /// </summary>
-        private static readonly string ContactsFolderPath =
-            Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-
-        /// <summary>
-        /// Хранит полный путь к файлу (Папка + имя файла).
-        /// </summary>
-        private static readonly string ContactsDirectory =
-            Path.Combine(ContactsFolderPath, "Contacts");
-        /// <summary>
-        /// Полный путь к файлу контакта
-        /// </summary>
-        public string FilePath { get; }
-
-        /// <summary>
-        /// Конструктор по умолчанию.
-        /// Использует путь: Мои документы\Contacts\contacts.json
-        /// </summary>
-        public ContactSerializer() 
+    /// <summary>
+    /// Метод сериализации данных контакта
+    /// </summary>
+    /// <param name="contact">Контакт для сохранения</param>
+    /// <returns>true, при успешной записи и false, при исключении</returns>
+    public bool SaveContact(Contact contact)
+    {
+        try
         {
-            FilePath = Path.Combine(ContactsDirectory, FileName);
+            string directory = Path.GetDirectoryName(FilePath);
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+            string json = JsonConvert.SerializeObject(contact, Formatting.Indented);
+
+            // Записываем в файл
+            File.WriteAllText(FilePath, json);
+
+            return true;
         }
-        /// <summary>
-        /// Метод сериализации данных контакта
-        /// </summary>
-        /// <param name="contact">Контакт для сохранения</param>
-        /// <returns>true, при успешной записи и false, при исключении</returns>
-        public bool SaveContact(Contact contact)
+        catch(Exception ex) 
         {
-            try
-            {
-                string directory = Path.GetDirectoryName(FilePath);
-                if (!Directory.Exists(directory))
-                {
-                    Directory.CreateDirectory(directory);
-                }
-                string json = JsonConvert.SerializeObject(contact, Formatting.Indented);
+            return false;
 
-                // Записываем в файл
-                File.WriteAllText(FilePath, json);
-
-                return true;
-            }
-            catch(Exception ex) 
-            {
-                return false;
-
-            }
         }
-        /// <summary>
-        /// Метод десериализации данных контакта
-        /// </summary>
-        /// <returns>Контакт, при успешом превращении из JSON строки в объект С#, иначе пустой контакт</returns>
-        public Contact LoadContact()
-        {
-            try
-            {
-                if (File.Exists(FilePath))
-                {
-                    string json = File.ReadAllText(FilePath);
-                    Contact contact = JsonConvert.DeserializeObject<Contact>(json);
-                    if (contact == null)
-                    {
-                        return new Contact();
-                    }
-                    else { return contact; }
-                }
-                return new Contact();
+    }
 
-            }
-            catch (Exception ex)
+    /// <summary>
+    /// Метод десериализации данных контакта
+    /// </summary>
+    /// <returns>Контакт, при успешом превращении из JSON строки в объект С#, иначе пустой контакт</returns>
+    public Contact LoadContact()
+    {
+        try
+        {
+            if (File.Exists(FilePath))
             {
-                return new Contact();
+                string json = File.ReadAllText(FilePath);
+                Contact contact = JsonConvert.DeserializeObject<Contact>(json);
+                if (contact == null)
+                {
+                    return new Contact();
+                }
+                else { return contact; }
             }
+            return new Contact();
+
+        }
+        catch (Exception)
+        {
+            return new Contact();
         }
     }
 }

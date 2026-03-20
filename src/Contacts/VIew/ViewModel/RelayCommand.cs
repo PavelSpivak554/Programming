@@ -1,26 +1,20 @@
 ﻿using System.Windows.Input;
 using View.Model;
 
+
 namespace View.ViewModel;
 
-/// <summary>
-/// Команда для загрузки контакта.
-/// </summary>
-public class LoadCommand : ICommand
+internal class RelayCommand : ICommand
 {
-    /// <summary>
-    /// Приватное поле для хранения действия, которое нужно выполнить при загрузке
-    /// </summary>
-    private readonly Action<Contact> _loadAction;
+    private readonly Action<object> _execute;
+    private readonly Func<object, bool> _canExecute;
 
-    /// <summary>
-    /// Создает новую команду загрузки
-    /// </summary>
-    /// <param name="loadAction">Действие, выполняемое при загрузке контакта</param>
-    public LoadCommand(Action<Contact> loadAction)
+    public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
     {
-        _loadAction = loadAction;
+        _execute = execute;
+        _canExecute = canExecute;
     }
+
     /// <summary>
     /// Определяет можно ли выполнить команду сейчас. Кнопка всегда доступна.
     /// </summary>
@@ -35,10 +29,7 @@ public class LoadCommand : ICommand
     /// </summary>
     public void Execute(object parameter)
     {
-        if(parameter is Contact contact)
-        {
-            _loadAction(contact);
-        }
+        _execute(parameter);
     }
     /// <summary>
     ///Событие которое возникает при изменении возможности выполнения команды.

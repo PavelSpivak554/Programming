@@ -5,98 +5,110 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace View.Model
+namespace View.Model;
+
+/// <summary>
+/// Класс, представляющий контактную информацию.
+/// </summary>
+public class Contact : INotifyPropertyChanged
 {
     /// <summary>
-    /// Класс, представляющий контактную информацию.
+    /// Поле для хранения имени контакта
     /// </summary>
-    public class Contact
+    private string _name;
+
+    /// <summary>
+    /// Поле для хранения номера контакта
+    /// </summary>
+    private string _phoneNumber;
+
+    /// <summary>
+    /// Поле для хранения почты контакта
+    /// </summary>
+    private string _email;
+
+    /// <summary>
+    /// Событие, возникающее при изменении свойства.
+    /// </summary>
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    /// <summary>
+    /// Конструктор по умолчанию.
+    /// </summary>
+    public Contact()
     {
-        private string _name;
-        private string _phoneNumber;
-        private string _email;
+        _name = string.Empty;
+        _phoneNumber = string.Empty;
+        _email = string.Empty;
+    }
 
-        /// <summary>
-        /// Событие, возникающее при изменении свойства.
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
+    /// <summary>
+    /// Конструктор для инициализации контакта с параметрами.
+    /// </summary>
+    /// <param name="name">Имя контакта.</param>
+    /// <param name="phoneNumber">Номер телефона.</param>
+    /// <param name="email">Адрес электронной почты.</param>
+    public Contact(string name, string phoneNumber, string email)
+    {
+        Name = name;
+        PhoneNumber = phoneNumber; 
+        Email = email;
+    }
 
-        /// <summary>
-        /// Конструктор по умолчанию.
-        /// </summary>
-        public Contact()
+    /// <summary>
+    /// Имя контакта
+    /// </summary>
+    public string Name
+    {
+        get { return _name; }
+        set
         {
-            _name = string.Empty;
-            _phoneNumber = string.Empty;
-            _email = string.Empty;
-        }
-        /// <summary>
-        /// Конструктор для инициализации контакта с параметрами.
-        /// </summary>
-        /// <param name="name">Имя контакта.</param>
-        /// <param name="phoneNumber">Номер телефона.</param>
-        /// <param name="email">Адрес электронной почты.</param>
-        public Contact(string name, string phoneNumber, string email)
-        {
-            _name = name;
-            _phoneNumber = phoneNumber; 
-            _email = email;
-        }
-        /// <summary>
-        /// Имя контакта
-        /// </summary>
-        public string Name
-        {
-            get { return _name; }
-            set
+            if(_name != value)
             {
-                if(_name != value)
-                {
-                    _name = value;
-                    OnPropertyChanged(nameof(Name));
-                }
+                _name = value;
+                OnPropertyChanged(nameof(Name));
             }
         }
+    }
 
-        /// <summary>
-        /// Номер контакта
-        /// </summary>
-        public string PhoneNumber
+    /// <summary>
+    /// Номер контакта
+    /// </summary>
+    public string PhoneNumber
+    {
+        get { return _phoneNumber; }
+        set
         {
-            get { return _phoneNumber; }
-            set
+            if (_phoneNumber != value)
             {
-                if (_phoneNumber != value)
-                {
-                    _phoneNumber = value;
-                    OnPropertyChanged(nameof(PhoneNumber));
-                }
+                _phoneNumber = value;
+                OnPropertyChanged(nameof(PhoneNumber));
             }
         }
-        /// <summary>
-        /// Почта контакта
-        /// </summary>
-        public string Email
+    }
+
+    /// <summary>
+    /// Почта контакта
+    /// </summary>
+    public string Email
+    {
+        get { return _email; }
+        set
         {
-            get { return _email; }
-            set
+            if (_email != value)
             {
-                if (_email != value)
-                {
-                    _email = value;
-                    OnPropertyChanged(nameof(Email));
-                }
+                _email = value;
+                OnPropertyChanged(nameof(Email));
             }
         }
-        
-
-        /// <summary>
-        /// Метод для вызова события PropertyChanged.
-        /// </summary>
-        /// <param name="propertyName">Имя изменившегося свойства.</param>
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+    }
+    
+    /// <summary>
+    /// Метод для вызова события PropertyChanged.
+    /// </summary>
+    /// <param name="propertyName">Имя изменившегося свойства.</param>
+    protected virtual void OnPropertyChanged(string propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }
