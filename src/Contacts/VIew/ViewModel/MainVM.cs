@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using View.Model;
 using View.Model.Services;
+using View.ViewModel.Services;
 
 namespace View.ViewModel
 {
@@ -55,24 +51,22 @@ namespace View.ViewModel
                 PhoneNumber = "+7-913-111-22-33",
                 Email = "yuri.smirnov@no.mail"
             };
-            SaveCommand = new SaveCommand(contact =>
+            SaveCommand = new RelayCommand(parameter =>
             {
-                try
+                if (parameter is Contact contact)
                 {
-                    if (_serializer.SaveContact(contact))
+                    try
                     {
-                        _messageService.SuccessSaveMessage();
+                        _serializer.SaveContact(contact);
                     }
-
+                    catch (Exception ex)
+                    {
+                        _messageService.FailureMessage(ex);
+                    }
                 }
-                catch (Exception ex)
-                {
-                    _messageService.FailureMessage(ex);
-                }
-
             });
 
-            LoadCommand = new LoadCommand(contact =>  
+            LoadCommand = new RelayCommand(contact =>  
             {
                 try
                 {
@@ -83,7 +77,6 @@ namespace View.ViewModel
                     PhoneNumber = loadedContact.PhoneNumber;
                     Email = loadedContact.Email;
 
-                    _messageService.SuccessLoadMessage();
                 }
                 catch (Exception ex)
                 {
