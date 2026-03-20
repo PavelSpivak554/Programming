@@ -4,15 +4,23 @@ using View.Model;
 
 namespace View.ViewModel;
 
+/// <summary>
+/// Представляет универсальную команду, реализующую интерфейс <see cref="ICommand"/>.
+/// </summary>
 internal class RelayCommand : ICommand
 {
+    /// <summary>
+    /// Поле хранящее ссылку на метод которое необходимо выполнить
+    /// </summary>
     private readonly Action<object> _execute;
-    private readonly Func<object, bool> _canExecute;
 
-    public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
+    /// <summary>
+    /// Инициализирует новый экземпляр класса <see cref="RelayCommand"/>.
+    /// </summary>
+    /// <param name="execute">Делегат, содержащий логику выполнения команды.</param>
+    public RelayCommand(Action<object> execute)
     {
         _execute = execute;
-        _canExecute = canExecute;
     }
 
     /// <summary>
@@ -31,6 +39,7 @@ internal class RelayCommand : ICommand
     {
         _execute(parameter);
     }
+
     /// <summary>
     ///Событие которое возникает при изменении возможности выполнения команды.
     /// </summary>
