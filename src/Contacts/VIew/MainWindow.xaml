@@ -5,11 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:View"
         mc:Ignorable="d"
-        Title="MainWindow"
+        Title="ContactsApp"
         Height="450"
         Width="500"
-        Icon="ContactsApp_96x96.ico">
-
+        Icon="/Resources/ContactsApp_96x96.ico">
     <!-- Поля окна 15px с каждой стороны -->
     <Grid Margin="15">
         <Grid.RowDefinitions>

@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="ContactsApp_96x96.ico" />
+    <None Remove="Resources\ContactsApp_96x96.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="ContactsApp_96x96.ico" />
+    <Resource Include="Resources\ContactsApp_96x96.ico" />
   </ItemGroup>
 
 </Project>
