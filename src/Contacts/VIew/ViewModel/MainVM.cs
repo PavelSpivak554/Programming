@@ -272,7 +272,17 @@ namespace View.ViewModel
                 }
             }
         }
-            
+
+        public ObservableCollection<Contact> Contacts
+        {
+            get => _contacts;
+            set
+            {
+                _contacts = value;
+                OnPropertyChanged();
+            }
+        }
+
         /// <summary>
         /// Метод для вызова события PropertyChanged
         /// </summary>
