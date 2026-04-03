@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 using View.Model;
 using View.Model.Services;
 using View.ViewModel.Services;
@@ -138,13 +139,16 @@ namespace View.ViewModel
                 execute: _ =>
                 {
                     if (_isAdding || _isEditing) return;
+
+                    SelectedContact = null;
                     IsAdding = true;
                     EditableContact = new Contact();
-                    SelectedContact = null;
+                    
 
                     OnPropertyChanged(nameof(Name));
                     OnPropertyChanged(nameof(PhoneNumber));
                     OnPropertyChanged(nameof(Email));
+
                 },
                 canExecute: _ =>
                 {
@@ -163,7 +167,6 @@ namespace View.ViewModel
 
                     if (_contacts.Count == 0)
                     {
-                        SelectedContact = null;
                         EditableContact = new Contact();
 
                         OnPropertyChanged(nameof(Name));
@@ -220,8 +223,6 @@ namespace View.ViewModel
                     }
                     else if (_isAdding)
                     {
-                        Debug.WriteLine($"=== AddCommand EXECUTE: IsAdding={_isAdding}, IsEditing={_isEditing} ===");
-                        MessageBox.Show("");
                         var newContact = EditableContact;
                         _contacts.Add(newContact);
                         IsAdding = false;
