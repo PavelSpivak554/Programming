@@ -3,106 +3,192 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:View"
+        xmlns:converters="clr-namespace:View.Converters"
         mc:Ignorable="d"
-        Title="MainWindow"
-        Height="450"
-        Width="500"
-        Icon="ContactsApp_96x96.ico">
+        Title="Contacts" 
+        Height="600" 
+        Width="800"
+        WindowStartupLocation="CenterScreen"
+        MinWidth="550" 
+        MinHeight="400"
+        Icon="/Resources/ContactsApp_96x96.ico">
 
-    <!-- Поля окна 15px с каждой стороны -->
-    <Grid Margin="15">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+    <Window.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
 
-        <!-- Основная панель с двумя колонками -->
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" MinWidth="150"/>
+            <ColumnDefinition Width="3"/>
+            <ColumnDefinition Width="*" MinWidth="250"/>
+        </Grid.ColumnDefinitions>
 
-            <!-- EDIT CONTACT - Левая панель -->
-            <GroupBox Grid.Column="0" 
-                      Header="Edit Contact"
-                      Margin="0 0 3 0"
-                      Padding="3">
-                <StackPanel>
-                    <!-- Name -->
-                    <Label Content="Name:" 
-                           Margin="0 0 0 3"
-                           Padding="0"/>
-                    <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
-                             Margin="0 0 0 10"/>
+        <!-- Левая панель - список контактов -->
+        <Grid Grid.Column="0">
+            <Grid Margin="8">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-                    <!-- Phone Number -->
-                    <Label Content="Phone Number:" 
-                           Margin="0 0 0 3"
-                           Padding="0"/>
-                    <TextBox Text="{Binding PhoneNumber, UpdateSourceTrigger=PropertyChanged}"
-                             Margin="0 0 0 10"/>
+                <!-- Верхняя панель: поле поиска -->
+                <Grid Grid.Row="0" Margin="0,0,0,3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-                    <!-- Email -->
-                    <Label Content="Email:" 
-                           Margin="0 0 0 3"
-                           Padding="0"/>
-                    <TextBox Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"/>
-                </StackPanel>
-            </GroupBox>
+                    <TextBlock Grid.Column="0" 
+                               Text="Find:" 
+                               VerticalAlignment="Center"
+                               Margin="0,0,5,0"/>
 
-            <!-- READ CONTACT - Правая панель -->
-            <GroupBox Grid.Column="1" 
-                      Header="Read Contact" 
-                      Margin="3 0 0 0"
-                      Padding="3">
-                <StackPanel>
-                    <!-- Name -->
-                    <Label Content="Name:" 
-                           Margin="0 0 0 3"
-                           Padding="0"/>
-                    <TextBlock Text="{Binding Name}"
-                               FontWeight="Bold"
-                               Margin="0 0 0 10"/>
+                    <TextBox Grid.Column="1" 
+                             Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                             Height="25" 
+                             Padding="3"
+                             BorderThickness="1"/>
+                </Grid>
 
-                    <!-- Phone Number -->
-                    <Label Content="Phone Number:" 
-                           Margin="0 0 0 3"
-                           Padding="0"/>
-                    <TextBlock Text="{Binding PhoneNumber}"
-                               FontWeight="Bold"
-                               Margin="0 0 0 10"/>
-                    
-                    <!-- Email -->
-                    <Label Content="Email:" 
-                           Margin="0 0 0 3"
-                           Padding="0"/>
-                    <TextBlock Text="{Binding Email}"
-                               FontWeight="Bold"/>
-                </StackPanel>
-            </GroupBox>
+                <!-- Список контактов -->
+                <ListBox Grid.Row="1" 
+                         ItemsSource="{Binding Contacts}"
+                         SelectedItem="{Binding SelectedContact}"
+                         Margin="0,3,0,3"
+                         BorderThickness="0">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Margin" Value="0,0,0,3"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="3">
+                                <TextBlock Text="{Binding Name}" 
+                                           FontSize="12" 
+                                           FontWeight="SemiBold"
+                                           TextTrimming="CharacterEllipsis"/>
+                                <TextBlock Text="{Binding PhoneNumber}" 
+                                           FontSize="11" 
+                                           TextTrimming="CharacterEllipsis"/>
+                                <TextBlock Text="{Binding Email}" 
+                                           FontSize="11" 
+                                           TextTrimming="CharacterEllipsis"/>
+                                
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <!-- Кнопки внизу -->
+                <Grid Grid.Row="2" Margin="0,3,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" 
+                            Content="Add" 
+                            Command="{Binding AddCommand}"
+                            Height="25" 
+                            Margin="0,0,3,0"
+                            HorizontalContentAlignment="Center"/>
+
+                    <Button Grid.Column="1" 
+                            Content="Edit" 
+                            Command="{Binding EditCommand}"
+                            Height="25" 
+                            Margin="3,0,3,0"
+                            HorizontalContentAlignment="Center"/>
+
+                    <Button Grid.Column="2" 
+                            Content="Remove" 
+                            Command="{Binding RemoveCommand}"
+                            Height="25" 
+                            Margin="3,0,0,0"
+                            HorizontalContentAlignment="Center"/>
+                </Grid>
+            </Grid>
         </Grid>
 
-        <!-- Кнопки сохранения и загрузки -->
-        <StackPanel Grid.Row="2" 
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Right"
-                    Margin="0 10 0 0">
+        <!-- Разделитель -->
+        <GridSplitter Grid.Column="1" 
+                      Width="3" 
+                      HorizontalAlignment="Stretch"
+                      ResizeBehavior="BasedOnAlignment"/>
 
-            <Button Content="Save" 
-                    Width="75" 
-                    Height="25" 
-                    Margin="0 0 3 0"
-                    Command="{Binding SaveCommand}"
-                    CommandParameter="{Binding CurrentContact}"/>
+        <!-- Правая панель - детали контакта -->
+        <Grid Grid.Column="2">
+            <Grid Margin="8">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-            <Button Content="Load" 
-                    Width="75" 
-                    Height="25"
-                    Command="{Binding LoadCommand}"
-                    CommandParameter="{Binding CurrentContact}"/>
-        </StackPanel>
+                <!-- Основная сетка с двумя колонками: фото слева, поля справа -->
+                <Grid Grid.Row="0" HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Левая колонка: фото -->
+                    <Border Grid.Column="0"
+                            Width="100" 
+                            Height="100"
+                            Background="LightGray"
+                            BorderThickness="1"
+                            Margin="0,20,12,0"
+                            VerticalAlignment="Top">
+                        <TextBlock Text="Фото"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+                    </Border>
+
+                    <!-- Правая колонка: поля с данными -->
+                    <StackPanel Grid.Column="1" HorizontalAlignment="Stretch">
+                        <!-- Поле Name -->
+                        <TextBlock Text="Name:" 
+                                   Margin="0,0,0,3"/>
+                        <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                                 IsReadOnly="{Binding IsReadOnly}"
+                                 Margin="0,0,0,3"
+                                 Padding="3"
+                                 HorizontalAlignment="Stretch"/>
+
+                        <!-- Поле Phone Number -->
+                        <TextBlock Text="Phone Number:" 
+                                   Margin="0,0,0,3"/>
+                        <TextBox Text="{Binding PhoneNumber, UpdateSourceTrigger=PropertyChanged}"
+                                 IsReadOnly="{Binding IsReadOnly}"
+                                 Margin="0,0,0,3"
+                                 Padding="3"
+                                 HorizontalAlignment="Stretch"/>
+
+                        <!-- Поле Email -->
+                        <TextBlock Text="Email:" 
+                                   Margin="0,0,0,3"/>
+                        <TextBox Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"
+                                 IsReadOnly="{Binding IsReadOnly}"
+                                 Margin="0,0,0,3"
+                                 Padding="3"
+                                 HorizontalAlignment="Stretch"/>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Кнопка Apply -->
+                <Button Grid.Row="1"
+                        Content="Apply"
+                        Width="75"
+                        Height="25"
+                        Margin="115,50,0,0"
+                        HorizontalAlignment="Left"
+                        Visibility="{Binding IsApplyVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        Command="{Binding ApplyCommand}"/>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>

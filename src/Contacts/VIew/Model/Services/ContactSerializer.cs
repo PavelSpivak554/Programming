@@ -40,11 +40,11 @@ public class ContactSerializer
     }
 
     /// <summary>
-    /// Метод сериализации данных контакта
+    /// Метод сериализации данных коллекции контакта
     /// </summary>
     /// <param name="contact">Контакт для сохранения</param>
     /// <returns>true, при успешной записи и false, при исключении</returns>
-    public bool SaveContact(Contact contact)
+    public bool SaveContact(IEnumerable<Contact> contacts)
     {
         try
         {
@@ -53,11 +53,8 @@ public class ContactSerializer
             {
                 Directory.CreateDirectory(directory);
             }
-            string json = JsonConvert.SerializeObject(contact, Formatting.Indented);
-
-            // Записываем в файл
-            File.WriteAllText(FilePath, json);
-
+            string json = JsonConvert.SerializeObject(contacts, Formatting.Indented);
+            File.WriteAllText(FilePath, json);  
             return true;
         }
         catch(Exception ex) 
@@ -68,29 +65,29 @@ public class ContactSerializer
     }
 
     /// <summary>
-    /// Метод десериализации данных контакта
+    /// Метод десериализации данных коллекции контактов
     /// </summary>
-    /// <returns>Контакт, при успешом превращении из JSON строки в объект С#, иначе пустой контакт</returns>
-    public Contact LoadContact()
+    /// <returns>Коллекцию контактов, при успешом превращении из JSON строки в объект С#, иначе пустой контакт</returns>
+    public List<Contact> LoadContact()
     {
         try
         {
             if (File.Exists(FilePath))
             {
                 string json = File.ReadAllText(FilePath);
-                Contact contact = JsonConvert.DeserializeObject<Contact>(json);
-                if (contact == null)
+                List<Contact> contacts = JsonConvert.DeserializeObject<List<Contact>>(json);
+                if (contacts == null)
                 {
-                    return new Contact();
+                    return new List<Contact>();
                 }
-                else { return contact; }
+                else { return contacts; }
             }
-            return new Contact();
+            return new List<Contact>();
 
         }
         catch (Exception)
         {
-            return new Contact();
+            return new List<Contact>();
         }
     }
 }

@@ -57,7 +57,10 @@ namespace ObjectOrientedPractics.Model
             }
         }
 
-
+        /// <summary>
+        /// Создаеи объект копию класса
+        /// </summary>
+        /// <returns></returns>
         public object Clone()
         {
             var clonedCart = new Cart();
