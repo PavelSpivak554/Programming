@@ -1,6 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
 using View.Model;
 using View.Model.Services;
@@ -24,7 +26,7 @@ namespace View.ViewModel
         private Contact _selectedContact;
 
         /// <summary>
-        /// Редактируемый контакт (для временного хранения).
+        /// Редактируемый контакт для временного хранения
         /// </summary>
         private Contact _editableContact;
 
@@ -157,6 +159,7 @@ namespace View.ViewModel
                     var removedContact = SelectedContact;
                     int index = _contacts.IndexOf(removedContact);
                     _contacts.Remove(removedContact);
+                    SaveContacts();
 
                     if (_contacts.Count == 0)
                     {
@@ -166,6 +169,7 @@ namespace View.ViewModel
                         OnPropertyChanged(nameof(Name));
                         OnPropertyChanged(nameof(PhoneNumber));
                         OnPropertyChanged(nameof(Email));
+                        
                     }
                     else if (index < _contacts.Count)
                     {
@@ -203,27 +207,36 @@ namespace View.ViewModel
                 });
 
             ApplyCommand = new RelayCommand(
-    execute: _ =>
-    {
-        if (_isEditing)
-        {
-            SelectedContact.Name = EditableContact.Name;
-            SelectedContact.PhoneNumber = EditableContact.PhoneNumber;
-            SelectedContact.Email = EditableContact.Email;
+                execute: _ =>
+                {
+                    if (_isEditing)
+                    {
+                        SelectedContact.Name = EditableContact.Name;
+                        SelectedContact.PhoneNumber = EditableContact.PhoneNumber;
+                        SelectedContact.Email = EditableContact.Email;
 
-            IsEditing = false;
-            OnPropertyChanged(nameof(SelectedContact));
+                        IsEditing = false;
+                        SaveContacts();
+                    }
+                    else if (_isAdding)
+                    {
+                        Debug.WriteLine($"=== AddCommand EXECUTE: IsAdding={_isAdding}, IsEditing={_isEditing} ===");
+                        MessageBox.Show("");
+                        var newContact = EditableContact;
+                        _contacts.Add(newContact);
+                        IsAdding = false;
+                        SelectedContact = newContact;
+                        SaveContacts();
+                    }
+                    OnPropertyChanged(nameof(IsReadOnly));
+                    OnPropertyChanged(nameof(IsApplyVisible));
+                    CommandManager.InvalidateRequerySuggested();
+                    
+                },
+                canExecute: _ => (_isEditing || _isAdding) && EditableContact != null);
+
         }
-        else if (_isAdding)
-        {
-            var newContact = EditableContact;
-            _contacts.Add(newContact);
-            IsAdding = false;
-            SelectedContact = newContact;
-        }
-    },
-    canExecute: _ => (_isEditing || _isAdding) && EditableContact != null);
-        }
+
 
         /// <summary>
         /// Свойство для доступа к имени
@@ -273,6 +286,9 @@ namespace View.ViewModel
             }
         }
 
+        /// <summary>
+        /// Свойство для доступа к коллекции контактов
+        /// </summary>
         public ObservableCollection<Contact> Contacts
         {
             get => _contacts;
@@ -296,8 +312,8 @@ namespace View.ViewModel
         }
 
         /// <summary>
-        /// Свойство для доступа к контакту
-        /// Используется для передачи всего объекта Contact в команды
+        /// Свойство для доступа к текущему контакту
+        /// </summary>
         public Contact SelectedContact
         {
             get => _selectedContact;
@@ -320,6 +336,9 @@ namespace View.ViewModel
             }
         }
 
+        /// <summary>
+        /// Свойство для доступа к изменяемому контакту
+        /// </summary>
         public Contact EditableContact
         {
             get => _editableContact;
@@ -338,6 +357,9 @@ namespace View.ViewModel
             }
         }
 
+        /// <summary>
+        /// Метод отмены изменений
+        /// </summary>
         private void CancelEditing()
         {
             if (_isEditing)
@@ -373,10 +395,19 @@ namespace View.ViewModel
             CommandManager.InvalidateRequerySuggested();
         }
 
+        /// <summary>
+        /// Свойство для доступа к флагу доступа кнопок только на чтение
+        /// </summary>
         public bool IsReadOnly => !_isAdding && !_isEditing;
 
+        /// <summary>
+        /// Свойство для доступа к флагу видимости кнопки Apply
+        /// </summary>
         public bool IsApplyVisible => _isAdding || _isEditing;
 
+        /// <summary>
+        /// Свойство для доступа к флагу добавления контакта
+        /// </summary>
         public bool IsAdding
         {
             get => _isAdding;
@@ -393,6 +424,9 @@ namespace View.ViewModel
             }
         }
 
+        /// <summary>
+        /// Свойство для доступа к флагу изменения контакта
+        /// </summary>
         public bool IsEditing
         {
             get => _isEditing;
@@ -406,6 +440,21 @@ namespace View.ViewModel
                     OnPropertyChanged(nameof(IsApplyVisible));
                     CommandManager.InvalidateRequerySuggested();
                 }
+            }
+        }
+
+        /// <summary>
+        /// Метод сохранения контактов (автосохранение в файл)
+        /// </summary>
+        public void SaveContacts()
+        {
+            try
+            {
+                _serializer.SaveContact(_contacts);
+            }
+            catch (Exception ex)
+            {
+                _messageService.FailureMessage(ex);
             }
         }
     }

@@ -1,6 +1,4 @@
 ﻿using System.Windows.Input;
-using View.Model;
-
 
 namespace View.ViewModel;
 
@@ -15,7 +13,7 @@ internal class RelayCommand : ICommand
     private readonly Func<object,bool> _canExecute;
 
     /// <summary>
-    /// Поле хранящее ссылку на метод которое необходимо выполнить
+    /// Поле хранящее ссылку на метод который необходимо выполнить
     /// </summary>
     private readonly Action<object> _execute;
 
@@ -38,6 +36,7 @@ internal class RelayCommand : ICommand
         _execute = execute;
         _canExecute = canExecute;
     }
+
     /// <summary>
     /// Определяет, можно ли выполнить команду.
     /// </summary>
