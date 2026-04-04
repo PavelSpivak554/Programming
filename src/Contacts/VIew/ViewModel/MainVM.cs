@@ -2,9 +2,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using System.Windows;
 using System.Windows.Input;
-using System.Windows.Threading;
 using View.Model;
 using View.Model.Services;
 using View.ViewModel.Services;
@@ -194,12 +192,14 @@ namespace View.ViewModel
                     if (_isAdding || _isEditing) return;
                     IsEditing = true;
                     IsAdding = false;
+
                     EditableContact = new Contact()
                     {
                         Name = SelectedContact.Name,
                         PhoneNumber = SelectedContact.PhoneNumber,
                         Email = SelectedContact.Email
                     };
+
                     OnPropertyChanged(nameof(Name));
                     OnPropertyChanged(nameof(PhoneNumber));
                     OnPropertyChanged(nameof(Email));
@@ -325,13 +325,19 @@ namespace View.ViewModel
                 {
                     CancelEditing();
                 }
+
                 _selectedContact = value;
                 if (value != null && !_isAdding && !_isEditing)
                 {
-                    EditableContact = value;
-                    OnPropertyChanged(nameof(Name));
-                    OnPropertyChanged(nameof(PhoneNumber));
-                    OnPropertyChanged(nameof(Email));
+                    EditableContact = new Contact
+                    {
+                        Name = value.Name,
+                        PhoneNumber = value.PhoneNumber,
+                        Email = value.Email
+                    };
+                    //OnPropertyChanged(nameof(Name));
+                    //OnPropertyChanged(nameof(PhoneNumber));
+                    //OnPropertyChanged(nameof(Email));
                 }
                 OnPropertyChanged();
             }
@@ -369,7 +375,12 @@ namespace View.ViewModel
 
                 if (_selectedContact != null)
                 {
-                    EditableContact = _selectedContact;
+                    EditableContact = new Contact
+                    {
+                        Name = _selectedContact.Name,
+                        PhoneNumber = _selectedContact.PhoneNumber,
+                        Email = _selectedContact.Email
+                    };
                 }
                 else
                 {
