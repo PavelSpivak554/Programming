@@ -1,12 +1,32 @@
 ﻿using System.ComponentModel;
-
 namespace View.Model;
+using System.Linq;
+using View.Model.Services;
+using System.Diagnostics;
 
 /// <summary>
 /// Класс, представляющий контактную информацию.
 /// </summary>
-public class Contact : INotifyPropertyChanged
+public class Contact : INotifyPropertyChanged, IDataErrorInfo
 {
+    private readonly Dictionary<string, List<string>> _errors = new();
+    public Dictionary<string, List<string>> Errors => _errors;
+    public bool HasErrors => _errors.Any();
+
+    public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+
+    private readonly ContactValidator _validator = new();
+
+    string IDataErrorInfo.Error => null;
+    string IDataErrorInfo.this[string columnName]
+    {
+        get
+        {
+            var result = _validator.Validate(this);
+            return result.IsValid ? null : result.Errors.FirstOrDefault(e => e.PropertyName == columnName)?.ErrorMessage;
+        }
+    }
+
     /// <summary>
     /// Поле для хранения имени контакта
     /// </summary>
@@ -48,6 +68,7 @@ public class Contact : INotifyPropertyChanged
         Name = name;
         PhoneNumber = phoneNumber; 
         Email = email;
+        ValidateAll();
     }
 
     /// <summary>
@@ -62,6 +83,7 @@ public class Contact : INotifyPropertyChanged
             {
                 _name = value;
                 OnPropertyChanged(nameof(Name));
+                UpdateErrors(nameof(Name));
             }
         }
     }
@@ -78,6 +100,7 @@ public class Contact : INotifyPropertyChanged
             {
                 _phoneNumber = value;
                 OnPropertyChanged(nameof(PhoneNumber));
+                UpdateErrors(nameof(PhoneNumber));
             }
         }
     }
@@ -94,6 +117,7 @@ public class Contact : INotifyPropertyChanged
             {
                 _email = value;
                 OnPropertyChanged(nameof(Email));
+                UpdateErrors(nameof(Email));
             }
         }
     }
@@ -105,5 +129,29 @@ public class Contact : INotifyPropertyChanged
     protected virtual void OnPropertyChanged(string propertyName)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    private void UpdateErrors(string propertyName)
+    {
+        _errors.Clear();
+        var result = _validator.Validate(this);
+
+        Debug.WriteLine($"Errors: {result.IsValid}");
+
+
+        foreach (var error in result.Errors)
+        {
+            Debug.WriteLine($"Error {error.PropertyName}: {error.ErrorMessage}");
+            _errors[error.PropertyName] = new() { error.ErrorMessage };
+
+        }
+            
+        ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+    }
+
+    public void ValidateAll()
+    {
+        Debug.WriteLine("ValidateAll called");
+        UpdateErrors(string.Empty);
     }
 }

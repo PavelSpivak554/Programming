@@ -231,10 +231,13 @@ namespace View.ViewModel
                     }
                     OnPropertyChanged(nameof(IsReadOnly));
                     OnPropertyChanged(nameof(IsApplyVisible));
+                    string error = (EditableContact as IDataErrorInfo)["PhoneNumber"];
                     CommandManager.InvalidateRequerySuggested();
                     
                 },
-                canExecute: _ => (_isEditing || _isAdding) && EditableContact != null);
+                canExecute: _ => (_isEditing || _isAdding)
+                && EditableContact != null
+                && !EditableContact.HasErrors);
 
         }
 
@@ -356,6 +359,7 @@ namespace View.ViewModel
 
                 if (value != null)
                 {
+                    _editableContact.ValidateAll();
                     OnPropertyChanged(nameof(Name));
                     OnPropertyChanged(nameof(PhoneNumber));
                     OnPropertyChanged(nameof(Email));

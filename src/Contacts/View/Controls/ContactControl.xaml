@@ -6,7 +6,27 @@
              xmlns:local="clr-namespace:View.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    
+
+
+    <UserControl.Resources>
+        <Style x:Key="ValidationTextBox" TargetType="TextBox">
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <AdornedElementPlaceholder/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="Background" Value="#FFE6B0B0"/>
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
     <!-- Основная сетка с двумя колонками: фото слева, поля справа -->
     <Grid
                     Grid.Row="0" HorizontalAlignment="Stretch">
@@ -30,27 +50,32 @@
             <!-- Поле Name -->
             <TextBlock Text="Name:" 
                                    Margin="0,0,0,3"/>
-            <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}"
                                  IsReadOnly="{Binding IsReadOnly,RelativeSource={RelativeSource AncestorType=UserControl}}"
                                  Margin="0,0,0,3"
+                                 Style="{StaticResource ValidationTextBox}"
                                  Padding="3"
                                  HorizontalAlignment="Stretch"/>
 
             <!-- Поле Phone Number -->
             <TextBlock Text="Phone Number:" 
                                    Margin="0,0,0,3"/>
-            <TextBox Text="{Binding PhoneNumber, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+            <TextBox Text="{Binding PhoneNumber, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                  IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                 Margin="0,0,0,3"
+                     PreviewTextInput="PhonePreviewTextInput" 
+                     DataObject.Pasting="PhoneDataObjectPasting"
+                     Margin="0,0,0,3"
+                     Style="{StaticResource ValidationTextBox}"
                                  Padding="3"
                                  HorizontalAlignment="Stretch"/>
 
             <!-- Поле Email -->
             <TextBlock Text="Email:" 
                                    Margin="0,0,0,3"/>
-            <TextBox Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"
+            <TextBox Text="{Binding Email, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                  IsReadOnly="{Binding IsReadOnly,RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                 Margin="0,0,0,3"
+                     Style="{StaticResource ValidationTextBox}"            
+                     Margin="0,0,0,3"
                                  Padding="3"
                                  HorizontalAlignment="Stretch"/>
         </StackPanel>
