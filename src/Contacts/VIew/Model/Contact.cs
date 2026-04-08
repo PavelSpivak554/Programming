@@ -1,9 +1,7 @@
 ﻿using System.ComponentModel;
-namespace View.Model;
-using System.Linq;
 using View.Model.Services;
-using System.Diagnostics;
 
+namespace View.Model;
 /// <summary>
 /// Класс, представляющий контактную информацию.
 /// </summary>
@@ -18,6 +16,7 @@ public class Contact : INotifyPropertyChanged, IDataErrorInfo
     private readonly ContactValidator _validator = new();
 
     string IDataErrorInfo.Error => null;
+
     string IDataErrorInfo.this[string columnName]
     {
         get
@@ -121,7 +120,7 @@ public class Contact : INotifyPropertyChanged, IDataErrorInfo
             }
         }
     }
-    
+
     /// <summary>
     /// Метод для вызова события PropertyChanged.
     /// </summary>
@@ -135,23 +134,16 @@ public class Contact : INotifyPropertyChanged, IDataErrorInfo
     {
         _errors.Clear();
         var result = _validator.Validate(this);
-
-        Debug.WriteLine($"Errors: {result.IsValid}");
-
-
         foreach (var error in result.Errors)
         {
-            Debug.WriteLine($"Error {error.PropertyName}: {error.ErrorMessage}");
             _errors[error.PropertyName] = new() { error.ErrorMessage };
 
         }
-            
         ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
     }
 
     public void ValidateAll()
     {
-        Debug.WriteLine("ValidateAll called");
         UpdateErrors(string.Empty);
     }
 }
