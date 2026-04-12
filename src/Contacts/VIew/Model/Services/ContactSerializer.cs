@@ -4,46 +4,54 @@ using System.IO;
 namespace View.Model.Services;
 
 /// <summary>
-/// Класс отвечающий за сериализацию и десериализацию данных (контакты)
+/// Класс, отвечающий за сериализацию и десериализацию данных (контактов).
 /// </summary>
+/// <remarks>
+/// Данные сохраняются в JSON-файл по пути: Мои документы\Contacts\contacts.json
+/// При ошибках чтения/записи метод LoadContact возвращает пустой список,
+/// метод SaveContact возвращает false (без проброса исключений).
+/// </remarks>
 public class ContactSerializer
 {
     /// <summary>
-    /// Имя файла куда сохраняются данные, не хранит путь 
+    /// Имя файла для сохранения контактов (без пути).
     /// </summary>
     private const string FileName = "contacts.json";
 
     /// <summary>
-    /// Хранит путь к папке "Мои документы".
+    /// Путь к папке "Мои документы" текущего пользователя.
     /// </summary>
-    private static readonly string ContactsFolderPath =
+    private static readonly string MyDocumentsPath =
         Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
     /// <summary>
-    /// Хранит полный путь к файлу (Папка + имя файла).
+    /// Путь к папке Contacts внутри "Моих документов".
     /// </summary>
-    private static readonly string ContactsDirectory =
-        Path.Combine(ContactsFolderPath, "Contacts");
+    private static readonly string ContactsFolderPath =
+        Path.Combine(MyDocumentsPath, "Contacts");
 
     /// <summary>
-    /// Полный путь к файлу контакта
+    /// Полный путь к файлу контактов (включая имя файла).
     /// </summary>
     public string FilePath { get; }
 
     /// <summary>
-    /// Конструктор по умолчанию.
+    /// Инициализирует новый экземпляр сериализатора.
     /// Использует путь: Мои документы\Contacts\contacts.json
     /// </summary>
-    public ContactSerializer() 
+    public ContactSerializer()
     {
-        FilePath = Path.Combine(ContactsDirectory, FileName);
+        FilePath = Path.Combine(ContactsFolderPath, FileName);
     }
 
     /// <summary>
-    /// Метод сериализации данных коллекции контакта
+    /// Сохраняет коллекцию контактов в JSON-файл.
     /// </summary>
-    /// <param name="contact">Контакт для сохранения</param>
-    /// <returns>true, при успешной записи и false, при исключении</returns>
+    /// <param name="contacts">Коллекция контактов для сохранения.</param>
+    /// <returns>
+    /// true — при успешной записи;
+    /// false — при возникновении ошибки (например, нет прав на запись, диск заполнен).
+    /// </returns>
     public bool SaveContact(IEnumerable<Contact> contacts)
     {
         try
@@ -53,39 +61,39 @@ public class ContactSerializer
             {
                 Directory.CreateDirectory(directory);
             }
+
             string json = JsonConvert.SerializeObject(contacts, Formatting.Indented);
-            File.WriteAllText(FilePath, json);  
+            File.WriteAllText(FilePath, json);
             return true;
         }
-        catch(Exception ex) 
+        catch
         {
             return false;
-
         }
     }
 
     /// <summary>
-    /// Метод десериализации данных коллекции контактов
+    /// Загружает коллекцию контактов из JSON-файла.
     /// </summary>
-    /// <returns>Коллекцию контактов, при успешом превращении из JSON строки в объект С#, иначе пустой контакт</returns>
+    /// <returns>
+    /// Список контактов из файла. Если файл не существует, повреждён или содержит некорректный JSON,
+    /// возвращается пустой список (не null).
+    /// </returns>
     public List<Contact> LoadContact()
     {
         try
         {
-            if (File.Exists(FilePath))
+            if (!File.Exists(FilePath))
             {
-                string json = File.ReadAllText(FilePath);
-                List<Contact> contacts = JsonConvert.DeserializeObject<List<Contact>>(json);
-                if (contacts == null)
-                {
-                    return new List<Contact>();
-                }
-                else { return contacts; }
+                return new List<Contact>();
             }
-            return new List<Contact>();
 
+            string json = File.ReadAllText(FilePath);
+            List<Contact> contacts = JsonConvert.DeserializeObject<List<Contact>>(json);
+
+            return contacts ?? new List<Contact>();
         }
-        catch (Exception)
+        catch
         {
             return new List<Contact>();
         }

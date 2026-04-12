@@ -2,30 +2,20 @@
 using View.Model.Services;
 
 namespace View.Model;
+
 /// <summary>
-/// Класс, представляющий контактную информацию.
+/// Класс, представляющий контактную информацию с поддержкой валидации и уведомлений об изменениях.
 /// </summary>
+/// <remarks>
+/// Реализует интерфейсы:
+/// - INotifyPropertyChanged — для уведомления UI об изменениях свойств
+/// - IDataErrorInfo — для интеграции с WPF валидацией
+/// 
+/// Валидация выполняется через ContactValidator. Ошибки кэшируются в словаре _errors
+/// и не пересчитываются при каждом обращении к индексатору.
+/// </remarks>
 public class Contact : INotifyPropertyChanged, IDataErrorInfo
 {
-    private readonly Dictionary<string, List<string>> _errors = new();
-    public Dictionary<string, List<string>> Errors => _errors;
-    public bool HasErrors => _errors.Any();
-
-    public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
-
-    private readonly ContactValidator _validator = new();
-
-    string IDataErrorInfo.Error => null;
-
-    string IDataErrorInfo.this[string columnName]
-    {
-        get
-        {
-            var result = _validator.Validate(this);
-            return result.IsValid ? null : result.Errors.FirstOrDefault(e => e.PropertyName == columnName)?.ErrorMessage;
-        }
-    }
-
     /// <summary>
     /// Поле для хранения имени контакта
     /// </summary>
@@ -42,9 +32,25 @@ public class Contact : INotifyPropertyChanged, IDataErrorInfo
     private string _email;
 
     /// <summary>
+    /// Поле для хранения валидатора
+    /// </summary>
+    private readonly ContactValidator _validator = new();
+
+    /// <summary>
+    /// Поле для хранения списка ошибок валидации
+    /// </summary>
+    private readonly Dictionary<string, List<string>> _errors = new();
+
+    /// <summary>
     /// Событие, возникающее при изменении свойства.
     /// </summary>
     public event PropertyChangedEventHandler PropertyChanged;
+
+    /// <summary>
+    /// Событие возниющее при изменении ошибок
+    /// </summary>
+    public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+
 
     /// <summary>
     /// Конструктор по умолчанию.
@@ -122,6 +128,45 @@ public class Contact : INotifyPropertyChanged, IDataErrorInfo
     }
 
     /// <summary>
+    /// Словарь ошибок валидации по названиям свойств.
+    /// </summary>
+    /// <remarks>
+    /// Возвращает IReadOnlyDictionary для защиты от внешних изменений.
+    /// </remarks>
+    public IReadOnlyDictionary<string, List<string>> Errors => _errors;
+
+    /// <summary>
+    /// Указывает, есть ли хотя бы одна ошибка валидации.
+    /// </summary>
+    public bool HasErrors => _errors.Any();
+
+    /// <summary>
+    /// Возвращает общую ошибку для объекта (не используется).
+    /// </summary>
+    string IDataErrorInfo.Error => null!;
+
+    /// <summary>
+    /// Возвращает ошибку валидации для указанного свойства.
+    /// </summary>
+    /// <param name="columnName">Имя свойства.</param>
+    /// <returns>Текст ошибки или null, если ошибок нет.</returns>
+    /// <remarks>
+    /// Данные берутся из кэшированного словаря _errors, который обновляется
+    /// через UpdateErrors при каждом изменении свойства.
+    /// </remarks>
+    string IDataErrorInfo.this[string columnName]
+    {
+        get
+        {
+            if (_errors.TryGetValue(columnName, out List<string>? errors) && errors.Count > 0)
+            {
+                return errors[0];
+            }
+            return null!;
+        }
+    }
+
+    /// <summary>
     /// Метод для вызова события PropertyChanged.
     /// </summary>
     /// <param name="propertyName">Имя изменившегося свойства.</param>
@@ -142,6 +187,9 @@ public class Contact : INotifyPropertyChanged, IDataErrorInfo
         ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
     }
 
+    /// <summary>
+    /// Принудительно запускает полную валидацию всех полей.
+    /// </summary>
     public void ValidateAll()
     {
         UpdateErrors(string.Empty);

@@ -1,30 +1,34 @@
-﻿namespace View.Model.Services;
-using FluentValidation;
-using View.ViewModel;
+﻿using FluentValidation;
+
+namespace View.Model.Services;
 
 /// <summary>
-/// Класс, отвечающий за валидацию полей контакта
+/// Класс, отвечающий за валидацию полей контакта.
 /// </summary>
+/// <remarks>
+/// - Все поля могут быть пустыми (null или пустая строка считаются валидными)
+/// но на уровне mainVM мы не допускаем создания контакта с пустыми значениями
+/// - Запрещённые символы в телефоне отсекаются на уровне UI
+/// </remarks>
 public class ContactValidator : AbstractValidator<Contact>
 {
     /// <summary>
-    /// Конструктор для валидациии
+    /// Инициализирует правила валидации для модели Contact.
     /// </summary>
     public ContactValidator()
     {
+        const string phoneRegexPattern = @"^[0-9()+ -]+$";
+
         RuleFor(contact => contact.Name)
-            //.NotEmpty()
             .MaximumLength(100)
-            .When(x => !string.IsNullOrWhiteSpace(x.Name));
+            .When(contact => !string.IsNullOrWhiteSpace(contact.Name));
 
         RuleFor(contact => contact.PhoneNumber)
-            //.NotEmpty()
             .MaximumLength(100)
-            .Matches(@"^[0-9()+ -]+$")
+            .Matches(phoneRegexPattern)
             .When(contact => !string.IsNullOrWhiteSpace(contact.PhoneNumber));
 
         RuleFor(contact => contact.Email)
-            //.NotEmpty()
             .MaximumLength(100)
             .EmailAddress()
             .When(contact => !string.IsNullOrWhiteSpace(contact.Email));

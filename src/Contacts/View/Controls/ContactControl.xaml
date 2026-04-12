@@ -79,5 +79,5 @@
                                  HorizontalAlignment="Stretch"/>
         </StackPanel>
     </Grid>
-
+    
 </UserControl>
