@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Data;
 using System.Windows.Input;
 using View.Model;
 using View.Model.Services;
@@ -50,6 +51,15 @@ namespace View.ViewModel
         /// </summary>
         private readonly IMessageService _messageService;
 
+        /// <summary>
+        /// Поле для отображения отфильтрованных контактов
+        /// </summary>
+        private ICollectionView _contactsView;
+
+        /// <summary>
+        /// Поле для хранения поискового запроса
+        /// </summary>
+        private string _searchText;
         #endregion
 
         #region Constructor
@@ -74,7 +84,10 @@ namespace View.ViewModel
             {
                 _messageService.FailureMessage(ex);
             }
+            CollectionView = CollectionViewSource.GetDefaultView(_contacts);
+            CollectionView.Filter = item => FilteredContacts(item);
             InitializeCommands();
+            
         }
 
         #endregion
@@ -142,6 +155,31 @@ namespace View.ViewModel
             }
         }
 
+        /// <summary>
+        /// Свойство для доступа к отфильтрованной коллекции контактов
+        /// </summary>
+        public ICollectionView CollectionView
+        {
+            get => _contactsView;
+            set
+            {
+                _contactsView = value;
+                _contactsView?.Refresh(); // отвечает за обновление данных в UI 
+                OnPropertyChanged();
+            }
+        }
+
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                _searchText = value ?? "";
+                _contactsView.Refresh();
+                OnPropertyChanged();
+
+            }
+        }
         /// <summary>
         /// Свойство для доступа к текущему контакту
         /// </summary>
@@ -539,6 +577,17 @@ namespace View.ViewModel
             CommandManager.InvalidateRequerySuggested();
         }
 
+        /// <summary>
+        /// Метод проверяющий то, что данные в строке поиска есть в коллекции контактов, обеспечивает поиск по имени
+        /// </summary>
+        /// <param name="item">Контакт которой мы проверяем для фильтрации</param>
+        /// <returns>true, если имя контакты содержит вводимые данные, иначе false</returns>
+        /// <remarks>Игнорируем регистр</remarks>
+        private bool FilteredContacts(object item)
+        {
+            var contact = item as Contact;
+            return contact?.Name.Contains(SearchText ?? "", StringComparison.OrdinalIgnoreCase) == true;
+        }
         #endregion
 
         #region INotifyPropertyChanged
