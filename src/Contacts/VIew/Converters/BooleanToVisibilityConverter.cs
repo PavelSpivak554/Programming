@@ -5,18 +5,26 @@ using System.Windows.Data;
 namespace View.Converters;
 
 /// <summary>
-/// Конвертер для привязки булевых значений к свойству Visibility.
+/// Конвертер для преобразования булевых значений в Visibility и обратно.
 /// </summary>
+/// <remarks>
+/// Используется в привязках для управления видимостью UI-элементов.
+/// true → Visibility.Visible
+/// false → Visibility.Collapsed
+/// </remarks>
 public class BooleanToVisibilityConverter : IValueConverter
 {
     /// <summary>
-    /// Конвертор в невидимость кнопки.
+    /// Преобразует булево значение в Visibility.
     /// </summary>
-    /// <param name="value"></param>
-    /// <param name="targetType"></param>
-    /// <param name="parameter"></param>
-    /// <param name="culture"></param>
-    /// <returns></returns>
+    /// <param name="value">Исходное булево значение (true/false).</param>
+    /// <param name="targetType">Целевой тип (не используется).</param>
+    /// <param name="parameter">Дополнительный параметр (не используется).</param>
+    /// <param name="culture">Культура (не используется).</param>
+    /// <returns>
+    /// Visibility.Visible — если value = true;
+    /// Visibility.Collapsed — если value = false или значение не является bool.
+    /// </returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (value is bool boolValue)
@@ -27,13 +35,16 @@ public class BooleanToVisibilityConverter : IValueConverter
     }
 
     /// <summary>
-    /// Конвертор в видимость кнопки.
+    /// Преобразует Visibility обратно в булево значение.
     /// </summary>
-    /// <param name="value"></param>
-    /// <param name="targetType"></param>
-    /// <param name="parameter"></param>
-    /// <param name="culture"></param>
-    /// <returns></returns>
+    /// <param name="value">Значение Visibility (Visible/Collapsed/Hidden).</param>
+    /// <param name="targetType">Целевой тип (не используется).</param>
+    /// <param name="parameter">Дополнительный параметр (не используется).</param>
+    /// <param name="culture">Культура (не используется).</param>
+    /// <returns>
+    /// true — если value = Visibility.Visible;
+    /// false — во всех остальных случаях.
+    /// </returns>
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (value is Visibility visibility)

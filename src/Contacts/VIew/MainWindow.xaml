@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converters="clr-namespace:View.Converters"
+        xmlns:controls="clr-namespace:View.Controls"
         mc:Ignorable="d"
         Title="Contacts" 
         Height="600" 
@@ -15,6 +16,27 @@
 
     <Window.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <DataTemplate x:Key="contactTemplate">
+            <StackPanel Orientation="Horizontal" Margin="5">
+
+                <!-- Картинка -->
+                <Image Source="Resources/photo_placeholder_100x100.png" 
+               Width="40" 
+               Height="40" 
+               Margin="0,0,10,0"
+               Stretch="UniformToFill"/>
+
+                <!-- Вертикальный StackPanel для текста -->
+                <StackPanel>
+                    <TextBlock Text="{Binding Name}" 
+                       FontSize="14" 
+                       FontWeight="SemiBold"/>
+                    <TextBlock Text="{Binding PhoneNumber}" 
+                       FontSize="12"/>
+                </StackPanel>
+
+            </StackPanel>
+        </DataTemplate>
     </Window.Resources>
 
     <Grid>
@@ -55,6 +77,7 @@
                 <!-- Список контактов -->
                 <ListBox Grid.Row="1" 
                          ItemsSource="{Binding Contacts}"
+                         ItemTemplate="{StaticResource contactTemplate}"
                          SelectedItem="{Binding SelectedContact}"
                          Margin="0,3,0,3"
                          BorderThickness="0">
@@ -63,23 +86,6 @@
                             <Setter Property="Margin" Value="0,0,0,3"/>
                         </Style>
                     </ListBox.ItemContainerStyle>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="3">
-                                <TextBlock Text="{Binding Name}" 
-                                           FontSize="12" 
-                                           FontWeight="SemiBold"
-                                           TextTrimming="CharacterEllipsis"/>
-                                <TextBlock Text="{Binding PhoneNumber}" 
-                                           FontSize="11" 
-                                           TextTrimming="CharacterEllipsis"/>
-                                <TextBlock Text="{Binding Email}" 
-                                           FontSize="11" 
-                                           TextTrimming="CharacterEllipsis"/>
-                                
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
                 </ListBox>
 
                 <!-- Кнопки внизу -->
@@ -128,56 +134,11 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <!-- Основная сетка с двумя колонками: фото слева, поля справа -->
-                <Grid Grid.Row="0" HorizontalAlignment="Stretch">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <!-- Левая колонка: фото -->
-                    <Border Grid.Column="0"
-                            Width="100" 
-                            Height="100"
-                            Background="LightGray"
-                            BorderThickness="1"
-                            Margin="0,20,12,0"
-                            VerticalAlignment="Top">
-                        <TextBlock Text="Фото"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"/>
-                    </Border>
-
-                    <!-- Правая колонка: поля с данными -->
-                    <StackPanel Grid.Column="1" HorizontalAlignment="Stretch">
-                        <!-- Поле Name -->
-                        <TextBlock Text="Name:" 
-                                   Margin="0,0,0,3"/>
-                        <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
-                                 IsReadOnly="{Binding IsReadOnly}"
-                                 Margin="0,0,0,3"
-                                 Padding="3"
-                                 HorizontalAlignment="Stretch"/>
-
-                        <!-- Поле Phone Number -->
-                        <TextBlock Text="Phone Number:" 
-                                   Margin="0,0,0,3"/>
-                        <TextBox Text="{Binding PhoneNumber, UpdateSourceTrigger=PropertyChanged}"
-                                 IsReadOnly="{Binding IsReadOnly}"
-                                 Margin="0,0,0,3"
-                                 Padding="3"
-                                 HorizontalAlignment="Stretch"/>
-
-                        <!-- Поле Email -->
-                        <TextBlock Text="Email:" 
-                                   Margin="0,0,0,3"/>
-                        <TextBox Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"
-                                 IsReadOnly="{Binding IsReadOnly}"
-                                 Margin="0,0,0,3"
-                                 Padding="3"
-                                 HorizontalAlignment="Stretch"/>
-                    </StackPanel>
-                </Grid>
+                <!-- Правая панель: UserControl -->
+                <controls:ContactControl Grid.Row="0"
+                         DataContext="{Binding EditableContact}"
+                         IsReadOnly="{Binding DataContext.IsReadOnly,
+ RelativeSource={RelativeSource AncestorType=Window}}"/>
 
                 <!-- Кнопка Apply -->
                 <Button Grid.Row="1"
