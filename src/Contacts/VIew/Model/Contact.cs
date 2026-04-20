@@ -10,7 +10,6 @@ namespace View.Model;
 /// Реализует интерфейсы:
 /// - INotifyPropertyChanged — для уведомления UI об изменениях свойств
 /// - IDataErrorInfo — для интеграции с WPF валидацией
-/// 
 /// Валидация выполняется через ContactValidator. Ошибки кэшируются в словаре _errors
 /// и не пересчитываются при каждом обращении к индексатору.
 /// </remarks>
@@ -175,6 +174,13 @@ public class Contact : INotifyPropertyChanged, IDataErrorInfo
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
+    /// <summary>
+    /// Обновляет коллекцию ошибок валидации и уведомляет UI об изменениях.
+    /// Выполняет полную валидацию объекта через FluentValidation и заполняет словарь ошибок.
+    /// </summary>
+    /// <param name="propertyName">
+    /// Имя свойства, для которого выполняется обновление ошибок.
+    /// </param>
     private void UpdateErrors(string propertyName)
     {
         _errors.Clear();

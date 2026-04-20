@@ -169,6 +169,9 @@ namespace View.ViewModel
             }
         }
 
+        /// <summary>
+        /// Свойство для доступа к тексту поискового запроса
+        /// </summary>
         public string SearchText
         {
             get => _searchText;
@@ -180,6 +183,7 @@ namespace View.ViewModel
 
             }
         }
+
         /// <summary>
         /// Свойство для доступа к текущему контакту
         /// </summary>

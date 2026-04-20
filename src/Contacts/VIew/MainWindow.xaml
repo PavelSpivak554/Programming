@@ -16,11 +16,10 @@
 
     <Window.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-        <!-- Шаблон сохранён в ресурсах с ключом "contactTemplate" -->
         <DataTemplate x:Key="contactTemplate">
             <StackPanel Orientation="Horizontal" Margin="5">
 
-                <!-- Картинка слева -->
+                <!-- Картинка -->
                 <Image Source="Resources/photo_placeholder_100x100.png" 
                Width="40" 
                Height="40" 
