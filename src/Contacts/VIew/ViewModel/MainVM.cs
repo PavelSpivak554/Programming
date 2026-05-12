@@ -1,79 +1,109 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows.Data;
 using System.Windows.Input;
 using View.Model;
 using View.Model.Services;
 using View.ViewModel.Services;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace View.ViewModel
 {
     /// <summary>
     /// ViewModel для главного окна приложения.
     /// </summary>
-    public class MainVM : INotifyPropertyChanged
+    public partial class MainVM : ObservableObject
     {
         #region Private Fields
 
         /// <summary>
-        /// Поле коллекции контактов, хранящее актуальные данные.
+        /// Коллекция контактов, хранящая актуальные данные.
         /// </summary>
+        [ObservableProperty]
         private ObservableCollection<Contact> _contacts;
 
         /// <summary>
-        /// Поле хранящее текущий контакт
+        /// Текущий выбранный контакт.
         /// </summary>
         private Contact _selectedContact;
 
         /// <summary>
-        /// Редактируемый контакт для временного хранения
+        /// Редактируемый контакт для временного хранения данных.
         /// </summary>
+        [ObservableProperty]
         private Contact _editableContact;
 
         /// <summary>
-        /// Флаг для режима добавления
+        /// Флаг, указывающий, что выполняется добавление нового контакта.
         /// </summary>
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(IsReadOnly))]
+        [NotifyPropertyChangedFor(nameof(IsApplyVisible))]
         private bool _isAdding;
 
         /// <summary>
-        /// Флаг для режима редактирования
+        /// Флаг, указывающий, что выполняется редактирование существующего контакта.
         /// </summary>
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(IsReadOnly))]
+        [NotifyPropertyChangedFor(nameof(IsApplyVisible))]
         private bool _isEditing;
 
         /// <summary>
-        /// Поле для сериализатора
+        /// Сервис сериализации контактов.
         /// </summary>
         private readonly ContactSerializer _serializer;
 
         /// <summary>
-        /// Поле для интерфейса сообщений
+        /// Сервис для отображения сообщений пользователю.
         /// </summary>
         private readonly IMessageService _messageService;
 
         /// <summary>
-        /// Поле для отображения отфильтрованных контактов
+        /// Представление коллекции контактов для фильтрации.
         /// </summary>
         private ICollectionView _contactsView;
 
         /// <summary>
-        /// Поле для хранения поискового запроса
+        /// Текст поискового запроса.
         /// </summary>
-        private string _searchText;
+        [ObservableProperty]
+        private string _searchText = "";
+
+        /// <summary>
+        /// Имя редактируемого контакта.
+        /// </summary>
+        [ObservableProperty]
+        private string _name;
+
+        /// <summary>
+        /// Номер телефона редактируемого контакта.
+        /// </summary>
+        [ObservableProperty]
+        private string _phoneNumber;
+
+        /// <summary>
+        /// Email редактируемого контакта.
+        /// </summary>
+        [ObservableProperty]
+        private string _email;
+
         #endregion
 
         #region Constructor
 
         /// <summary>
-        /// Конструктор по умолчанию.
-        /// Инициализирует сериализатор, создает тестовый контакт и команду сохранения.
+        /// Инициализирует новый экземпляр класса <see cref="MainVM"/>.
         /// </summary>
+        /// <param name="messageService">Сервис для отображения сообщений.</param>
         public MainVM(IMessageService messageService)
         {
             _contacts = new ObservableCollection<Contact>();
             _serializer = new ContactSerializer();
             _messageService = messageService;
             _editableContact = new Contact();
+
             try
             {
                 var loadedContacts = _serializer.LoadContact();
@@ -84,79 +114,18 @@ namespace View.ViewModel
             {
                 _messageService.FailureMessage(ex);
             }
+
             CollectionView = CollectionViewSource.GetDefaultView(_contacts);
             CollectionView.Filter = item => FilteredContacts(item);
             InitializeCommands();
-            
         }
 
         #endregion
 
-        #region Public Properties (Simple)
+        #region Public Properties
 
         /// <summary>
-        /// Свойство для доступа к имени
-        /// </summary>
-        public string Name
-        {
-            get { return _editableContact.Name; }
-            set
-            {
-                if (_editableContact.Name != value)
-                {
-                    _editableContact.Name = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Свойство для доступа к номеру телефона
-        /// </summary>
-        public string PhoneNumber
-        {
-            get { return _editableContact.PhoneNumber; }
-            set
-            {
-                if (_editableContact.PhoneNumber != value)
-                {
-                    _editableContact.PhoneNumber = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Свойство для доступа к почте
-        /// </summary>
-        public string Email
-        {
-            get { return _editableContact.Email; }
-            set
-            {
-                if (_editableContact.Email != value)
-                {
-                    _editableContact.Email = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Свойство для доступа к коллекции контактов
-        /// </summary>
-        public ObservableCollection<Contact> Contacts
-        {
-            get => _contacts;
-            set
-            {
-                _contacts = value;
-                OnPropertyChanged();
-            }
-        }
-
-        /// <summary>
-        /// Свойство для доступа к отфильтрованной коллекции контактов
+        /// Получает или задает отфильтрованное представление коллекции контактов.
         /// </summary>
         public ICollectionView CollectionView
         {
@@ -164,28 +133,13 @@ namespace View.ViewModel
             set
             {
                 _contactsView = value;
-                _contactsView?.Refresh(); // отвечает за обновление данных в UI 
+                _contactsView?.Refresh();
                 OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Свойство для доступа к тексту поискового запроса
-        /// </summary>
-        public string SearchText
-        {
-            get => _searchText;
-            set
-            {
-                _searchText = value ?? "";
-                _contactsView.Refresh();
-                OnPropertyChanged();
-
-            }
-        }
-
-        /// <summary>
-        /// Свойство для доступа к текущему контакту
+        /// Получает или задает текущий выбранный контакт.
         /// </summary>
         public Contact SelectedContact
         {
@@ -193,13 +147,15 @@ namespace View.ViewModel
             set
             {
                 if (_selectedContact == value) return;
-                if (_isEditing || _isAdding)
+
+                if (IsEditing || IsAdding)
                 {
                     CancelEditing();
                 }
 
                 _selectedContact = value;
-                if (value != null && !_isAdding && !_isEditing)
+
+                if (value != null && !IsAdding && !IsEditing)
                 {
                     EditableContact = new Contact
                     {
@@ -208,127 +164,102 @@ namespace View.ViewModel
                         Email = value.Email
                     };
                 }
+
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(SelectedContact));
             }
         }
 
         /// <summary>
-        /// Свойство для доступа к изменяемому контакту
+        /// Получает значение, указывающее, находится ли интерфейс в режиме только для чтения.
         /// </summary>
-        public Contact EditableContact
-        {
-            get => _editableContact;
-            set
-            {
-                if (_editableContact == value) return;
-                _editableContact = value;
-
-                if (value != null)
-                {
-                    _editableContact.ValidateAll();
-                    OnPropertyChanged(nameof(Name));
-                    OnPropertyChanged(nameof(PhoneNumber));
-                    OnPropertyChanged(nameof(Email));
-                }
-                OnPropertyChanged();
-            }
-        }
+        public bool IsReadOnly => !IsAdding && !IsEditing;
 
         /// <summary>
-        /// Свойство для доступа к флагу добавления контакта
+        /// Получает значение, указывающее, видима ли кнопка Apply.
         /// </summary>
-        public bool IsAdding
-        {
-            get => _isAdding;
-            set
-            {
-                if (_isAdding != value)
-                {
-                    _isAdding = value;
-                    OnPropertyChanged();
-                    OnPropertyChanged(nameof(IsReadOnly));
-                    OnPropertyChanged(nameof(IsApplyVisible));
-                    CommandManager.InvalidateRequerySuggested();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Свойство для доступа к флагу изменения контакта
-        /// </summary>
-        public bool IsEditing
-        {
-            get => _isEditing;
-            set
-            {
-                if (_isEditing != value)
-                {
-                    _isEditing = value;
-                    OnPropertyChanged();
-                    OnPropertyChanged(nameof(IsReadOnly));
-                    OnPropertyChanged(nameof(IsApplyVisible));
-                    CommandManager.InvalidateRequerySuggested();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Свойство для доступа к флагу доступа кнопок только на чтение
-        /// </summary>
-        public bool IsReadOnly => !_isAdding && !_isEditing;
-
-        /// <summary>
-        /// Свойство для доступа к флагу видимости кнопки Apply
-        /// </summary>
-        public bool IsApplyVisible => _isAdding || _isEditing;
+        public bool IsApplyVisible => IsAdding || IsEditing;
 
         #endregion
 
         #region Commands
 
         /// <summary>
-        /// Свойство для команды сохранения
+        /// Команда сохранения контактов в файл.
         /// </summary>
         public ICommand SaveCommand { get; private set; }
 
         /// <summary>
-        /// Свойство для команды загрузки
+        /// Команда загрузки контактов из файла.
         /// </summary>
         public ICommand LoadCommand { get; private set; }
 
         /// <summary>
-        /// Свойство для команды добавления
+        /// Команда добавления нового контакта.
         /// </summary>
         public ICommand AddCommand { get; private set; }
 
         /// <summary>
-        /// Свойство для команды удаления
+        /// Команда удаления выбранного контакта.
         /// </summary>
         public ICommand RemoveCommand { get; private set; }
 
         /// <summary>
-        /// Свойство для команды изменения
+        /// Команда редактирования выбранного контакта.
         /// </summary>
         public ICommand EditCommand { get; private set; }
 
         /// <summary>
-        /// Свойство для команды применения
+        /// Команда применения изменений.
         /// </summary>
         public ICommand ApplyCommand { get; private set; }
+
+        #endregion
+
+        #region Partial Methods
+
+        /// <summary>
+        /// Вызывается при изменении свойства <see cref="SearchText"/>.
+        /// Обновляет фильтрацию коллекции контактов.
+        /// </summary>
+        /// <param name="value">Новое значение поискового запроса.</param>
+        partial void OnSearchTextChanged(string value)
+        {
+            _contactsView?.Refresh();
+        }
+
+        /// <summary>
+        /// Вызывается при изменении свойства <see cref="IsAdding"/>.
+        /// Обновляет состояние команд.
+        /// </summary>
+        /// <param name="value">Новое значение флага добавления.</param>
+        partial void OnIsAddingChanged(bool value)
+        {
+            CommandManager.InvalidateRequerySuggested();
+        }
+
+        /// <summary>
+        /// Вызывается при изменении свойства <see cref="IsEditing"/>.
+        /// Обновляет состояние команд.
+        /// </summary>
+        /// <param name="value">Новое значение флага редактирования.</param>
+        partial void OnIsEditingChanged(bool value)
+        {
+            CommandManager.InvalidateRequerySuggested();
+        }
 
         #endregion
 
         #region Public Methods
 
         /// <summary>
-        /// Метод сохранения контактов (автосохранение в файл)
+        /// Сохраняет текущую коллекцию контактов в файл.
         /// </summary>
         public void SaveContacts()
         {
             try
             {
-                _serializer.SaveContact(_contacts);
+                _serializer.SaveContact(Contacts);
             }
             catch (Exception ex)
             {
@@ -341,133 +272,87 @@ namespace View.ViewModel
         #region Private Methods (Command Initialization)
 
         /// <summary>
-        /// Метод инициализации всех команд
+        /// Инициализирует все команды ViewModel.
         /// </summary>
         private void InitializeCommands()
         {
+            
             InitializeAddCommand();
-            InitializeApplyCommand();
-            InitializeEditCommand();
-            InitializeLoadCommand();
             InitializeRemoveCommand();
-            InitializeSaveCommand();
+            InitializeEditCommand();
+            InitializeApplyCommand();
         }
 
-        /// <summary>
-        /// Метод инициализации команды сохранения
-        /// </summary>
-        private void InitializeSaveCommand()
-        {
-            SaveCommand = new RelayCommand(
-                _ =>
-                {
-                    try
-                    {
-                        _serializer.SaveContact(_contacts);
-                    }
-                    catch (Exception ex)
-                    {
-                        _messageService.FailureMessage(ex);
-                    }
-                });
-        }
 
         /// <summary>
-        /// Метод инициализации команды загрузки
-        /// </summary>
-        private void InitializeLoadCommand()
-        {
-            LoadCommand = new RelayCommand(
-                _ =>
-                {
-                    try
-                    {
-                        _contacts.Clear();
-                        var loadedContacts = _serializer.LoadContact();
-                        foreach (var c in loadedContacts)
-                            _contacts.Add(c);
-                    }
-                    catch (Exception ex)
-                    {
-                        _messageService.FailureMessage(ex);
-                    }
-                });
-        }
-
-        /// <summary>
-        /// Метод инициализации команды добавления
+        /// Инициализирует команду добавления нового контакта.
         /// </summary>
         private void InitializeAddCommand()
         {
             AddCommand = new RelayCommand(
                 execute: _ =>
                 {
-                    if (_isAdding || _isEditing) return;
+                    if (IsAdding || IsEditing) return;
 
                     SelectedContact = null;
                     IsAdding = true;
                     EditableContact = new Contact();
+
                     OnPropertyChanged(nameof(Name));
                     OnPropertyChanged(nameof(PhoneNumber));
                     OnPropertyChanged(nameof(Email));
                 },
-                canExecute: _ =>
-                {
-                    return !_isAdding && !_isEditing; //доступна, когда оба флага false 
-                });
+                canExecute: _ => !IsAdding && !IsEditing);
         }
 
         /// <summary>
-        /// Метод инициализации команды удаления
+        /// Инициализирует команду удаления контакта.
         /// </summary>
         private void InitializeRemoveCommand()
         {
             RemoveCommand = new RelayCommand(
                 execute: _ =>
                 {
-                    if (_isAdding || _isEditing) return;
+                    if (IsAdding || IsEditing) return;
 
                     var removedContact = SelectedContact;
-                    int index = _contacts.IndexOf(removedContact);
-                    _contacts.Remove(removedContact);
+                    int index = Contacts.IndexOf(removedContact);
+                    Contacts.Remove(removedContact);
                     SaveContacts();
 
-                    if (_contacts.Count == 0)
+                    if (Contacts.Count == 0)
                     {
                         EditableContact = new Contact();
-
                         OnPropertyChanged(nameof(Name));
                         OnPropertyChanged(nameof(PhoneNumber));
                         OnPropertyChanged(nameof(Email));
                     }
-                    else if (index < _contacts.Count)
+                    else if (index < Contacts.Count)
                     {
-                        SelectedContact = _contacts[index];
+                        SelectedContact = Contacts[index];
                     }
                     else
                     {
-                        SelectedContact = _contacts[_contacts.Count - 1];
+                        SelectedContact = Contacts[Contacts.Count - 1];
                     }
                 },
-                canExecute: _ =>
-                {
-                    return SelectedContact != null && !_isAdding && !_isEditing; //доступна, когда оба флага false 
-                });
+                canExecute: _ => SelectedContact != null && !IsAdding && !IsEditing);
         }
 
         /// <summary>
-        /// Метод инициализации команды редактирования
+        /// Инициализирует команду редактирования выбранного контакта.
         /// </summary>
         private void InitializeEditCommand()
         {
             EditCommand = new RelayCommand(
                 execute: _ =>
                 {
-                    if (_isAdding || _isEditing) return;
+                    if (IsAdding || IsEditing) return;
+
                     IsEditing = true;
                     IsAdding = false;
 
-                    EditableContact = new Contact()
+                    EditableContact = new Contact
                     {
                         Name = SelectedContact.Name,
                         PhoneNumber = SelectedContact.PhoneNumber,
@@ -478,21 +363,18 @@ namespace View.ViewModel
                     OnPropertyChanged(nameof(PhoneNumber));
                     OnPropertyChanged(nameof(Email));
                 },
-                canExecute: _ =>
-                {
-                    return SelectedContact != null && !_isAdding && !_isEditing; //доступна, когда оба флага false 
-                });
+                canExecute: _ => SelectedContact != null && !IsAdding && !IsEditing);
         }
 
         /// <summary>
-        /// Метод инициализации команды подтверждения
+        /// Инициализирует команду применения изменений.
         /// </summary>
         private void InitializeApplyCommand()
         {
             ApplyCommand = new RelayCommand(
                 execute: _ =>
                 {
-                    if (_isEditing)
+                    if (IsEditing)
                     {
                         SelectedContact.Name = EditableContact.Name;
                         SelectedContact.PhoneNumber = EditableContact.PhoneNumber;
@@ -501,23 +383,23 @@ namespace View.ViewModel
                         IsEditing = false;
                         SaveContacts();
                     }
-                    else if (_isAdding)
+                    else if (IsAdding)
                     {
                         var newContact = EditableContact;
-                        _contacts.Add(newContact);
+                        Contacts.Add(newContact);
                         IsAdding = false;
                         SelectedContact = newContact;
                         SaveContacts();
                     }
+
                     OnPropertyChanged(nameof(IsReadOnly));
                     OnPropertyChanged(nameof(IsApplyVisible));
-                    
                     CommandManager.InvalidateRequerySuggested();
                 },
-                canExecute: _ => (_isEditing || _isAdding)
-                && EditableContact != null
-                && !EditableContact.HasErrors
-                && AreFieldsClear());
+                canExecute: _ => (IsEditing || IsAdding)
+                    && EditableContact != null
+                    && !EditableContact.HasErrors
+                    && AreFieldsClear());
         }
 
         #endregion
@@ -525,25 +407,25 @@ namespace View.ViewModel
         #region Private Methods (Helpers)
 
         /// <summary>
-        /// Проверяет, что все поля редактируемого контакта заполнены.
+        /// Проверяет, что все обязательные поля редактируемого контакта заполнены.
         /// </summary>
         /// <remarks>
-        /// Обеспечивает недоступность кнопки apply в UI ведь валидатор допускает то, что пустые поля валидны
+        /// Обеспечивает корректное состояние кнопки Apply, так как валидатор допускает пустые поля как валидные.
         /// </remarks>
-        /// <returns>true, если все поля не пустые; иначе false.</returns>
+        /// <returns>true, если все поля заполнены; иначе false.</returns>
         private bool AreFieldsClear()
         {
-            return !string.IsNullOrWhiteSpace(EditableContact.Name) &&
-           !string.IsNullOrWhiteSpace(EditableContact.PhoneNumber) &&
-           !string.IsNullOrWhiteSpace(EditableContact.Email);
+            return !string.IsNullOrWhiteSpace(EditableContact.Name)
+                && !string.IsNullOrWhiteSpace(EditableContact.PhoneNumber)
+                && !string.IsNullOrWhiteSpace(EditableContact.Email);
         }
 
         /// <summary>
-        /// Метод отмены изменений
+        /// Отменяет текущее редактирование или добавление контакта.
         /// </summary>
         private void CancelEditing()
         {
-            if (_isEditing)
+            if (IsEditing)
             {
                 IsEditing = false;
 
@@ -562,7 +444,7 @@ namespace View.ViewModel
                     _selectedContact = null;
                 }
             }
-            else if (_isAdding)
+            else if (IsAdding)
             {
                 IsAdding = false;
 
@@ -575,6 +457,7 @@ namespace View.ViewModel
                     EditableContact = new Contact();
                 }
             }
+
             OnPropertyChanged(nameof(Name));
             OnPropertyChanged(nameof(PhoneNumber));
             OnPropertyChanged(nameof(Email));
@@ -582,35 +465,15 @@ namespace View.ViewModel
         }
 
         /// <summary>
-        /// Метод проверяющий то, что данные в строке поиска есть в коллекции контактов, обеспечивает поиск по имени
+        /// Фильтрует контакты по поисковому запросу, проверяя совпадение по имени.
         /// </summary>
-        /// <param name="item">Контакт которой мы проверяем для фильтрации</param>
-        /// <returns>true, если имя контакты содержит вводимые данные, иначе false</returns>
-        /// <remarks>Игнорируем регистр</remarks>
+        /// <param name="item">Контакт для проверки.</param>
+        /// <returns>true, если имя контакта содержит поисковый запрос; иначе false.</returns>
+        /// <remarks>Сравнение выполняется без учета регистра.</remarks>
         private bool FilteredContacts(object item)
         {
             var contact = item as Contact;
             return contact?.Name.Contains(SearchText ?? "", StringComparison.OrdinalIgnoreCase) == true;
-        }
-        #endregion
-
-        #region INotifyPropertyChanged
-
-        /// <summary>
-        /// Событие для уведомления об изменениях свойств.
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// Метод для вызова события PropertyChanged
-        /// </summary>
-        /// <param name="propertyName">Имя изменившегося свойства.</param>
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
         }
 
         #endregion
