@@ -39,6 +39,9 @@ public partial class MainVM : ObservableObject
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsReadOnly))]
     [NotifyPropertyChangedFor(nameof(IsApplyVisible))]
+    [NotifyCanExecuteChangedFor(nameof(AddCommand))]
+    [NotifyCanExecuteChangedFor(nameof(EditCommand))]
+    [NotifyCanExecuteChangedFor(nameof(RemoveCommand))]
     private bool _isAdding;
 
     /// <summary>
@@ -47,6 +50,9 @@ public partial class MainVM : ObservableObject
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsReadOnly))]
     [NotifyPropertyChangedFor(nameof(IsApplyVisible))]
+    [NotifyCanExecuteChangedFor(nameof(AddCommand))]
+    [NotifyCanExecuteChangedFor(nameof(EditCommand))]
+    [NotifyCanExecuteChangedFor(nameof(RemoveCommand))]
     private bool _isEditing;
 
     /// <summary>
