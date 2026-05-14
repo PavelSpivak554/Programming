@@ -1,9 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Data;
-using View.Model;
-using View.Model.Services;
-using View.ViewModel.Services;
+using Model.Model;
+using Model.Model.Services;
+using ViewModel.ViewModel.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 

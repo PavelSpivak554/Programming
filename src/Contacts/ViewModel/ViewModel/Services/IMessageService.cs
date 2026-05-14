@@ -1,4 +1,4 @@
-﻿namespace View.ViewModel.Services;
+﻿namespace ViewModel.ViewModel.Services;
 
 /// <summary>
 /// Интерфейс сервиса для отображения сообщений пользователю.

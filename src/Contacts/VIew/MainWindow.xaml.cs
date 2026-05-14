@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using View.Services;
-using View.ViewModel;
-using View.ViewModel.Services;
+using ViewModel.ViewModel;
+using ViewModel.ViewModel.Services;
 
 namespace View;
 
@@ -14,7 +14,7 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         IMessageService messageService = new WindowsMessageService();
-        MainVM mainVM = new MainVM(messageService);
+        ViewModel.MainVM mainVM = new ViewModel.MainVM(messageService);
         this.DataContext = mainVM;
     }
 }
