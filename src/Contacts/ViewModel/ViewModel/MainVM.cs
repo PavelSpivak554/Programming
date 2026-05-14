@@ -251,6 +251,13 @@ public partial class MainVM : ObservableObject
 
     #region Commands
 
+    /// <summary>
+    /// Добавляет новый контакт в коллекцию.
+    /// </summary>
+    /// <remarks>
+    /// Переключает режим добавления, создаёт пустой контакт и очищает поля ввода.
+    /// Команда доступна только когда не активно добавление или редактирование.
+    /// </remarks>
     [RelayCommand(CanExecute = nameof(CanAdd))]
     private void Add()
     {
@@ -265,8 +272,18 @@ public partial class MainVM : ObservableObject
         OnPropertyChanged(nameof(Email));
     }
 
+    /// <summary>
+    /// Определяет доступность команды добавления.
+    /// </summary>
+    /// <returns>True, если не активны режимы добавления и редактирования; иначе false.</returns>
     private bool CanAdd() => !IsAdding && !IsEditing;
 
+    /// <summary>
+    /// Удаляет выбранный контакт из коллекции.
+    /// </summary>
+    /// <remarks>
+    /// После удаления автоматически выбирает предыдущий контакт.
+    /// </remarks>
     [RelayCommand(CanExecute = nameof(CanRemove))]
     private void Remove()
     {
@@ -294,8 +311,19 @@ public partial class MainVM : ObservableObject
         }
     }
 
+    /// <summary>
+    /// Определяет доступность команды удаления.
+    /// </summary>
+    /// <returns>True, если контакт выбран и не активны режимы добавления/редактирования.</returns>
     private bool CanRemove() => SelectedContact != null && !IsAdding && !IsEditing;
 
+    /// <summary>
+    /// Переключает режим редактирования выбранного контакта.
+    /// </summary>
+    /// <remarks>
+    /// Копирует данные выбранного контакта во временный редактируемый объект.
+    /// Команда доступна только при выбранном контакте и отсутствии других активных режимов.
+    /// </remarks>
     [RelayCommand(CanExecute = nameof(CanEdit))]
     private void Edit()
     {
@@ -316,8 +344,18 @@ public partial class MainVM : ObservableObject
         OnPropertyChanged(nameof(Email));
     }
 
+    /// <summary>
+    /// Определяет доступность команды редактирования.
+    /// </summary>
+    /// <returns>True, если контакт выбран и не активны режимы добавления/редактирования.</returns>
     private bool CanEdit() => SelectedContact != null && !IsAdding && !IsEditing;
 
+    /// <summary>
+    /// Применяет изменения в зависимости от текущего режима (добавление или редактирование).
+    /// </summary>
+    /// <remarks>
+    /// После применения сбрасывает активный режим и сохраняет изменения.
+    /// </remarks>
     [RelayCommand(CanExecute = nameof(CanApply))]
     private void Apply()
     {
@@ -344,6 +382,13 @@ public partial class MainVM : ObservableObject
         RefreshCommandStates();
     }
 
+    /// <summary>
+    /// Определяет доступность команды применения изменений.
+    /// </summary>
+    /// <returns>
+    /// True, если активен режим добавления или редактирования, редактируемый контакт не null,
+    /// не содержит ошибок валидации и все поля заполнены.
+    /// </returns>
     private bool CanApply() =>
         (IsEditing || IsAdding)
         && EditableContact != null
