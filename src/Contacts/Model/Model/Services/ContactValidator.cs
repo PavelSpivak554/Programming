@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace View.Model.Services;
+namespace Model.Model.Services;
 
 /// <summary>
 /// Класс, отвечающий за валидацию полей контакта.

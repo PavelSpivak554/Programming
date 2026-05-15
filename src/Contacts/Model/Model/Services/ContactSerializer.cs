@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.IO;
 
-namespace View.Model.Services;
+namespace Model.Model.Services;
 
 /// <summary>
 /// Класс, отвечающий за сериализацию и десериализацию данных (контактов).

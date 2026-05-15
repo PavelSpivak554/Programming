@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
-using View.Model.Services;
+using Model.Model.Services;
 
-namespace View.Model;
+namespace Model.Model;
 
 /// <summary>
 /// Класс, представляющий контактную информацию с поддержкой валидации и уведомлений об изменениях.

@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using View.ViewModel.Services;
+using ViewModel.ViewModel.Services;
 
 namespace View.Services;
 
